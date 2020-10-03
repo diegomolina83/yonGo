@@ -14,16 +14,17 @@ class Login extends Component {
         super(props)
         this.state = {
             username: '',
-            password: '',
-            email:''
+            password: ''
         }
         this.authService = new authService()
     }
+
 
     handleInputChange = e => {
         const { name, value } = e.target
         this.setState({ [name]: value })
     }
+
 
     handleFormSubmit = e => {
 
@@ -42,7 +43,6 @@ class Login extends Component {
     render() {
 
         return (
-
             <Container>
                 <main>
                     <Row className="justify-content-center">
@@ -52,11 +52,6 @@ class Login extends Component {
                                 <Form.Group>
                                     <Form.Label>Nombre de usuario</Form.Label>
                                     <Form.Control type="text" name="username" value={this.state.username} onChange={this.handleInputChange} />
-                                </Form.Group>
-
-                                <Form.Group>
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" name="email" value={this.state.email} onChange={this.handleInputChange} />
                                 </Form.Group>
 
                                 <Form.Group>
@@ -73,5 +68,6 @@ class Login extends Component {
         )
     }
 }
+
 
 export default Login
