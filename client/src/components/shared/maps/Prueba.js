@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import morty from '../../../images/morty.png'
 
 
 
@@ -8,7 +8,7 @@ class Prueba extends Component {
 
     render() {
         return (
-           <h1>HOLA</h1>
+           <img className="marker" src={morty}></img>
         );
     }
 }

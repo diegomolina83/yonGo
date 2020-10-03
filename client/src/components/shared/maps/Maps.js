@@ -27,6 +27,12 @@ class SimpleMap extends Component {
                         lng={-3.7106144}
                         text="My Marker"
                     />
+                    <Prueba
+                        lat={40.4274}
+                        lng={-2.7106144}
+                        text="My Marker"
+                    />
+                    
                 </GoogleMapReact>
             </div>
         );
