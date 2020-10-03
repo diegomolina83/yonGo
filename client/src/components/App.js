@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Signup from './pages/signup/Signup'
 import Login from './pages/login/Login'
 import Maps from './shared/maps/Maps'
-
+import PlanCreation from './pages/planForm/PlanForm'
 
 import authService from '../service/auth.service'
 
@@ -47,13 +47,13 @@ class App extends Component {
         <h1>Movidas</h1>
         {!this.state.loggedInUser && <Link className="nav-link" to="/signup">Registro</Link>}
         {!this.state.loggedInUser && <Link className="nav-link" to="/login">Acceder</Link>}
-        {this.state.loggedInUser && <div className="nav-link" onClick={this.logoutUser}>Cerrar sesión</div>}
-        <Maps />
+        {!this.state.loggedInUser && <div className="nav-link" onClick={this.logoutUser}>Cerrar sesión</div>}
+        {!this.state.loggedInUser && <Link className="nav-link" to='/plans/create'>Crear plan</Link>}
 
         <Switch>
-          {/* <Route path="/maps" render={props => <Maps setTheUser={this.setTheUser} {...props} />} /> */}
           <Route path="/signup" render={props => <Signup setTheUser={this.setTheUser} {...props} />} />
           <Route path="/login" render={props => <Login setTheUser={this.setTheUser} {...props} />} />
+          <Route path="/plans/create" render={props => <PlanCreation {...props} />} />
         </Switch>
 
       </>
