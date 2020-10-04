@@ -1,0 +1,17 @@
+div[class*='container']{
+
+    border: solid 1px rgb(129, 21, 21);
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+div[class*='col']{
+
+    border: solid 1px rgb(21, 129, 53);
+    background-color: rgba(0, 255, 0, 0.5);
+}
+
+div[class*='row']{
+
+    border: solid 1px rgb(21, 59, 129);
+    background-color: rgba(0, 0, 255, 0.5);
+}

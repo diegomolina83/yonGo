@@ -80,6 +80,7 @@ class Home extends Component {
                 {!this.state.loggedInUser && <Link to="/login"><Button onClick={() => this.onOpenModalLogin()}>Login</Button></Link>}
                 {!this.state.loggedInUser && <Link to="/signup"><Button onClick={() => this.onOpenModal()}>Registro</Button></Link>}
                 {this.state.loggedInUser && <div className="nav-link" onClick={this.logoutUser}>Cerrar sesión</div>}
+                {<Link to="/plans/new"><Button>Login</Button></Link>}
 
                 <Maps />
 

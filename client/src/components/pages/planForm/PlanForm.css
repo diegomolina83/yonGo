@@ -1,9 +1,5 @@
-.plan-form .form-control:invalid{
+.plan-form-title::placeholder {
 
-    border-color: #dc3545
-}
-
-.plan-form .form-control:valid{
-
-    border-color: #28a745
+    color: rgb(214, 214, 214);
+    text-transform: uppercase;
 }

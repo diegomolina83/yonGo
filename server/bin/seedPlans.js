@@ -16,17 +16,53 @@ const plansCreator = async (plansAmount) => {
 
             for (let i = 0; i < plansAmount; i++) {
 
-                const title = `Plan ${i + 1}`
+                const title = `Plan ${i}`
+
+                // // Within Spain
+                // const minLatitude = 36.134919
+                // const maxLatitude = 43.326108
+                // const randomStartLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
+                // const randomEndLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
+
+                // const minLongitude = -8.648822
+                // const maxLongitude = 2.195764
+                // const randomStartLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
+                // const randomEndLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
+
+                // Within Madrid
+                const minLatitude = 40.307528
+                const maxLatitude = 40.496922
+                const randomStartLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
+                const randomEndLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
+
+                const minLongitude = -3.843728
+                const maxLongitude = -3.560117
+                const randomStartLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
+                const randomEndLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
+
                 const location = {
                     start: {
-                        lat: faker.address.latitude(),
-                        lng: faker.address.longitude()
+                        lat: randomStartLatitude.toString(),
+                        lng: randomStartLongitude.toString()
                     },
                     end: {
-                        lat: faker.address.latitude(),
-                        lng: faker.address.longitude()
+                        lat: randomEndLatitude.toString(),
+                        lng: randomEndLongitude.toString()
                     }
                 }
+
+                // // All around the world
+                // const location = {
+                //     start: {
+                //         lat: faker.address.latitude(),
+                //         lng: faker.address.longitude()
+                //     },
+                //     end: {
+                //         lat: faker.address.latitude(),
+                //         lng: faker.address.longitude()
+                //     }
+                // }
+
                 const date = {
                     start: faker.date.soon(),
                     end: faker.date.future()
@@ -82,7 +118,7 @@ const plansCreator = async (plansAmount) => {
     return plans
 }
 
-const seedLength = 100
+const seedLength = 1000
 
 plansCreator(seedLength).then(plans => {
 
