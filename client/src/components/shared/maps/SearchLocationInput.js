@@ -23,8 +23,8 @@ const loadScript = (url, callback) => {
 
 function handleScriptLoad(updateQuery, autoCompleteRef) {
     autoComplete = new window.google.maps.places.Autocomplete(
-        autoCompleteRef.current,
-        { types: ["(cities)"], componentRestrictions: { country: "us" } }
+        autoCompleteRef.current
+        
     );
     autoComplete.setFields(["address_components", "formatted_address"]);
     autoComplete.addListener("place_changed", () =>
@@ -45,10 +45,11 @@ function SearchLocationInput() {
 
     useEffect(() => {
         loadScript(
-            `https://maps.googleapis.com/maps/api/js?key=AIzaSyBJDLrdE_JV9a04dgT7DZjam5FxNXtTwAM&libraries=places`,
+            `https://maps.googleapis.com/maps/api/js?key=AIzaSyCF9hR-suWhxSLFu6v8Dkl_QOMJWSzlXyo&libraries=places`,
             () => handleScriptLoad(setQuery, autoCompleteRef)
         );
     }, []);
+    
 
     return (
         <div className="search-location-input">
