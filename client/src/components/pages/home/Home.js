@@ -77,8 +77,8 @@ class Home extends Component {
         return (
             <>
                 <h1>yonGo</h1>
-                {!this.state.loggedInUser && <Link to="/login"><Button onClick={() => this.onOpenModalLogin()}>Login</Button></Link>}
-                {!this.state.loggedInUser && <Link to="/signup"><Button onClick={() => this.onOpenModal()}>Registro</Button></Link>}
+                {!this.state.loggedInUser && <Link to="/"><Button onClick={() => this.onOpenModalLogin()}>Login</Button></Link>}
+                {!this.state.loggedInUser && <Link to="/"><Button onClick={() => this.onOpenModal()}>Registro</Button></Link>}
                 {this.state.loggedInUser && <div className="nav-link" onClick={this.logoutUser}>Cerrar sesión</div>}
                 <Link to="/plans/new"><Button>Nuevo plan</Button></Link>
 
@@ -89,7 +89,7 @@ class Home extends Component {
                         <Modal.Title>Signup</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Route path="/signup" render={props => <Signup setTheUser={this.setTheUser} {...props} />} />
+                        <Signup setTheUser={this.setTheUser} {...this.props} />
                     </Modal.Body>
                 </Modal>
 
@@ -98,7 +98,7 @@ class Home extends Component {
                         <Modal.Title>Login</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Route path="/login" render={props => <Login setTheUser={this.setTheUser} {...props} />} />
+                        <Login close={this.onCloseModalclose} setTheUser={this.setTheUser} {...this.props} />
                     </Modal.Body>
                 </Modal>
             </>

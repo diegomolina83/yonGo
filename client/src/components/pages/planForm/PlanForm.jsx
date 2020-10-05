@@ -12,7 +12,7 @@ import LocationFields from './FormLocation'
 
 import './PlanForm.css'
 
-import planService from '../../../service/plans.service'
+import planService from '../../../service/plan.service'
 
 class PlanForm extends Component {
 

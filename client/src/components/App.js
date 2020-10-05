@@ -4,9 +4,8 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import './App.css'
 
 import Home from './pages/home/Home'
-import SearchLocationInput from './shared/maps/SearchLocationInput';
 import PlanForm from './pages/planForm/PlanForm';
-import BooTest from './pages/planForm/ReactBooTest';
+
 
 
 class App extends Component {
@@ -23,14 +22,15 @@ class App extends Component {
   render() {
     return (
       <>
+        {/* <SearchLocationInput onChange={() => null} /> */}
+        {/* <Home /> */}
+        {/* <Route path="/" exact render={() => <Home />} /> */}
         <Switch>
-          <Route path='/' exact render={() => <Home />} />
+          <Route path='/' exact render={props => <Home {...props} />} />
           <Route path='/plans/new' render={props => <PlanForm styles={this.styles} history={props.history} />} />
-          <Route path='/testing' render={() => <BooTest />} />
         </Switch>
       </>
     )
   }
 }
-
 export default App;

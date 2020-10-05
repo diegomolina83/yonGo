@@ -33,8 +33,9 @@ class Login extends Component {
         this.authService
             .login(this.state)
             .then(response => {
+                console.log("...........",this.props)
                 this.props.setTheUser(response.data)
-                this.props.history.push('/')
+                this.props.close()
             })
             .catch(err => console.log('Erroooooor:', { err }))
     }

@@ -1,0 +1,38 @@
+.cardPlan{
+    border:1px solid black;
+    z-index: 1;
+    right: 19px;
+    top: 20%;
+    max-height: 70%;
+}
+
+.cardContainer {
+    background-color: gray;
+    position: absolute;
+    z-index: 1;
+    right: 19px;
+    top: 20%;
+    max-height: 70%;
+    overflow: auto;
+}
+
+.cardContainer::-webkit-scrollbar {
+    width: 100%;     /* Tamaño del scroll en vertical */
+    height: 100%; 
+  display: none;
+}
+
+
+/*Media Queries*/
+
+@media (max-width: 768px) { 
+.cardContainer{
+    position:relative;
+    background-color: white;
+    display:flex;
+    right:0px;
+    top:0px;
+}
+
+
+}
