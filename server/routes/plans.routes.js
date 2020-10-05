@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Plan = require ('../models/plan.model')
+const Plan = require('../models/plan.model')
 
 // Endpoints
 router.get('/getAllPlans', (req, res) => {
@@ -25,7 +25,7 @@ router.get('/getOnePlan/:plan_id', (req, res) => {
 
 router.post('/plans/create', (req, res) => {
 
-    const { title, scope, category, description } = req.body
+    const { title, scope, category, description, owners, creator } = req.body
 
     console.log(req.body)
 
@@ -50,7 +50,7 @@ router.post('/plans/create', (req, res) => {
         planToCreate = { title, start, end, scope, category, description }
     } else {
 
-        planToCreate = { title, start, scope, category, description }
+        planToCreate = { title, start, scope, category, description, owners, creator }
     }
 
     Plan.create(planToCreate)

@@ -34,11 +34,22 @@ class PlanForm extends Component {
             description: '',
             requirements: '',
 
+            creator: undefined,
+            owners: []
+
         }
 
         this.hasEnd = false
         this.isValidForm = false
         this.planService = new planService()
+    }
+
+    componentDidMount() {
+
+        this.setState({
+            creator: this.props.loggedInUser._id,
+            owners: new Array(this.props.loggedInUser._id)
+        })
     }
 
     handleFormSubmit = e => {
@@ -117,12 +128,12 @@ class PlanForm extends Component {
     render() {
         return (
 
-            <Container fluid='lg' className='py-5'>
+            <Container fluid='lg mb-4' className='plan-form'>
 
 
                 <h1 className='mb-5 text-center font-weight-bold'>Diseña una nueva <span className='text-primary'>experiencia!</span></h1>
 
-                <Form className='plan-form' onSubmit={this.handleFormSubmit}>
+                <Form onSubmit={this.handleFormSubmit}>
 
                     <Form.Group>
                         <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' required type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
@@ -130,61 +141,6 @@ class PlanForm extends Component {
                     </Form.Group>
 
                     <LocationFields formState={this.state} handleInputChange={this.handleInputChange} styles={this.props.styles} hasEndToogle={this.hasEndToogle} />
-
-                    {/* Location start */}
-                    {/* <Form.Group className='px-3 pt-3 border rounded bg-light'>
-
-                        <Form.Label>Inicio</Form.Label>
-
-                        <Form.Group>
-                            <Form.Control type="text" name="startLocation" value={this.state.length} onChange={this.handleInputChange} placeholder='Ubicación' />
-                        </Form.Group>
-
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Control type="date" name="startDate" value={this.state.inversions} onChange={this.handleInputChange} />
-                                </Form.Group>
-                            </Col>
-
-                            <Col>
-                                <Form.Group>
-                                    <Form.Control type="time" name="startTime" value={this.state.inversions} onChange={this.handleInputChange} />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                    </Form.Group>
-
-                    {!this.hasEnd && <Button className='mb-3' variant={this.props.styles.button.discreet} onClick={this.hasEndToogle}>Añadir final</Button>}
-
-                    {this.hasEnd && <><Form.Group className='px-3 pt-3 border rounded bg-light'>
-
-                        <Form.Label>Final</Form.Label>
-
-                        <Form.Group>
-                            <Form.Control type="text" name="endLocation" value={this.state.length} onChange={this.handleInputChange} placeholder='Ubicación' />
-                        </Form.Group>
-
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Control type="date" name="endDate" value={this.state.inversions} onChange={this.handleInputChange} />
-                                </Form.Group>
-                            </Col>
-
-                            <Col>
-                                <Form.Group>
-                                    <Form.Control type="time" name="endTime" value={this.state.inversions} onChange={this.handleInputChange} />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-
-                    </Form.Group>
-
-                        <Button className='mb-3' variant={this.props.styles.button.discreet} onClick={this.hasEndToogle}>Eliminar final</Button>
-
-                    </>} */}
-                    {/* Location end */}
 
                     <Form.Group>
 
@@ -222,7 +178,7 @@ class PlanForm extends Component {
                         <Form.Control as="textarea" rows="3" name='requirements' onChange={this.handleInputChange} placeholder='¿Algo que deban saber?' />
                     </Form.Group>
 
-                    <Button id='submit-btn' disabled className='mr-2' variant={this.props.styles.button.submit} type="submit">Crear plan</Button>
+                    <Button id='submit-btn' disabled className='mr-2 submit-btn' variant={this.props.styles.button.submit} type="submit">Crear plan</Button>
                     <Button variant={this.props.styles.button.discreet} onClick={this.props.history.goBack}>Cancelar</Button>
                 </Form>
 

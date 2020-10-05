@@ -57,6 +57,7 @@ export default function SimpleMap() {
                 height: '90vh', width: '100%'
             }}>
                 {<PlacesAutocomplete />}
+
                 <GoogleMapReact
                     // layerTypes={['TrafficLayer', 'TransitLayer']}
                     bootstrapURLKeys={{

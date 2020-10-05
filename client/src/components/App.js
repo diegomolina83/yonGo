@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import './App.css'
 
@@ -55,13 +55,16 @@ class App extends Component {
   render() {
     return (
       <>
-        
+
         {/* <SearchLocationInput onChange={() => null} /> */}
         {/* <Home /> */}
         {/* <Route path="/" exact render={() => <Home />} /> */}
         <Switch>
           <Route path='/' exact render={props => <Home {...props} loggedInUser={this.state.loggedInUser} setUser={this.setUser} logoutUser={this.logoutUser} />} />
-          <Route path='/plans/new' render={props => <PlanForm styles={this.styles} history={props.history} />} />
+          <Route path='/plans/new' render={props => <PlanForm loggedInUser={this.state.loggedInUser} history={props.history} styles={this.styles} />} />
+          <Route path="/plans/new" render={props => this.state.loggedInUser ?
+            <PlanForm loggedInUser={this.state.loggedInUser} history={props.history} styles={this.styles} /> :
+            <Redirect to="/" />} />
         </Switch>
       </>
     )
