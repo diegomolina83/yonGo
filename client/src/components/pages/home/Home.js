@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 import Signup from '../../pages/signup/Signup'
 import Login from '../../pages/login/Login'
-import Maps from '../../shared/maps/Maps'
+import SimpleMap from '../../shared/maps/Maps'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -81,8 +80,8 @@ class Home extends Component {
                 {!this.state.loggedInUser && <Link to="/"><Button onClick={() => this.onOpenModal()}>Registro</Button></Link>}
                 {this.state.loggedInUser && <div className="nav-link" onClick={this.logoutUser}>Cerrar sesión</div>}
                 <Link to="/plans/new"><Button>Nuevo plan</Button></Link>
-
-                <Maps />
+                
+                <SimpleMap />
 
                 <Modal show={this.state.signup} onHide={() => this.onCloseModal()}>
                     <Modal.Header closeButton>

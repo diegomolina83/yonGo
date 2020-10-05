@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
-import SearchLocationInput from '../../shared/maps/SearchLocationInput'
+import PlacesAutocomplete from '../../shared/maps/PlacesAutocomplete'
+
 
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
@@ -20,7 +21,7 @@ const PlanFormLocation = (props) => {
                 <Form.Label>Inicio</Form.Label>
 
                 <Form.Group>
-                    <SearchLocationInput />
+                    <PlacesAutocomplete />
                     {/* <Form.Control type="text" name="startLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' /> */}
                 </Form.Group>
 
@@ -45,7 +46,7 @@ const PlanFormLocation = (props) => {
                     <Form.Label>Final</Form.Label>
 
                     <Form.Group>
-                        <SearchLocationInput />
+                        <PlacesAutocomplete />
                         {/* <Form.Control type="text" name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' /> */}
                     </Form.Group>
 
