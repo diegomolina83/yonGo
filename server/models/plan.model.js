@@ -23,14 +23,8 @@ const planSchema = new Schema({
     },
     end: {
         location: {
-            lat: {
-                type: String,
-                default: ''
-            },
-            lng: {
-                type: String,
-                default: ''
-            }
+            lat: String,
+            lng: String
         },
         date: Date
     },
@@ -68,5 +62,5 @@ const planSchema = new Schema({
     timestamps: true
 })
 
-const Plan = mongoose.model('PlanTest', planSchema)
+const Plan = mongoose.model('Plan', planSchema)
 module.exports = Plan
