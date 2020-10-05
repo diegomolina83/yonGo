@@ -23,14 +23,8 @@ const planSchema = new Schema({
     },
     end: {
         location: {
-            lat: {
-                type: String,
-                default: ''
-            },
-            lng: {
-                type: String,
-                default: ''
-            }
+            lat: String,
+            lng: String
         },
         date: Date
     },

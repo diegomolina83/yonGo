@@ -1,5 +1,10 @@
-.plan-form-title::placeholder {
+.plan-form-title{
 
-    color: rgb(214, 214, 214);
+    font-size: 1.2em
+}
+
+.plan-form-title::placeholder {
+    
     text-transform: uppercase;
+    font-weight: normal;
 }

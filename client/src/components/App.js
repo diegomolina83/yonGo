@@ -16,7 +16,7 @@ class App extends Component {
     super()
     this.styles = {
 
-      button: { default: 'light', active: 'secondary', submit: 'success', cancel: 'outline-secondary' }
+      button: { default: 'light', active: 'secondary', submit: 'primary', discreet: 'outline-secondary' }
     }
   }
 
@@ -25,7 +25,7 @@ class App extends Component {
       <>
         <Switch>
           <Route path='/' exact render={() => <Home />} />
-          <Route path='/plans/new' render={() => <PlanForm styles={this.styles} />} />
+          <Route path='/plans/new' render={props => <PlanForm styles={this.styles} history={props.history} />} />
           <Route path='/testing' render={() => <BooTest />} />
         </Switch>
       </>
