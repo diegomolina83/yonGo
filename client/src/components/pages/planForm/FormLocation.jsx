@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import PlacesAutocomplete from '../../shared/maps/PlacesAutocomplete'
-
+import ReactPlacesAutocomplete from '../../shared/maps/ReactPlacesAutocomplete'
 
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
@@ -12,6 +12,7 @@ import Collapse from 'react-bootstrap/Collapse'
 const PlanFormLocation = (props) => {
     const [open, setOpen] = useState({ value: false, btnText: 'Añadir final', toogleFun: props.hasEndToogle });
 
+    
     return (
 
         <>
@@ -21,7 +22,8 @@ const PlanFormLocation = (props) => {
                 <Form.Label>Inicio</Form.Label>
 
                 <Form.Group>
-                    <PlacesAutocomplete />
+                    {/* <ReactPlacesAutocomplete/> */}
+                    <PlacesAutocomplete name="startLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación'/>
                     {/* <Form.Control type="text" name="startLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' /> */}
                 </Form.Group>
 
@@ -46,7 +48,7 @@ const PlanFormLocation = (props) => {
                     <Form.Label>Final</Form.Label>
 
                     <Form.Group>
-                        <PlacesAutocomplete />
+                        <PlacesAutocomplete name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación'/>
                         {/* <Form.Control type="text" name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' /> */}
                     </Form.Group>
 

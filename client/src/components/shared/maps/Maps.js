@@ -5,6 +5,7 @@ import useSupercluster from "use-supercluster"
 import morty from '../../../images/morty.png'
 import CardList from './CardList'
 import PlacesAutocomplete from './PlacesAutocomplete'
+import ReactPlacesAutocomplete from './ReactPlacesAutocomplete'
 import './Maps.css'
 
 
@@ -13,6 +14,8 @@ const Marker = ({ children }) => children
 
 export default function SimpleMap() {
 
+    const [lat, setLatitude] = useState(40.42)
+    const [lng, setLongitude] = useState(-3.71)
     const [zoom, setZoom] = useState(10);
     const [bounds, setBounds] = useState(null);
     const mapRef = useRef();
@@ -47,7 +50,14 @@ export default function SimpleMap() {
     //     </script>
     // });
 
+    function handleCoords(params) {
 
+        mapRef.current.setCenter({ lat: params[0], lng: params[1] })
+        mapRef.current.setZoom(12)
+        console.log(mapRef.current)
+        
+        
+    }
 
     return (
         // Important! Always set the container height explicitly
@@ -56,7 +66,8 @@ export default function SimpleMap() {
             <div className="map" style={{
                 height: '90vh', width: '100%'
             }}>
-                {<PlacesAutocomplete />}
+                {/* {<PlacesAutocomplete />} */}
+                <ReactPlacesAutocomplete handleCoords={handleCoords} />
                 <GoogleMapReact
                     // layerTypes={['TrafficLayer', 'TransitLayer']}
                     bootstrapURLKeys={{
@@ -64,8 +75,8 @@ export default function SimpleMap() {
                         libraries: ['places,geometry']
                     }}
                     defaultCenter={{
-                        lat: 40.42,
-                        lng: -3.71
+                        lat: lat,
+                        lng: lng
                     }}
                     defaultZoom={7}
                     onChange={({ zoom, bounds }) => {
@@ -112,8 +123,8 @@ export default function SimpleMap() {
                             lat={latitude}
                             lng={longitude}
                         >
-                            <button className="crime-marker">
-                                <img src={morty} alt="Crímenes"></img>
+                            <button className="plan-marker">
+                                <img src={morty} alt="Plan"></img>
                             </button>
                         </Marker>)
                     })}

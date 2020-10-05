@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Signup from '../../pages/signup/Signup'
 import Login from '../../pages/login/Login'
 import SimpleMap from '../../shared/maps/Maps'
+// import NewMap from '../../shared/maps/NewMap'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -80,9 +81,9 @@ class Home extends Component {
                 {!this.state.loggedInUser && <Link to="/"><Button onClick={() => this.onOpenModal()}>Registro</Button></Link>}
                 {this.state.loggedInUser && <div className="nav-link" onClick={this.logoutUser}>Cerrar sesión</div>}
                 <Link to="/plans/new"><Button>Nuevo plan</Button></Link>
-                
-                <SimpleMap />
 
+                {/* <NewMap /> */}
+                <SimpleMap />
                 <Modal show={this.state.signup} onHide={() => this.onCloseModal()}>
                     <Modal.Header closeButton>
                         <Modal.Title>Signup</Modal.Title>

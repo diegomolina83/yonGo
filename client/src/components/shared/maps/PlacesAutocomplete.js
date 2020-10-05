@@ -5,6 +5,7 @@ import usePlacesAutocomplete, {
     getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
+import Form from 'react-bootstrap/Form'
 
 const PlacesAutocomplete = () => {
     const {
@@ -63,7 +64,7 @@ const PlacesAutocomplete = () => {
 
     return (
         <div ref={ref}>
-            <input
+            <Form.Control
                 value={value}
                 onChange={handleInput}
                 disabled={!ready}
