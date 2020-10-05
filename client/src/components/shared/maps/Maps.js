@@ -32,6 +32,7 @@ export default function SimpleMap() {
         },
         geometry: { type: "Point", coordinates: [parseFloat(plan.start.location.lng), parseFloat(plan.start.location.lat)] }
     }))
+    
 
     const { clusters, supercluster } = useSupercluster({
         points,
