@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 import LogForm from '../log/LogForm'
-import Maps from '../../shared/maps/Maps'
+import SimpleMap from '../../shared/maps/Maps'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -47,7 +46,7 @@ class Home extends Component {
 
                 <Link to="/plans/new"><Button>Nuevo plan</Button></Link>
 
-                <Maps />
+                <SimpleMap />
 
                 <Modal show={this.state.logModal} onHide={() => this.onCloseLogModal()}>
                     <Modal.Header closeButton>

@@ -29,7 +29,7 @@ class CardList extends Component {
 
         return (
             <>
-                {this.props.clusters.map((elm, idx) => <Card key={idx} {...elm} />)}
+                {this.props.clusters.map(elm => <Card key={elm.id} {...elm} />)}
             </>
         )
     }

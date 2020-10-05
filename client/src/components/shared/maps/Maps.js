@@ -1,15 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
 import useSwr from 'swr'
 import useSupercluster from "use-supercluster"
-
 import morty from '../../../images/morty.png'
 import CardList from './CardList'
+import PlacesAutocomplete from './PlacesAutocomplete'
 import './Maps.css'
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
 const Marker = ({ children }) => children
-let test = []
+
 
 export default function SimpleMap() {
 
@@ -32,7 +32,7 @@ export default function SimpleMap() {
         },
         geometry: { type: "Point", coordinates: [parseFloat(plan.start.location.lng), parseFloat(plan.start.location.lat)] }
     }))
-    
+
 
     const { clusters, supercluster } = useSupercluster({
         points,
@@ -42,13 +42,11 @@ export default function SimpleMap() {
 
     })
 
-    const drawPlans = () => {
-        clusters.forEach(element => {
-            let elemento = element.properties
-            test.push(elemento)
-            return test
-        });
-    }
+    // useEffect(() => {
+    //     <script defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAFg3MgHL8DLNcbFOQc0MyBxKMyFSn9J3I">
+    //     </script>
+    // });
+
 
 
     return (
@@ -58,11 +56,12 @@ export default function SimpleMap() {
             <div className="map" style={{
                 height: '90vh', width: '100%'
             }}>
+                {<PlacesAutocomplete />}
                 <GoogleMapReact
                     // layerTypes={['TrafficLayer', 'TransitLayer']}
                     bootstrapURLKeys={{
                         key: process.env.REACT_APP_GOOGLE_API_KEY,
-                        libraries: ['places']
+                        libraries: ['places,geometry']
                     }}
                     defaultCenter={{
                         lat: 40.42,
@@ -83,6 +82,7 @@ export default function SimpleMap() {
                         mapRef.current = map;
                     }}
                 >
+
                     {clusters.map(cluster => {
                         const [longitude, latitude] = cluster.geometry.coordinates
                         const { cluster: isCluster } = cluster.properties
