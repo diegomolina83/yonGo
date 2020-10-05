@@ -30,7 +30,7 @@ export default function SimpleMap() {
             markAmount: plan.mark.amount
 
         },
-        geometry: { type: "Point", coordinates: [parseFloat(plan.location.start.lng), parseFloat(plan.location.start.lat)] }
+        geometry: { type: "Point", coordinates: [parseFloat(plan.start.location.lng), parseFloat(plan.start.location.lat)] }
     }))
 
     const { clusters, supercluster } = useSupercluster({

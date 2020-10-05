@@ -7,61 +7,60 @@ const planSchema = new Schema({
         type: String,
         required: true
     },
+
+    start: {
+        location: {
+            lat: {
+                type: String,
+                default: ''
+            },
+            lng: {
+                type: String,
+                default: ''
+            }
+        },
+        date: Date
+    },
+    end: {
+        location: {
+            lat: {
+                type: String,
+                default: ''
+            },
+            lng: {
+                type: String,
+                default: ''
+            }
+        },
+        date: Date
+    },
+
     description: String,
 
-    location: {
-        start: {
-            lat: {
-                type: String,
-                default: ''
-            },
-            lng: {
-                type: String,
-                default: ''
-            }
-        },
-        end: {
-            lat: {
-                type: String,
-                default: ''
-            },
-            lng: {
-                type: String,
-                default: ''
-            }
-        }
-    },
-    date: {
-        start: {
-            type: Date,
-            required: true
-        },
-        end: {
-            type: Date,
-            required: true
-        }
-    },
     attendees: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         required: true  // At least one of the owners must be attending
     },
-    allowedUsers: {
-        type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-        default: [] // When is empty represents that all users are allowed (is Public)
+    scope: {
+        type: String,
+        enum: ['public', 'friends', 'group'],
+        default: 'friends'
     },
     mark: {
         amount: { type: Number, default: 0 },
         average: { type: Number, default: 0 },
     },
-    category: String,
-
+    category: {
+        type: String,
+        required: true
+    },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
     owners: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-        default: [] // When is empty represents that all users are allowed (is Public)
+        default: []
     },
     requirements: [String]
 
@@ -69,5 +68,5 @@ const planSchema = new Schema({
     timestamps: true
 })
 
-const Plan = mongoose.model('Plan', planSchema)
+const Plan = mongoose.model('PlanTest', planSchema)
 module.exports = Plan
