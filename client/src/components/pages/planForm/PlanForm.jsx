@@ -224,7 +224,7 @@ class PlanForm extends Component {
                     </Form.Group>
 
                     <Button id='submit-btn' disabled className='mr-2' variant={this.props.styles.button.submit} type="submit">Crear plan</Button>
-                    <Button variant={this.props.styles.button.discreet}>Cancelar</Button>
+                    <Button variant={this.props.styles.button.discreet} onClick={this.props.history.goBack}>Cancelar</Button>
                 </Form>
 
             </Container>

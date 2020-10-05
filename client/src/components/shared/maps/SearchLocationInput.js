@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import Form from 'react-bootstrap/Form'
+
 let autoComplete;
 
 const loadScript = (url, callback) => {
@@ -24,7 +26,7 @@ const loadScript = (url, callback) => {
 function handleScriptLoad(updateQuery, autoCompleteRef) {
     autoComplete = new window.google.maps.places.Autocomplete(
         autoCompleteRef.current
-        
+
     );
     autoComplete.setFields(["address_components", "formatted_address"]);
     autoComplete.addListener("place_changed", () =>
@@ -40,6 +42,7 @@ async function handlePlaceSelect(updateQuery) {
 }
 
 function SearchLocationInput() {
+
     const [query, setQuery] = useState("");
     const autoCompleteRef = useRef(null);
 
@@ -49,10 +52,10 @@ function SearchLocationInput() {
             () => handleScriptLoad(setQuery, autoCompleteRef)
         );
     }, []);
-    
 
     return (
         <div className="search-location-input">
+
             <input
                 ref={autoCompleteRef}
                 onChange={event => setQuery(event.target.value)}

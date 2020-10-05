@@ -20,7 +20,7 @@ const PlanFormLocation = (props) => {
                 <Form.Label>Inicio</Form.Label>
 
                 <Form.Group>
-                    <SearchLocationInput />
+                    <SearchLocationInput formState={props.formState} handleInputChange={props.handleInputChange} />
                     {/* <Form.Control type="text" name="startLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' /> */}
                 </Form.Group>
 

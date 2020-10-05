@@ -32,10 +32,10 @@ class Card extends Component {
 
 
     render() {
-        console.log("----", this.props)
+
         return (
             <>
-                { this.props.properties.title ? this.renderIfExist() : console.log("no hay dato")}
+                { this.props.properties.title ? this.renderIfExist() : null}
             </>
         )
     }
