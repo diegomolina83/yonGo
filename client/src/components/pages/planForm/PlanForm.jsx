@@ -62,6 +62,7 @@ class PlanForm extends Component {
     }
 
     handleInputChange = e => {
+
         const { name, value } = e.target
         this.setState({ [name]: value }, this.validation)
     }
@@ -128,7 +129,7 @@ class PlanForm extends Component {
     render() {
         return (
 
-            <Container fluid='lg mb-4' className='plan-form'>
+            <Container fluid='lg pb-4' className='plan-form'>
 
 
                 <h1 className='mb-5 text-center font-weight-bold'>Diseña una nueva <span className='text-primary'>experiencia!</span></h1>
