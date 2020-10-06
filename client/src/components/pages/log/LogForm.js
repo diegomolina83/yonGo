@@ -9,12 +9,13 @@ import Button from 'react-bootstrap/Button'
 import authService from '../../../service/auth.service'
 
 
-class Login extends Component {
+class LogForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            email: ''
         }
         this.authService = new authService()
     }
@@ -30,14 +31,29 @@ class Login extends Component {
 
         e.preventDefault()
 
-        this.authService
-            .login(this.state)
-            .then(response => {
-                console.log("...........",this.props)
-                this.props.setTheUser(response.data)
-                this.props.close()
-            })
-            .catch(err => console.log('Erroooooor:', { err }))
+        if (this.props.logType === 'Sign up') {
+
+            this.authService
+                .signup(this.state)
+                .then(response => {
+                    this.props.setTheUser(response.data)
+                    this.props.close()
+                })
+                .catch(err => console.log('Erroooooor:', { err }))
+
+        } else {
+
+
+            this.authService
+                .login(this.state)
+                .then(response => {
+
+                    this.props.setTheUser(response.data)
+                    this.props.close()
+                })
+                .catch(err => console.log('Erroooooor:', { err }))
+        }
+
     }
 
 
@@ -47,13 +63,23 @@ class Login extends Component {
             <Container>
                 <main>
                     <Row className="justify-content-center">
-                        <Col md={{ span: 5 }}>
-                            <h1>Login de usuario</h1>
+                        <Col>
+
+                            <h1>{this.props.logType} de usuario</h1>
+
                             <Form onSubmit={this.handleFormSubmit}>
                                 <Form.Group>
                                     <Form.Label>Nombre de usuario</Form.Label>
                                     <Form.Control type="text" name="username" value={this.state.username} onChange={this.handleInputChange} />
                                 </Form.Group>
+
+                                {this.props.logType === 'Sign up' &&
+
+                                    <Form.Group>
+                                        <Form.Label>Email</Form.Label>
+                                        <Form.Control type="email" name="email" value={this.state.email} onChange={this.handleInputChange} />
+                                    </Form.Group>
+                                }
 
                                 <Form.Group>
                                     <Form.Label>Contraseña</Form.Label>
@@ -71,4 +97,4 @@ class Login extends Component {
 }
 
 
-export default Login
+export default LogForm

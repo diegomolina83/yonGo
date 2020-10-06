@@ -12,10 +12,12 @@ const planSchema = new Schema({
         location: {
             lat: {
                 type: String,
+                // required: true,
                 default: ''
             },
             lng: {
                 type: String,
+                // required: true,
                 default: ''
             }
         },

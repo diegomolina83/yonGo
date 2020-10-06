@@ -99,18 +99,18 @@ router.post('/login', (req, res, next) => {
 
 router.post('/logout', (req, res, next) => {
     // req.logout() is defined by passport
-    req.logout();
-    res.status(200).json({ message: 'Log out success!' });
+    req.logout()
+    res.status(200).json({ message: 'Log out success!' })
 });
 
 
 router.get('/loggedin', (req, res, next) => {
     if (req.isAuthenticated()) {
-        res.status(200).json(req.user);
-        return;
+        res.status(200).json(req.user)
+        return
     }
-    res.status(403).json({ message: 'Unauthorized' });
-});
+    res.status(403).json({ message: 'Unauthorized' })
+})
 
 
 module.exports = router

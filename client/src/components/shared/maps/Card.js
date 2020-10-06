@@ -32,6 +32,7 @@ class Card extends Component {
 
 
     render() {
+
         return (
             <>
                 { this.props.properties.title ? this.renderIfExist() : null}

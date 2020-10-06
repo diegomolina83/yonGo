@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import Signup from '../../pages/signup/Signup'
-import Login from '../../pages/login/Login'
+import LogForm from '../log/LogForm'
 import SimpleMap from '../../shared/maps/Maps'
 import ReactPlacesAutocomplete from '../../shared/maps/ReactPlacesAutocomplete'
 
@@ -22,56 +21,15 @@ class Home extends Component {
             signup: false,
             login: false,
             lat: null,
-            lng: null
+            lng: null,
+            logModal: false,
+            logType: undefined
         }
         this.authService = new authService()
     }
 
     //Para que se abran los modales según sea login o signup
-    onOpenModal = () => {
-        this.setState({
-            signup: true,
-        });
-    };
-
-
-    onOpenModalLogin = () => {
-        this.setState({ login: true });
-    };
-
-
-    onCloseModal = () => {
-        this.setState({ signup: false });
-    };
-
-
-    onCloseModalclose = () => {
-        this.setState({ login: false });
-    };
-
-
-    //Ver estado de usuario
-    componentDidMount = () => this.fetchUser()
-
-
-    setTheUser = user => this.setState({ loggedInUser: user }, () => console.log('El usuario es', this.state.loggedInUser))
-
-
-    fetchUser = () => {
-        this.authService
-            .isLoggedIn()
-            .then(response => this.setState({ loggedInUser: response.data }))
-            .catch(err => this.setState({ loggedInUser: null }))
-    }
-
-
-    //Finalizar la sesión del usuario
-    logoutUser = () => {
-        this.authService
-            .logout()
-            .then(() => this.setTheUser(null))
-            .catch(err => console.log('ERRORR!!:', err))
-    }
+    
 
     getCoords = (coords) => {
         console.log(coords)
@@ -93,33 +51,27 @@ this.change()
         return (
             <>
                 <h1>yonGo</h1>
-                {!this.state.loggedInUser && <Link to="/"><Button onClick={() => this.onOpenModalLogin()}>Login</Button></Link>}
-                {!this.state.loggedInUser && <Link to="/"><Button onClick={() => this.onOpenModal()}>Registro</Button></Link>}
-                {this.state.loggedInUser && <div className="nav-link" onClick={this.logoutUser}>Cerrar sesión</div>}
-                <Link to="/plans/new"><Button>Nuevo plan</Button></Link>
+
+                {!this.props.loggedInUser && <Button onClick={() => this.setState({ logModal: true, logType: 'Login' })}>Login</Button>}
+                {!this.props.loggedInUser && <Button onClick={() => this.setState({ logModal: true, logType: 'Sign up' })}>Registro</Button>}
+                {this.props.loggedInUser && <div className="nav-link" onClick={this.props.logoutUser}>Cerrar sesión</div>}
+
+                {this.props.loggedInUser && <Link to="/plans/new"><Button>Nuevo plan</Button></Link>}
 
                 <ReactPlacesAutocomplete getCoords={this.getCoords} />
                 <SimpleMap coords={Object.create({ lat: this.state.lat, lng: this.state.lng })} />
-                <Modal show={this.state.signup} onHide={() => this.onCloseModal()}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Signup</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Signup setTheUser={this.setTheUser} {...this.props} />
-                    </Modal.Body>
-                </Modal>
 
-                <Modal show={this.state.login} onHide={() => this.onCloseModalclose()}>
+                <Modal show={this.state.logModal} onHide={() => this.setState({ logModal: false })}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Login</Modal.Title>
+                        <Modal.Title>{this.state.logType}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Login close={this.onCloseModalclose} setTheUser={this.setTheUser} {...this.props} />
+                        <LogForm close={() => this.setState({ logModal: false })} setTheUser={this.props.setUser} {...this.props} logType={this.state.logType} />
                     </Modal.Body>
                 </Modal>
             </>
-        );
+        )
     }
 }
 
-export default Home;
+export default Home

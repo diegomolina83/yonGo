@@ -18,6 +18,18 @@ const plansCreator = async (plansAmount) => {
 
                 const title = `Plan ${i}`
 
+                const hasEnd = Math.floor(Math.random() * 2)
+
+                const passedPlansPercentage = 10    // In %
+                const isPassed = Math.floor(Math.random() * (100 / passedPlansPercentage)) === 0 ? true : false
+
+                // // All around the world
+                // const randomStartLatitude = faker.address.latitude()
+                // const randomStartLongitude = faker.address.longitude()
+
+                // const randomEndLatitude = faker.address.latitude()
+                // const randomEndLongitude = faker.address.longitude()
+
                 // // Within Spain
                 // const minLatitude = 36.134919
                 // const maxLatitude = 43.326108
@@ -40,32 +52,25 @@ const plansCreator = async (plansAmount) => {
                 const randomStartLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
                 const randomEndLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
 
-                const location = {
-                    start: {
+                const startDate = isPassed ? faker.date.past() : faker.date.soon()
+                const endDate = isPassed ? faker.date.recent() : faker.date.future()
+
+                const start = {
+
+                    location: {
                         lat: randomStartLatitude.toString(),
                         lng: randomStartLongitude.toString()
                     },
-                    end: {
-                        lat: randomEndLatitude.toString(),
-                        lng: randomEndLongitude.toString()
-                    }
+                    date: startDate
                 }
 
-                // // All around the world
-                // const location = {
-                //     start: {
-                //         lat: faker.address.latitude(),
-                //         lng: faker.address.longitude()
-                //     },
-                //     end: {
-                //         lat: faker.address.latitude(),
-                //         lng: faker.address.longitude()
-                //     }
-                // }
+                const end = {
 
-                const date = {
-                    start: faker.date.soon(),
-                    end: faker.date.future()
+                    location: {
+                        lat: randomEndLatitude.toString(),
+                        lng: randomEndLongitude.toString()
+                    },
+                    date: endDate
                 }
 
                 const creatorIdx = Math.floor(Math.random() * allUsers.length)
@@ -91,8 +96,6 @@ const plansCreator = async (plansAmount) => {
                 // We set the rest of attendees
                 const numberOfAttendees = Math.floor(Math.random() * (maxAttendees - minAttendees)) + minAttendees
 
-                // console.log(availableAttendees)
-
                 for (let i = 0; i < numberOfAttendees; i++) {
 
                     const newAttendeeIndex = availableAttendees[Math.floor(Math.random() * availableAttendees.length)]
@@ -102,15 +105,23 @@ const plansCreator = async (plansAmount) => {
                 }
 
 
-                // This should be modified in order increase the allowedUsers
+                // This should be modified in order increase the allowedUsers (TODO)
                 const allowedUsers = attendees
+
+                // Random category
+                const availableCategories = ['sport', 'culinary', 'culture', 'travel', 'other']
+                const category = availableCategories[Math.floor(Math.random() * availableCategories.length)]
 
                 const mark = {
                     amount: Math.floor(Math.random() * attendees.length),
                     average: Math.random() * 5
                 }
 
-                plans.push({ title, location, date, creator, owners, attendees, allowedUsers, mark })
+                const newPlan = hasEnd ?
+                    { title, start, end, creator, owners, attendees, allowedUsers, mark, category } :
+                    { title, start, creator, owners, attendees, allowedUsers, mark, category }
+
+                plans.push(newPlan)
             }
         })
         .catch(err => console.log(err))

@@ -56,7 +56,6 @@ export default function SimpleMap(props) {
                 height: '90vh', width: '100%'
             }}>
 
-
                 <GoogleMapReact
                     // layerTypes={['TrafficLayer', 'TransitLayer']}
                     bootstrapURLKeys={{
