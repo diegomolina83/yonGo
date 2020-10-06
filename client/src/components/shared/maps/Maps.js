@@ -4,15 +4,16 @@ import useSwr from 'swr'
 import useSupercluster from "use-supercluster"
 import morty from '../../../images/morty.png'
 import CardList from './CardList'
-import PlacesAutocomplete from './PlacesAutocomplete'
 import './Maps.css'
 
 
 const Marker = ({ children }) => children
 
 
-export default function SimpleMap() {
+export default function SimpleMap(props) {
 
+    const [lat, setLatitude] = useState(40.42)
+    const [lng, setLongitude] = useState(-3.71)
     const [zoom, setZoom] = useState(10);
     const [bounds, setBounds] = useState(null);
     const mapRef = useRef();
@@ -28,7 +29,6 @@ export default function SimpleMap() {
             planId: plan._id,
             title: plan.title,
             markAmount: plan.mark.amount
-
         },
         geometry: { type: "Point", coordinates: [parseFloat(plan.start.location.lng), parseFloat(plan.start.location.lat)] }
     }))
@@ -42,21 +42,19 @@ export default function SimpleMap() {
 
     })
 
-    // useEffect(() => {
-    //     <script defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAFg3MgHL8DLNcbFOQc0MyBxKMyFSn9J3I">
-    //     </script>
-    // });
+
+    useEffect(() => {
+        mapRef.current ? mapRef.current.setCenter({ lat: parseFloat(props.coords.lat), lng: parseFloat(props.coords.lng) }) : console.log("")
+        // mapRef.current ? mapRef.current.setZoom(12) : console.log("")
+    })
 
 
 
     return (
-        // Important! Always set the container height explicitly
         <>
-
             <div className="map" style={{
                 height: '90vh', width: '100%'
             }}>
-                {<PlacesAutocomplete />}
 
                 <GoogleMapReact
                     // layerTypes={['TrafficLayer', 'TransitLayer']}
@@ -65,10 +63,10 @@ export default function SimpleMap() {
                         libraries: ['places,geometry']
                     }}
                     defaultCenter={{
-                        lat: 40.42,
-                        lng: -3.71
+                        lat: lat,
+                        lng: lng
                     }}
-                    defaultZoom={7}
+                    defaultZoom={15}
                     onChange={({ zoom, bounds }) => {
                         setZoom(zoom)
                         setBounds([
@@ -113,13 +111,12 @@ export default function SimpleMap() {
                             lat={latitude}
                             lng={longitude}
                         >
-                            <button className="crime-marker">
-                                <img src={morty} alt="Crímenes"></img>
+                            <button className="plan-marker">
+                                <img src={morty} alt="Plan"></img>
                             </button>
                         </Marker>)
                     })}
                 </GoogleMapReact>
-
                 <div className="cardContainer">
                     <CardList clusters={clusters} />
                 </div>

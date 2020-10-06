@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import LogForm from '../log/LogForm'
 import SimpleMap from '../../shared/maps/Maps'
+import ReactPlacesAutocomplete from '../../shared/maps/ReactPlacesAutocomplete'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -17,10 +18,33 @@ class Home extends Component {
         super()
         this.state = {
             loggedInUser: undefined,
+            signup: false,
+            login: false,
+            lat: null,
+            lng: null,
             logModal: false,
             logType: undefined
         }
         this.authService = new authService()
+    }
+
+    //Para que se abran los modales según sea login o signup
+    
+
+    getCoords = (coords) => {
+        console.log(coords)
+        this.setState({
+            lat: coords[0],
+            lng: coords[1]
+        })
+this.change()
+    }
+
+    change() {
+        this.setState({
+            lat: null,
+            lng: null
+        })
     }
 
     render() {
@@ -34,7 +58,8 @@ class Home extends Component {
 
                 {this.props.loggedInUser && <Link to="/plans/new"><Button>Nuevo plan</Button></Link>}
 
-                <SimpleMap />
+                <ReactPlacesAutocomplete getCoords={this.getCoords} />
+                <SimpleMap coords={Object.create({ lat: this.state.lat, lng: this.state.lng })} />
 
                 <Modal show={this.state.logModal} onHide={() => this.setState({ logModal: false })}>
                     <Modal.Header closeButton>

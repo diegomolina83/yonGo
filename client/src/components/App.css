@@ -33,6 +33,28 @@ h1{
   background: linear-gradient(#006adb,#53a6ff);  
 }
 
+.marker{
+  width:25px;
+}
+
+.plan-marker{
+  background: none;
+  border:none;
+}
+
+.plan-marker img{
+  width: 25px;
+}
+
+.cluster-marker{
+  color:#fff;
+  background: red;
+  border-radius: 50%;
+  padding: 10px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
 @media (min-width: 300px) { 
   
   h1 {
