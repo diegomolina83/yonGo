@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import PlacesAutocomplete from '../../shared/maps/PlacesAutocomplete'
 import ReactPlacesAutocomplete from '../../shared/maps/ReactPlacesAutocomplete'
 
 import Form from 'react-bootstrap/Form'
@@ -12,7 +11,17 @@ import Collapse from 'react-bootstrap/Collapse'
 const PlanFormLocation = (props) => {
     const [open, setOpen] = useState({ value: false, btnText: 'Añadir final', toogleFun: props.hasEndToogle });
 
-    
+
+    const getCoords = (coords) => {
+        console.log(coords)
+        // this.setState({
+        //     lat: coords[0],
+        //     lng: coords[1]
+        // })
+    }
+
+
+
     return (
 
         <>
@@ -22,8 +31,8 @@ const PlanFormLocation = (props) => {
                 <Form.Label>Inicio</Form.Label>
 
                 <Form.Group>
-                    {/* <ReactPlacesAutocomplete/> */}
-                    <PlacesAutocomplete name="startLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación'/>
+                    <ReactPlacesAutocomplete getCoords={getCoords} />
+                    {/* <PlacesAutocomplete name="startLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación'/> */}
                     {/* <Form.Control type="text" name="startLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' /> */}
                 </Form.Group>
 
@@ -48,7 +57,8 @@ const PlanFormLocation = (props) => {
                     <Form.Label>Final</Form.Label>
 
                     <Form.Group>
-                        <PlacesAutocomplete name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación'/>
+                        <ReactPlacesAutocomplete />
+                        {/* <PlacesAutocomplete name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación'/> */}
                         {/* <Form.Control type="text" name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' /> */}
                     </Form.Group>
 

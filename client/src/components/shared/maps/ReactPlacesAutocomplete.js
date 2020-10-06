@@ -4,7 +4,10 @@ import PlacesAutocomplete, {
     getLatLng
 } from "react-places-autocomplete"
 
-export default function ReactPlacesAutocomplete({ handleCoords }) {
+import Form from 'react-bootstrap/Form'
+
+
+export default function ReactPlacesAutocomplete(props) {
     const [address, setAddress] = React.useState("")
     const [coordinates, setCoordinates] = React.useState({ lat: null, lng: null })
 
@@ -13,13 +16,12 @@ export default function ReactPlacesAutocomplete({ handleCoords }) {
         const latLng = await getLatLng(results[0])
         setAddress(value)
         setCoordinates(latLng)
+        console.log(".............",latLng)
+        await props.getCoords([latLng.lat, latLng.lng])
 
     }
 
-    
-coordinates.lat ? handleCoords([coordinates.lat,coordinates.lng]) : console.log("no pasa na")
-   
-
+console.log("valor desde otra funcion ",props.placeholder)
     return <div>
         <PlacesAutocomplete
             value={address}
@@ -27,11 +29,8 @@ coordinates.lat ? handleCoords([coordinates.lat,coordinates.lng]) : console.log(
             onSelect={handleSelect}
         >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div>
-                <input {...getInputProps({ placeholder: "Type Address" })} />
+                <Form.Control {...getInputProps({ placeholder: "Escribe dirección" })} />
                 <div>
-                    <p>Latitude:{coordinates.lat}</p>
-                    <p>Latitude:{coordinates.lng}</p>
-
 
                 </div>
                 <div>

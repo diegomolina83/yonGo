@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Signup from '../../pages/signup/Signup'
 import Login from '../../pages/login/Login'
 import SimpleMap from '../../shared/maps/Maps'
-// import NewMap from '../../shared/maps/NewMap'
+import ReactPlacesAutocomplete from '../../shared/maps/ReactPlacesAutocomplete'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -20,7 +20,9 @@ class Home extends Component {
         this.state = {
             loggedInUser: undefined,
             signup: false,
-            login: false
+            login: false,
+            lat: null,
+            lng: null
         }
         this.authService = new authService()
     }
@@ -29,7 +31,6 @@ class Home extends Component {
     onOpenModal = () => {
         this.setState({
             signup: true,
-
         });
     };
 
@@ -72,6 +73,21 @@ class Home extends Component {
             .catch(err => console.log('ERRORR!!:', err))
     }
 
+    getCoords = (coords) => {
+        console.log(coords)
+        this.setState({
+            lat: coords[0],
+            lng: coords[1]
+        })
+this.change()
+    }
+
+    change() {
+        this.setState({
+            lat: null,
+            lng: null
+        })
+    }
 
     render() {
         return (
@@ -82,8 +98,8 @@ class Home extends Component {
                 {this.state.loggedInUser && <div className="nav-link" onClick={this.logoutUser}>Cerrar sesión</div>}
                 <Link to="/plans/new"><Button>Nuevo plan</Button></Link>
 
-                {/* <NewMap /> */}
-                <SimpleMap />
+                <ReactPlacesAutocomplete getCoords={this.getCoords} />
+                <SimpleMap coords={Object.create({ lat: this.state.lat, lng: this.state.lng })} />
                 <Modal show={this.state.signup} onHide={() => this.onCloseModal()}>
                     <Modal.Header closeButton>
                         <Modal.Title>Signup</Modal.Title>
