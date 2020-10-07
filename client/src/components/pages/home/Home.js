@@ -28,11 +28,9 @@ class Home extends Component {
         this.authService = new authService()
     }
 
-    //Para que se abran los modales según sea login o signup
     
-
-    getCoords = (coords) => {
-        console.log(coords)
+        getCoords = (coords) => {
+        // console.log(coords)
         this.setState({
             lat: coords[0],
             lng: coords[1]
@@ -58,7 +56,7 @@ this.change()
 
                 {this.props.loggedInUser && <Link to="/plans/new"><Button>Nuevo plan</Button></Link>}
 
-                <ReactPlacesAutocomplete getCoords={this.getCoords} />
+                <ReactPlacesAutocomplete getCoords={this.getCoords} flag={"map"} />
                 <SimpleMap coords={Object.create({ lat: this.state.lat, lng: this.state.lng })} />
 
                 <Modal show={this.state.logModal} onHide={() => this.setState({ logModal: false })}>

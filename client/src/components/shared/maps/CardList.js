@@ -4,11 +4,11 @@ import PlanService from '../../../service/plan.service'
 
 
 class CardList extends Component {
+
     constructor(props) {
         super()
         this.state = {
             plans: [],
-
         }
         this.PlanService = new PlanService()
     }
@@ -26,10 +26,9 @@ class CardList extends Component {
 
 
     render() {
-
         return (
             <>
-                {this.props.clusters.map(elm => <Card key={elm.id} {...elm} />)}
+                {this.props.clusters.map((elm, idx) => <Card highlightPlan={this.props.highlightPlan} understate={this.props.understate} key={idx} {...elm} />)}
             </>
         )
     }

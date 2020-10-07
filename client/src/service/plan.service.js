@@ -12,6 +12,4 @@ export default class PlanService {
     createPlan = newPlan => this.api.post('/plans/create', newPlan)
     getAllPlans = () => this.api.get('/getAllPlans')
     getOnePlan = id => this.api.get(`/getOnePlan/${id}`)
-    // saveCoaster = coaster => this.api.post('/newCoaster', coaster)
-    // updateCoaster = (id, coaster) => this.api.put(`/editCoaster/${id}`, coaster)
 }

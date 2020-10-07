@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
 
 import Container from 'react-bootstrap/Container'
-
-
 import Form from 'react-bootstrap/Form'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
+import PlanFormLocation from './FormLocation'
+import planService from '../../../service/plan.service'
 
-import LocationFields from './FormLocation'
 
 import './PlanForm.css'
 
-import planService from '../../../service/plan.service'
+
 
 class PlanForm extends Component {
 
@@ -20,7 +19,7 @@ class PlanForm extends Component {
         this.state = {
             title: '',
 
-            startLocation: '',
+            startLocation: {},
             startDate: '',
             startTime: '',
 
@@ -64,6 +63,7 @@ class PlanForm extends Component {
     handleInputChange = e => {
         const { name, value } = e.target
         this.setState({ [name]: value }, this.validation)
+
     }
 
     handleOptionChange = e => {
@@ -125,6 +125,28 @@ class PlanForm extends Component {
         }
     }
 
+    getCoords = (coords, flag) => {
+       
+        switch (flag) {
+            case "start":
+                this.setState({ startLocation: { lat: coords[0], lng: coords[1] } })
+                break;
+            case "end":
+                this.setState({ endLocation: { lat: coords[0], lng: coords[1] } })
+                break;
+            case "map":
+                console.log("Estamos en el mapa")
+                break;
+            default:
+                console.log("error")
+                break
+        }
+
+
+    }
+
+    ge
+
     render() {
         return (
 
@@ -137,10 +159,10 @@ class PlanForm extends Component {
 
                     <Form.Group>
                         <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' required type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
-                        {/* <Form.Text className='text-muted'>* requerido</Form.Text> */}
+
                     </Form.Group>
 
-                    <LocationFields formState={this.state} handleInputChange={this.handleInputChange} styles={this.props.styles} hasEndToogle={this.hasEndToogle} />
+                    <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={this.props.styles} hasEndToogle={this.hasEndToogle} />
 
                     <Form.Group>
 
