@@ -80,6 +80,8 @@ h1{
 
 .plan-marker img{
   width: 40px;
+  transition: all;
+  transition-duration: .5s;
 }
 
 .plan-marker img:hover{
@@ -91,8 +93,13 @@ h1{
   border:none;
 }
 .highlight img{
-  width:100px
+  width:100px;
+  transition: all;
+  transition-duration: .5s;
 }
+
+
+
 
 .cluster-marker{
   color:#fff;
