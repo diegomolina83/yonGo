@@ -16,12 +16,10 @@ export default function ReactPlacesAutocomplete(props) {
         const latLng = await getLatLng(results[0])
         setAddress(value)
         setCoordinates(latLng)
-        console.log(".............",latLng)
         await props.getCoords([latLng.lat, latLng.lng])
 
     }
 
-console.log("valor desde otra funcion ",props.placeholder)
     return <div>
         <PlacesAutocomplete
             value={address}
@@ -30,17 +28,15 @@ console.log("valor desde otra funcion ",props.placeholder)
         >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div>
                 <Form.Control {...getInputProps({ placeholder: "Escribe dirección" })} />
-                <div>
 
-                </div>
                 <div>
                     {loading ? <div>...loading</div> : null}
 
-                    {suggestions.map((suggestion) => {
+                    {suggestions.map((suggestion, idx) => {
                         const style = {
                             backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
                         }
-                        return <div{...getSuggestionItemProps(suggestion, { style })}>
+                        return <div{...getSuggestionItemProps(suggestion, { style })} key={idx}>
                             {suggestion.description}</div>
                     })}
                 </div>
@@ -48,6 +44,6 @@ console.log("valor desde otra funcion ",props.placeholder)
 
         </PlacesAutocomplete>
 
-    </div>
+    </div >
 }
 

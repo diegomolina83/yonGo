@@ -24,72 +24,68 @@ const PlanFormLocation = (props) => {
 
     return (
 
-        <>
+        <Form.Group className='p-3 border rounded form-location'>
 
-            <Form.Group className='px-3 pt-3 border rounded bg-light'>
+            <Form.Label>Inicio</Form.Label>
 
-                <Form.Label>Inicio</Form.Label>
-
-                <Form.Group>
-                    <ReactPlacesAutocomplete getCoords={getCoords} />
-                </Form.Group>
-
-                <Row>
-                    <Col>
-                        <Form.Group>
-                            <Form.Control type="date" name="startDate" value={props.formState.inversions} onChange={props.handleInputChange} />
-                        </Form.Group>
-                    </Col>
-
-                    <Col>
-                        <Form.Group>
-                            <Form.Control type="time" name="startTime" value={props.formState.inversions} onChange={props.handleInputChange} />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Collapse in={open.value}>
-
-                    <div className='smoother'>
-
-                        <Form.Label>Final</Form.Label>
-
-                        <Form.Group>
-                            {/* <PlacesAutocomplete /> */}
-                            <Form.Control type="text" name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' />
-                        </Form.Group>
-
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Control type="date" name="endDate" value={props.formState.inversions} onChange={props.handleInputChange} />
-                                </Form.Group>
-                            </Col>
-
-                            <Col>
-                                <Form.Group>
-                                    <Form.Control type="time" name="endTime" value={props.formState.inversions} onChange={props.handleInputChange} />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                    </div>
-                </Collapse>
-
-                <Button
-                    variant={props.styles.button.discreet}
-                    className='mb-3 d-block d-sm-inline mx-auto'
-                    size='sm'
-                    onClick={() => setOpen({
-                        value: !open.value,
-                        btnText: open.btnText.includes('Añadir') ? 'Eliminar final' : 'Añadir final',
-                        toogleFun: props.hasEndToogle()
-                    })}
-                    aria-controls="example-collapse-text"
-                    aria-expanded={open.value}>{open.btnText}</Button>
-
+            <Form.Group>
+                <ReactPlacesAutocomplete getCoords={getCoords} />
             </Form.Group>
 
-        </>
+            <Row>
+                <Col>
+                    <Form.Group>
+                        <Form.Control type="date" name="startDate" value={props.formState.inversions} onChange={props.handleInputChange} />
+                    </Form.Group>
+                </Col>
+
+                <Col>
+                    <Form.Group>
+                        <Form.Control type="time" name="startTime" value={props.formState.inversions} onChange={props.handleInputChange} />
+                    </Form.Group>
+                </Col>
+            </Row>
+
+            <Collapse in={open.value}>
+
+                <div className='smoother'>
+
+                    <Form.Label>Final</Form.Label>
+
+                    <Form.Group>
+                        {/* <PlacesAutocomplete /> */}
+                        <Form.Control type="text" name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' />
+                    </Form.Group>
+
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Form.Control type="date" name="endDate" value={props.formState.inversions} onChange={props.handleInputChange} />
+                            </Form.Group>
+                        </Col>
+
+                        <Col>
+                            <Form.Group>
+                                <Form.Control type="time" name="endTime" value={props.formState.inversions} onChange={props.handleInputChange} />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                </div>
+            </Collapse>
+
+            <Button
+                className='d-block d-sm-inline mx-auto add-final'
+                size='sm'
+                onClick={() => setOpen({
+                    value: !open.value,
+                    btnText: open.btnText.includes('Añadir') ? 'Eliminar final' : 'Añadir final',
+                    toogleFun: props.hasEndToogle()
+                })}
+                aria-controls="example-collapse-text"
+                aria-expanded={open.value}>{open.btnText}</Button>
+
+        </Form.Group>
+
     )
 }
 

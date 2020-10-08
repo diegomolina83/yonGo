@@ -1,16 +1,48 @@
-.plan-form{
+.plan-new h1{
 
-    padding-top: 5rem;
-    overflow: hidden;
+    color: #43506c
 }
 
-.plan-form-title{
+.plan-new h1 span{
 
-    font-size: 1.2em
+    color: #5f7ab8
 }
 
-.plan-form-title::placeholder {
+/* FORM */
+
+.plan-new-title{
+
+    font-size: 1.2em;
+}
+
+.plan-new-title::placeholder {
     
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-weight: normal;
+}
+
+.plan-new .form-location{
+
+    background-color: #f8f8f8;
+}
+
+.plan-new .form-location .add-final{
+
+    background-color: #e9e9eb;
+    border-color:#bebebe;
+    color:#2b2b2b
+}
+
+.plan-new .form-location .add-final:hover{
+
+    background-color: #d8d8dd;
+    border-color:#bebebe;
+    color:#2b2b2b
+}
+
+.plan-new .form-location .add-final:focus{
+
+    background-color: #d8d8dd;
+    border-color:#bebebe;
+    color:#2b2b2b
 }

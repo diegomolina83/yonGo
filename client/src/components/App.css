@@ -1,8 +1,23 @@
+/* --- COLOR PALETTE ---
+#222222;  // Light black
+#303647;  // Dark blue
+#43506c;  // Blue
+#5f7ab8;  // Light blue
+#ef4b4c;  // Red
+#fbff8e;  // Yellow
+#e1e1e1;  // Dark grey
+#e9e9e9;  // Grey
+#f8f8f8;  // Light grey
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300;500;600;700&display=swap');
 
 body{
 
   font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+
 }
 
 h1{
@@ -22,7 +37,7 @@ h1{
 
 .submit-btn{
 
-  background: linear-gradient(#53a6ff,#006adb);
+  background: linear-gradient(#738ac0,#4f6db3);
 
   transition: all;
   transition-duration: .5s;
@@ -30,7 +45,28 @@ h1{
 
 .submit-btn:disabled{
   
-  background: linear-gradient(#006adb,#53a6ff);  
+  background: linear-gradient(#4f6db3,#738ac0);  
+}
+
+.selected-btn{
+
+  background-color: #5f7ab8;
+
+  color:white
+}
+
+.selected-btn:hover{
+
+  background-color: #5f7ab8;
+
+  color:white
+}
+
+.selected-btn:focus{
+
+  background-color: #5f7ab8;
+
+  color:white
 }
 
 .marker{

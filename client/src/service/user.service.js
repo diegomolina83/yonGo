@@ -9,7 +9,6 @@ export default class PlanService {
         })
     }
 
-    createPlan = newPlan => this.api.post('/plans/create', newPlan)
-    getAllPlans = () => this.api.get('/getAllPlans')
-    getOnePlan = id => this.api.get(`/getOnePlan/${id}`)
+    getAllUsers = () => this.api.get('/users/getAllUsers')
+    getOneUser = id => this.api.get(`/users/getOneUser/${id}`)
 }

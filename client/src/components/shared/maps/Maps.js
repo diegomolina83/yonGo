@@ -12,8 +12,8 @@ const Marker = ({ children }) => children
 
 export default function SimpleMap(props) {
 
-    const [lat, setLatitude] = useState(40.42)
-    const [lng, setLongitude] = useState(-3.71)
+    const lat = 40.42
+    const lng = -3.71
     const [zoom, setZoom] = useState(10);
     const [bounds, setBounds] = useState(null);
     const mapRef = useRef();
@@ -44,7 +44,7 @@ export default function SimpleMap(props) {
 
 
     useEffect(() => {
-        mapRef.current ? mapRef.current.setCenter({ lat: parseFloat(props.coords.lat), lng: parseFloat(props.coords.lng) }) : console.log("")
+        mapRef.current && props.coords.lat ? mapRef.current.setCenter({ lat: parseFloat(props.coords.lat), lng: parseFloat(props.coords.lng) }) : console.log("Maps: 47")
         // mapRef.current ? mapRef.current.setZoom(12) : console.log("")
     })
 
@@ -107,7 +107,7 @@ export default function SimpleMap(props) {
                             </Marker>;
                         }
                         return (<Marker
-                            key={cluster.properties.crimeId}
+                            key={cluster.properties.planId}
                             lat={latitude}
                             lng={longitude}
                         >

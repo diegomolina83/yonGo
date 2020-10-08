@@ -5,6 +5,7 @@ import './App.css'
 
 import Home from './pages/home/Home'
 import PlanForm from './pages/planForm/PlanForm';
+import UserProfile from './pages/user/profile'
 
 import authService from '../service/auth.service'
 
@@ -23,6 +24,22 @@ class App extends Component {
 
       button: { default: 'light', active: 'secondary', submit: 'primary', discreet: 'outline-secondary' }
     }
+
+    this.customStyles = {
+
+      colors: {
+
+        lightGrey: '#e9e9eb',
+        grey: '#e1e1e3',
+        darkGrey: '#222223',
+        lightBlue: '#4e81d3',
+        blue: '#43506c',
+        darkBlue: '#303647',
+        yellow: 'fbff8e',
+        red: 'ef4b4c'
+      }
+    }
+
     this.authService = new authService()
   }
 
@@ -53,6 +70,8 @@ class App extends Component {
   }
 
   render() {
+
+    console.log('loggedInUser: ', this.state.loggedInUser)
     return (
       <>
 
@@ -60,11 +79,17 @@ class App extends Component {
         {/* <Home /> */}
         {/* <Route path="/" exact render={() => <Home />} /> */}
         <Switch>
+
           <Route path='/' exact render={props => <Home {...props} loggedInUser={this.state.loggedInUser} setUser={this.setUser} logoutUser={this.logoutUser} />} />
-          <Route path='/plans/new' render={props => <PlanForm loggedInUser={this.state.loggedInUser} history={props.history} styles={this.styles} />} />
+
           <Route path="/plans/new" render={props => this.state.loggedInUser ?
             <PlanForm loggedInUser={this.state.loggedInUser} history={props.history} styles={this.styles} /> :
             <Redirect to="/" />} />
+
+          <Route path="/user/profile/:userId" render={props => this.state.loggedInUser ?
+            <UserProfile loggedInUser={this.state.loggedInUser} styles={this.customStyles} {...props} /> :
+            <Redirect to="/" />} />
+
         </Switch>
       </>
     )
