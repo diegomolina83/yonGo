@@ -28,9 +28,7 @@ export default function ReactPlacesAutocomplete(props) {
         >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div>
                 <Form.Control {...getInputProps({ placeholder: "Escribe dirección" })} />
-                <div>
 
-                </div>
                 <div>
                     {loading ? <div>...loading</div> : null}
 
@@ -48,6 +46,6 @@ export default function ReactPlacesAutocomplete(props) {
 
         </PlacesAutocomplete>
 
-    </div>
+    </div >
 }
 

@@ -28,14 +28,14 @@ class Home extends Component {
         this.authService = new authService()
     }
 
-    
-        getCoords = (coords) => {
-        // console.log(coords)
+
+    getCoords = (coords) => {
+
         this.setState({
             lat: coords[0],
             lng: coords[1]
         })
-this.change()
+        this.change()
     }
 
     change() {
@@ -52,7 +52,11 @@ this.change()
 
                 {!this.props.loggedInUser && <Button onClick={() => this.setState({ logModal: true, logType: 'Login' })}>Login</Button>}
                 {!this.props.loggedInUser && <Button onClick={() => this.setState({ logModal: true, logType: 'Sign up' })}>Registro</Button>}
+
                 {this.props.loggedInUser && <div className="nav-link" onClick={this.props.logoutUser}>Cerrar sesión</div>}
+                {this.props.loggedInUser && <Link className='btn btn-primary mr-1' to={{
+                    pathname: `user/profile/${this.props.loggedInUser._id}`
+                }}>Perfil</Link>}
 
                 {this.props.loggedInUser && <Link to="/plans/new"><Button>Nuevo plan</Button></Link>}
 

@@ -1,0 +1,14 @@
+.main-navbar{
+
+    height: 40px;
+    background-color: #e9e9eb;
+    border-bottom: solid 1px #b2b6c0;
+}
+
+@media (min-width: 576px) { 
+  
+  .main-navbar{
+
+    height: 60px;
+  }
+}
