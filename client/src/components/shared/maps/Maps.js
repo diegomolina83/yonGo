@@ -47,7 +47,7 @@ export default function SimpleMap(props) {
         points,
         bounds,
         zoom,
-        options: { radius: 200, maxZoom: 13 }
+        options: { radius: 200, maxZoom: 20 }
 
     })
 
