@@ -1,30 +1,22 @@
 import React, { Component } from 'react'
-import PlanService from '../../../service/plan.service'
+import { Link } from 'react-router-dom'
 import './Cards.css'
 
 
 class Card extends Component {
 
-    constructor(props) {
-        super()
-        this.state = {
-
-        }
-        this.PlanService = new PlanService()
-    }
-
-
-    componentDidMount = () => {
-
-
-    }
     renderIfExist() {
-
+        let cardProps = this.props
         return (
             <>
-                <div className="cardPlan">
-                    <h2>{this.props.properties.title}</h2>
-                    <p>Puntuación:{this.props.properties.markAmount}</p>
+                <div onMouseOver={() => this.props.highlightPlan(this.props.properties.planId)} onMouseOut={() => this.props.understate(this.props.properties.planId)} className="cardPlan">
+                    <Link to={{
+                        pathname: `/plans/details/${this.props.properties.planId}`,
+                        cardProps: {
+                            cardProps
+                        }
+                    }}><h2>{this.props.properties.title}</h2>
+                        <p>Puntuación:{this.props.properties.markAmount}</p></Link>
                 </div>
             </>
         )
@@ -32,7 +24,6 @@ class Card extends Component {
 
 
     render() {
-
         return (
             <>
                 { this.props.properties.title ? this.renderIfExist() : null}

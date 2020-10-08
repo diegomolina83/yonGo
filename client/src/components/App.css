@@ -79,7 +79,19 @@ h1{
 }
 
 .plan-marker img{
-  width: 25px;
+  width: 40px;
+}
+
+.plan-marker img:hover{
+  width: 50px;
+}
+
+.highlight{
+  background: none;
+  border:none;
+}
+.highlight img{
+  width:100px
 }
 
 .cluster-marker{

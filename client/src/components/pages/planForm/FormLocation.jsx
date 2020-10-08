@@ -1,35 +1,27 @@
 import React, { useState } from 'react'
 
 import ReactPlacesAutocomplete from '../../shared/maps/ReactPlacesAutocomplete'
-
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
 
+
+
+
 const PlanFormLocation = (props) => {
     const [open, setOpen] = useState({ value: false, btnText: 'Añadir final', toogleFun: props.hasEndToogle });
 
 
-    const getCoords = (coords) => {
-        console.log(coords)
-        // this.setState({
-        //     lat: coords[0],
-        //     lng: coords[1]
-        // })
-    }
-
-
-
     return (
 
-        <Form.Group className='p-3 border rounded form-location'>
+        <Form.Group className='p-3 border rounded bg-light'>
 
             <Form.Label>Inicio</Form.Label>
 
             <Form.Group>
-                <ReactPlacesAutocomplete getCoords={getCoords} />
+                <ReactPlacesAutocomplete flag={"start"} getCoords={props.getCoords} />
             </Form.Group>
 
             <Row>
@@ -53,8 +45,7 @@ const PlanFormLocation = (props) => {
                     <Form.Label>Final</Form.Label>
 
                     <Form.Group>
-                        {/* <PlacesAutocomplete /> */}
-                        <Form.Control type="text" name="endLocation" value={props.formState.length} onChange={props.handleInputChange} placeholder='Ubicación' />
+                        <ReactPlacesAutocomplete flag={"end"} getCoords={props.getCoords} />
                     </Form.Group>
 
                     <Row>
@@ -74,6 +65,7 @@ const PlanFormLocation = (props) => {
             </Collapse>
 
             <Button
+                variant={props.styles.button.discreet}
                 className='d-block d-sm-inline mx-auto add-final'
                 size='sm'
                 onClick={() => setOpen({

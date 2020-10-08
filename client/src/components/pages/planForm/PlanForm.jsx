@@ -3,17 +3,16 @@ import React, { Component } from 'react'
 import Container from 'react-bootstrap/Container'
 
 import MainNavbar from '../../shared/navbar/MainNavbar'
+import BackArrow from '../../styled/BackArrow'
+
 import Form from 'react-bootstrap/Form'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
-import BackArrow from '../../styled/BackArrow'
+import PlanFormLocation from './FormLocation'
+import planService from '../../../service/plan.service'
 
-import LocationFields from './FormLocation'
 
 import './PlanForm.css'
-
-import planService from '../../../service/plan.service'
-import { Link } from 'react-router-dom'
 
 class PlanForm extends Component {
 
@@ -22,7 +21,7 @@ class PlanForm extends Component {
         this.state = {
             title: '',
 
-            startLocation: '',
+            startLocation: {},
             startDate: '',
             startTime: '',
 
@@ -69,6 +68,7 @@ class PlanForm extends Component {
 
         const { name, value } = e.target
         this.setState({ [name]: value }, this.validation)
+
     }
 
     handleOptionChange = e => {
@@ -130,6 +130,28 @@ class PlanForm extends Component {
         }
     }
 
+    getCoords = (coords, flag) => {
+
+        switch (flag) {
+            case "start":
+                this.setState({ startLocation: { lat: coords[0], lng: coords[1] } })
+                break;
+            case "end":
+                this.setState({ endLocation: { lat: coords[0], lng: coords[1] } })
+                break;
+            case "map":
+                console.log("Estamos en el mapa")
+                break;
+            default:
+                console.log("error")
+                break
+        }
+
+
+    }
+
+    ge
+
     render() {
         return (
 
@@ -141,24 +163,15 @@ class PlanForm extends Component {
 
                     <BackArrow backLink={this.props.history.goBack} color='red' />
 
-                    {/* <Link className='d-block mt-3 mb-4' onClick={this.props.history.goBack}>
-
-                        <svg viewBox="0 0 16 16" className="bi bi-arrow-left btn-back" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-                        </svg>
-
-                    </Link> */}
-
                     <h1 className='mb-5 text-center font-weight-bold'>Diseña una nueva <span>experiencia!</span></h1>
 
                     <Form onSubmit={this.handleFormSubmit}>
 
                         <Form.Group>
                             <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' required type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
-                            {/* <Form.Text className='text-muted'>* requerido</Form.Text> */}
                         </Form.Group>
 
-                        <LocationFields formState={this.state} handleInputChange={this.handleInputChange} styles={this.props.styles} hasEndToogle={this.hasEndToogle} />
+                        <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={this.props.styles} hasEndToogle={this.hasEndToogle} />
 
                         <Form.Group>
 

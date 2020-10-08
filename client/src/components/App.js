@@ -7,6 +7,7 @@ import Home from './pages/home/Home'
 import PlanForm from './pages/planForm/PlanForm';
 import UserProfile from './pages/user/profile'
 
+import PlanDetails from './pages/plains/PlanDetails'
 import authService from '../service/auth.service'
 
 
@@ -16,12 +17,10 @@ class App extends Component {
 
     super()
     this.state = {
-
       loggedInUser: undefined
     }
 
     this.styles = {
-
       button: { default: 'light', active: 'secondary', submit: 'primary', discreet: 'outline-secondary' }
     }
 
@@ -43,10 +42,12 @@ class App extends Component {
     this.authService = new authService()
   }
 
+
   componentDidMount = () => {
 
     this.fetchLoggedInUser()
   }
+
 
   fetchLoggedInUser = () => {
     this.authService
@@ -58,9 +59,11 @@ class App extends Component {
       .catch(err => this.setState({ loggedInUser: null }))
   }
 
+
   setUser = user => this.setState(
     { loggedInUser: user },
     () => console.log('El usuario es', this.state.loggedInUser))
+
 
   logoutUser = () => {
     this.authService
@@ -69,15 +72,12 @@ class App extends Component {
       .catch(err => console.log('ERRORR!!:', err))
   }
 
+
   render() {
 
     console.log('loggedInUser: ', this.state.loggedInUser)
     return (
       <>
-
-        {/* <SearchLocationInput onChange={() => null} /> */}
-        {/* <Home /> */}
-        {/* <Route path="/" exact render={() => <Home />} /> */}
         <Switch>
 
           <Route path='/' exact render={props => <Home {...props} loggedInUser={this.state.loggedInUser} setUser={this.setUser} logoutUser={this.logoutUser} />} />
@@ -89,6 +89,8 @@ class App extends Component {
           <Route path="/user/profile/:userId" render={props => this.state.loggedInUser ?
             <UserProfile loggedInUser={this.state.loggedInUser} styles={this.customStyles} {...props} /> :
             <Redirect to="/" />} />
+
+          <Route path="/plans/details/:plan" render={props => <PlanDetails {...props} />} />
 
         </Switch>
       </>
