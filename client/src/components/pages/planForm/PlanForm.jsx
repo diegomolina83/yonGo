@@ -126,7 +126,7 @@ class PlanForm extends Component {
     }
 
     getCoords = (coords, flag) => {
-       
+
         switch (flag) {
             case "start":
                 this.setState({ startLocation: { lat: coords[0], lng: coords[1] } })
@@ -159,7 +159,6 @@ class PlanForm extends Component {
 
                     <Form.Group>
                         <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' required type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
-
                     </Form.Group>
 
                     <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={this.props.styles} hasEndToogle={this.hasEndToogle} />

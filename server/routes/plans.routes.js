@@ -25,7 +25,7 @@ router.get('/getOnePlan/:plan_id', (req, res) => {
 
 router.post('/plans/create', (req, res) => {
 
-    const { title, scope, category, description, owners, creator } = req.body
+    const { title, scope, category, description, owners, creator, location } = req.body
 
     console.log(req.body)
 
@@ -34,7 +34,7 @@ router.post('/plans/create', (req, res) => {
     const startTimeArray = req.body.startTime.split(':').map(elm => Number(elm))
     const formattedStartDate = new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2], startTimeArray[0], startTimeArray[1])
 
-    const start = { location: { lat: '', lng: '' }, date: formattedStartDate }
+    const start = { location: req.body.startLocation, date: formattedStartDate }
 
     let planToCreate
 
@@ -45,7 +45,7 @@ router.post('/plans/create', (req, res) => {
         const endTimeArray = req.body.endTime.split(':').map(elm => Number(elm))
         const formattedEndDate = new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2], endTimeArray[0], endTimeArray[1])
 
-        const end = { location: { lat: '', lng: '' }, date: formattedEndDate }
+        const end = { location: req.body.endLocation, date: formattedEndDate }
 
         planToCreate = { title, start, end, scope, category, description }
     } else {
