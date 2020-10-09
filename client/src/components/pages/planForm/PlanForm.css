@@ -25,24 +25,3 @@
 
     background-color: #f8f8f8;
 }
-
-.plan-new .form-location .add-final{
-
-    background-color: #e9e9eb;
-    border-color:#bebebe;
-    color:#2b2b2b
-}
-
-.plan-new .form-location .add-final:hover{
-
-    background-color: #d8d8dd;
-    border-color:#bebebe;
-    color:#2b2b2b
-}
-
-.plan-new .form-location .add-final:focus{
-
-    background-color: #d8d8dd;
-    border-color:#bebebe;
-    color:#2b2b2b
-}

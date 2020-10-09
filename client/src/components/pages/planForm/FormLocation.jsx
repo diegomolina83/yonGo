@@ -4,8 +4,10 @@ import ReactPlacesAutocomplete from '../../shared/maps/ReactPlacesAutocomplete'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
+//import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
+
+import Button from '../../styled/buttons/Button'
 
 
 
@@ -65,7 +67,7 @@ const PlanFormLocation = (props) => {
             </Collapse>
 
             <Button
-                variant={props.styles.button.discreet}
+                variant='lightBlue'
                 className='d-block d-sm-inline mx-auto add-final'
                 size='sm'
                 onClick={() => setOpen({
@@ -74,7 +76,11 @@ const PlanFormLocation = (props) => {
                     toogleFun: props.hasEndToogle()
                 })}
                 aria-controls="example-collapse-text"
-                aria-expanded={open.value}>{open.btnText}</Button>
+                aria-expanded={open.value}
+                outline
+            >
+                {open.btnText}
+            </Button>
 
         </Form.Group>
 

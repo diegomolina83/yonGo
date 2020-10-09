@@ -47,10 +47,6 @@ const userSchema = new Schema({
             amount: { type: Number, default: 0 },
             average: { type: Number, default: 0 },
         }
-    },
-    plans: {
-        type: [{ type: Schema.Types.ObjectId, ref: 'Plan' }],
-        default: []
     }
 
 }, {

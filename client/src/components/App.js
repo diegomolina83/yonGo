@@ -34,8 +34,8 @@ class App extends Component {
         lightBlue: '#4e81d3',
         blue: '#43506c',
         darkBlue: '#303647',
-        yellow: 'fbff8e',
-        red: 'ef4b4c'
+        yellow: '#fbff8e',
+        red: '#ef4b4c'
       }
     }
 
@@ -75,7 +75,6 @@ class App extends Component {
 
   render() {
 
-    console.log('loggedInUser: ', this.state.loggedInUser)
     return (
       <>
         <Switch>

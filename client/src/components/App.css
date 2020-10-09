@@ -16,9 +16,19 @@
 body{
 
   font-family: 'Poppins', sans-serif;
-  background-color: #ffffff;
+  background-color: #ffffff; 
 
 }
+
+/* div[class*='col']{
+
+  border: solid 1px green
+}
+
+div[class*='row']{
+
+  border: solid 1px red
+} */
 
 h1{
 
