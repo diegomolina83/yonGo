@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import './Cards.css'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import deporte from '../../../images/deporte.jpg'
 
 
 
@@ -24,7 +23,7 @@ class CardPlan extends Component {
                             <Card.Body>
                                 <Card.Title><h2>{this.props.properties.title}</h2></Card.Title>
                                 <Card.Text>
-                                    <p>Puntuación:{this.props.properties.markAmount}</p>
+                                    Puntuación:{this.props.properties.markAmount}
                                 </Card.Text>
                                 <Button size="sm" variant="primary">{this.props.properties.title}</Button>
                             </Card.Body>
