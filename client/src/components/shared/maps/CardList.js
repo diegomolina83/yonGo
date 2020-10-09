@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Card from '../maps/Card'
+import CardPlan from '../maps/Card'
 import PlanService from '../../../service/plan.service'
 
 
@@ -28,7 +28,7 @@ class CardList extends Component {
     render() {
         return (
             <>
-                {this.props.clusters.map((elm, idx) => <Card highlightPlan={this.props.highlightPlan} understate={this.props.understate} key={idx} {...elm} />)}
+                {this.props.clusters.map((elm, idx) => <CardPlan highlightPlan={this.props.highlightPlan} understate={this.props.understate} key={idx} {...elm} />)}
             </>
         )
     }

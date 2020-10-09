@@ -1,9 +1,13 @@
 .cardPlan{
-    border:1px solid black;
+    background-color: #5f7ab8;
     z-index: 1;
     right: 19px;
     top: 20%;
     max-height: 70%;
+    text-decoration: none;
+    text-align: center;
+    
+    
 }
 
 .cardContainer {
@@ -13,15 +17,44 @@
     right: 19px;
     top: 20%;
     max-height: 70%;
+    max-width: 15%;
+    min-width: 15%;
     overflow: auto;
+    text-decoration: none;
+    width: 100%;
+}
+
+.cardContainer a{
+    text-decoration: none;
+    color:black;
 }
 
 .cardContainer::-webkit-scrollbar {
     width: 100%;     /* Tamaño del scroll en vertical */
     height: 100%; 
-  display: none;
+    display: none;
 }
 
+
+.cardSelected{
+    background-color: green;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    right: 0px;
+   
+    
+}
+
+.cardUnselected{
+    background-color: #5f7ab8;
+    z-index: 1;
+    right: 19px;
+    top: 20%;
+    max-height: 70%;
+    text-decoration: none;
+    text-align: center;
+}
 
 /*Media Queries*/
 
@@ -32,6 +65,7 @@
     display:flex;
     right:0px;
     top:0px;
+    max-width: 100%;
 }
 
 

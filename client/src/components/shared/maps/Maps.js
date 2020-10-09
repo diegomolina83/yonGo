@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
 import useSwr from 'swr'
 import { Link } from 'react-router-dom'
+import Popover from 'react-bootstrap/Popover'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import useSupercluster from "use-supercluster"
 import viaje from '../../../images/viaje.png'
@@ -86,6 +88,40 @@ export default function SimpleMap(props) {
     //Función para que los marcadores disminuyan de tamaño al hacer un onMouseOut en las cards (viene de Card.js)
     function understate(val) {
         document.getElementById(val).classList.replace("highlight", "plan-marker")
+    }
+
+
+    //Función para que muestre una tarjeta al hacer onMouseOver en un marcador
+    function showCard(val) {
+        document.getElementById(`card${val}`).classList.add("cardSelected")
+        document.getElementById(`card${val}`).classList.remove("cardUnselected")
+    }
+
+
+    //Función para ocultar la tarjeta al hacer onMouseOut en un marcador
+    function hideCard(val) {
+        document.getElementById(`card${val}`).classList.add("cardUnselected")
+        document.getElementById(`card${val}`).classList.remove("cardSelected")
+
+    }
+
+
+    const popoverHoverFocus = (params) => {
+
+
+        return (
+            <div style={{ height: 120, width: 200 }}>
+                <Popover
+                    id="popover-basic"
+                    placement="right"
+                    positionLeft={200}
+                    positionTop={50}
+                    title="Popover right"
+                >
+                    {params.title} <strong>{params.description}</strong>
+                </Popover>
+            </div>
+        )
     }
 
 
@@ -176,15 +212,26 @@ export default function SimpleMap(props) {
                             lat={latitude}
                             lng={longitude}
                         >
-                            <Link to={{
-                                pathname: `/plans/details/${cluster.properties.planId}`,
-                                cardProps: {
-                                    cardProps: cluster
-                                }
-                            }}>
-                                <button onMouseOver={() => console.log(cluster)} id={`${cluster.properties.planId}`} className={`plan-marker`}>
-                                    <img src={imageName} alt="Plan"></img>
-                                </button></Link>
+                            <OverlayTrigger
+                                trigger={['hover', 'focus']}
+                                placement="bottom"
+                                overlay={popoverHoverFocus(cluster.properties)}
+                            // container={cluster.properties}
+
+                            >
+                                <Link to={{
+                                    pathname: `/plans/details/${cluster.properties.planId}`,
+                                    cardProps: {
+                                        cardProps: cluster
+                                    }
+                                }}>
+
+                                    <button onMouseOver={() => { showCard(cluster.properties.planId) }} onMouseOut={() => hideCard(cluster.properties.planId)} id={`${cluster.properties.planId}`} className={`plan-marker`}>
+                                        <img src={imageName} alt="Plan"></img>
+                                    </button>
+                                </Link>
+
+                            </OverlayTrigger>
                         </Marker>
                         )
                     })}
@@ -194,6 +241,7 @@ export default function SimpleMap(props) {
                 </div>
 
             </div >
+
         </>
     );
 }
