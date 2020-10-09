@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button'
 import PlanFormLocation from './FormLocation'
 import planService from '../../../service/plan.service'
 
-
 import './PlanForm.css'
 
 class PlanForm extends Component {
@@ -60,7 +59,9 @@ class PlanForm extends Component {
         e.preventDefault()
 
         this.planService.createPlan(this.state)
-            .then(response => this.props.history.push('/'))
+            .then(response => {
+                this.props.history.push('/')
+            })
             .catch(err => console.log(err))
     }
 
@@ -169,7 +170,7 @@ class PlanForm extends Component {
                     <Form onSubmit={this.handleFormSubmit}>
 
                         <Form.Group>
-                            <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' required type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
+                            <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
                         </Form.Group>
 
                         <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={this.props.styles} hasEndToogle={this.hasEndToogle} />
@@ -191,7 +192,7 @@ class PlanForm extends Component {
                             <Form.Label className='d-block'>Categoría</Form.Label>
 
                             <ButtonGroup className='border rounded flex-column flex-sm-row d-flex d-sm-inline-flex' aria-label="category">
-                                <Button id='sport' variant={this.props.styles.button.default} onClick={this.handleOptionChange} >Deporte</Button>
+                                <Button id='sport' variant='light' onClick={this.handleOptionChange} >Deporte</Button>
                                 <Button id='culinary' variant={this.props.styles.button.default} onClick={this.handleOptionChange} >Culinaria</Button>
                                 <Button id='culture' variant={this.props.styles.button.default} onClick={this.handleOptionChange} >Cultura</Button>
                                 <Button id='travel' variant={this.props.styles.button.default} onClick={this.handleOptionChange} >Viajes</Button>

@@ -3,6 +3,8 @@ const router = express.Router()
 const mongoose = require('mongoose')
 
 const User = require('../models/user.model')
+const Plan = require('../models/plan.model')
+
 
 // Endpoints
 router.get('/getAllUsers', (req, res) => {
@@ -13,17 +15,29 @@ router.get('/getAllUsers', (req, res) => {
 })
 
 
-router.get('/getOneUser/:plan_id', (req, res) => {
+router.get('/getOneUser/:userId', (req, res) => {
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.plan_id)) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
         res.status(400).json({ message: 'Specified id is not valid' })
         return
     }
 
-    User.findById(req.params.plan_id)
+    User.findById(req.params.userId)
         .then(response => {
             res.json(response)
         })
+        .catch(err => res.status(500).json(err))
+})
+
+router.get('/getAllPlans/:userId', (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+        res.status(400).json({ message: 'Specified id is not valid' })
+        return
+    }
+
+    Plan.find({ creator: req.params.userId })
+        .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
 

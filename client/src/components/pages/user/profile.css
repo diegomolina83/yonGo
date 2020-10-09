@@ -1,0 +1,15 @@
+.profile #profile-img img{
+
+    height: 150px;
+}
+
+.profile .deselected{
+
+    border-bottom: solid 1px #e1e1e1;
+}
+
+.profile .selected{
+
+    border-bottom: solid 3px #5f7ab8;
+    pointer-events: none;
+}
