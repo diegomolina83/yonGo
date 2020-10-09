@@ -4,26 +4,32 @@ import useSwr from 'swr'
 import { Link } from 'react-router-dom'
 import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-
 import useSupercluster from "use-supercluster"
+
+import Filtro from '../../pages/filtro/Filtro'
+import CardList from './CardList'
+import './Maps.css'
+import '../../pages/filtro/Filtro.css'
+//images
 import viaje from '../../../images/viaje.png'
 import atleta from '../../../images/atleta.png'
 import fastfood from '../../../images/fastfood.png'
 import museo from '../../../images/museo.png'
 import nuknuk from '../../../images/nuknuk.png'
-import CardList from './CardList'
-import './Maps.css'
 
 
 const Marker = ({ children }) => children
-
+// let renderMode = true
 
 export default function SimpleMap(props) {
 
     const lat = 40.42
     const lng = -3.71
-    const [zoom, setZoom] = useState(10);
-    const [bounds, setBounds] = useState(null);
+    const [zoom, setZoom] = useState(10)
+    const [bounds, setBounds] = useState(null)
+    const [renderSport, setRenderSport] = useState(true)
+    const [renderCulture,setRenderCulture]=useState(false)
+    // const [filterCard,setFilterCard]=useState(null)
     const mapRef = useRef();
     const url = "http://localhost:5000/api/getAllPlans"
     const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -38,6 +44,7 @@ export default function SimpleMap(props) {
             category: plan.category,
             description: plan.description,
             requirements: plan.requirements,
+            imageUrl: plan.imageUrl,
             markAmount: plan.mark.amount
         },
         geometry: { type: "Point", coordinates: [parseFloat(plan.start.location.lng), parseFloat(plan.start.location.lat)] }
@@ -105,9 +112,42 @@ export default function SimpleMap(props) {
 
     }
 
+    //Función para filtrar Cards
+    function filter() {
+        // renderMode = !renderMode
+        setRenderSport(!renderSport)
+    }
 
+    //Función para renderizar según el filtro
+    function renderList(params) {
+        let clustersSport = params.filter(cluster => cluster.properties.category == "sport")
+        // console.log("Clusters como tal", params)
+        // console.log("Clusters mapeados", clustersSport)
+
+        if (renderSport) {
+            return (
+                <div className="cardContainer">
+                    <CardList highlightPlan={highlightPlan} understate={understate} clusters={params} />
+                </div>
+            )
+        } else
+            return (
+                <div className="cardContainer">
+                    <CardList highlightPlan={highlightPlan} understate={understate} clusters={clustersSport} />
+                </div>
+            )
+    }
+
+
+    //Función para filtrar los marcadores 
+    function typeOfMarker(cluster) {
+        if(renderSport) return cluster
+        else if (cluster.properties.category == "sport") return cluster       
+    }
+
+
+    //Popover con información de cada marker
     const popoverHoverFocus = (params) => {
-
 
         return (
             <div style={{ height: 120, width: 200 }}>
@@ -118,6 +158,7 @@ export default function SimpleMap(props) {
                     positionTop={50}
                     title="Popover right"
                 >
+                    <img className="popoverImage " src={params.imageUrl}></img>
                     {params.title} <strong>{params.description}</strong>
                 </Popover>
             </div>
@@ -130,7 +171,6 @@ export default function SimpleMap(props) {
             <div className="map" style={{
                 height: '90vh', width: '100%'
             }}>
-
                 <GoogleMapReact
                     // layerTypes={['TrafficLayer', 'TransitLayer']} --> Posibles capas de carreteras pra el mapa
                     bootstrapURLKeys={{
@@ -206,7 +246,11 @@ export default function SimpleMap(props) {
                                 imageName = nuknuk
                                 break;
                         }
+                       
 
+                        let newCluster = typeOfMarker(cluster)
+                        
+                        if (newCluster) { 
                         return (<Marker
                             key={cluster.properties.planId}
                             lat={latitude}
@@ -233,12 +277,16 @@ export default function SimpleMap(props) {
 
                             </OverlayTrigger>
                         </Marker>
-                        )
+                            )
+                        }
                     })}
                 </GoogleMapReact>
-                <div className="cardContainer">
+
+                <Filtro filter={filter} name={"Deporte"} />
+                {renderList(clusters)}
+                {/* <div className="cardContainer">
                     <CardList highlightPlan={highlightPlan} understate={understate} clusters={clusters} />
-                </div>
+                </div> */}
 
             </div >
 

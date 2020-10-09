@@ -1,19 +1,25 @@
-import React from 'react'
-// import BackArrow from '../../styled/BackArrow'
+import React, { Component } from 'react'
+import BackArrow from '../../styled/BackArrow'
 
 
-function PlanDetails(props) {
-    const propCard = props.location.cardProps.cardProps.properties
+class PlanDetails extends Component {
 
-    return (
-        <>
-            {/* <BackArrow backLink={props.history.goBack} color='red' /> */}
-            <h1>{propCard.title}</h1>
-            <h2>{propCard.description}</h2>
-            <h2>{propCard.requirements}</h2>
+    constructor(props) {
+        super()
+        this.propCard = props.location.cardProps.cardProps.properties
+    }
 
-        </>
-    )
+    render() {
+        return (
+            <>
+                <BackArrow backLink={this.props.history.goBack} color='red' />
+                <h1>{this.propCard.title}</h1>
+                <h2>{this.propCard.description}</h2>
+                <h2>{this.propCard.requirements}</h2>
+
+            </>
+        )
+    }
 }
 
 

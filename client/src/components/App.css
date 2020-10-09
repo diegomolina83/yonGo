@@ -108,7 +108,11 @@ h1{
   transition-duration: .5s;
 }
 
-
+.filter{
+      position: absolute;
+    top: 20%;
+    left: 85%;
+}
 
 
 .cluster-marker{
