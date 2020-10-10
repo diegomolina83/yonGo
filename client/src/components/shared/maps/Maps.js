@@ -19,7 +19,7 @@ import nuknuk from '../../../images/nuknuk.png'
 
 
 const Marker = ({ children }) => children
-// let renderMode = true
+const renderOption = ["Todos"]
 
 export default function SimpleMap(props) {
 
@@ -27,9 +27,7 @@ export default function SimpleMap(props) {
     const lng = -3.71
     const [zoom, setZoom] = useState(10)
     const [bounds, setBounds] = useState(null)
-    const [renderSport, setRenderSport] = useState(true)
-    const [renderCulture,setRenderCulture]=useState(false)
-    // const [filterCard,setFilterCard]=useState(null)
+    const [renderFlag, setRenderFlag] = useState(true)
     const mapRef = useRef();
     const url = "http://localhost:5000/api/getAllPlans"
     const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -113,36 +111,50 @@ export default function SimpleMap(props) {
     }
 
     //Función para filtrar Cards
-    function filter() {
-        // renderMode = !renderMode
-        setRenderSport(!renderSport)
+    function filter(type) {
+        setRenderFlag(!renderFlag)
+
+        if (!renderOption.includes(type)) renderOption.push(type)
+        else (renderOption.splice(renderOption.indexOf(type), 1))
+
     }
 
-    //Función para renderizar según el filtro
+    //Función para renderizar cards según el filtro
+    let parametros = []
     function renderList(params) {
         let clustersSport = params.filter(cluster => cluster.properties.category == "sport")
-        // console.log("Clusters como tal", params)
-        // console.log("Clusters mapeados", clustersSport)
+        let clusterCulture = params.filter(cluster => cluster.properties.category == "culture")
+        let clusterTravel = params.filter(cluster => cluster.properties.category == "travel")
+        let clusterCulinary = params.filter(cluster => cluster.properties.category == "culinary")
+        let clusterOther = params.filter(cluster => cluster.properties.category == "other")
 
-        if (renderSport) {
-            return (
-                <div className="cardContainer">
-                    <CardList highlightPlan={highlightPlan} understate={understate} clusters={params} />
-                </div>
-            )
-        } else
-            return (
-                <div className="cardContainer">
-                    <CardList highlightPlan={highlightPlan} understate={understate} clusters={clustersSport} />
-                </div>
-            )
+        renderOption.includes("Todos") ? parametros = params : params = []
+        console.log(parametros)
+        console.log([...parametros, ...clustersSport])
+        renderOption.includes("Deporte") ? parametros = [...parametros,...clustersSport] : console.log()
+        renderOption.includes("Gastronomía") ? parametros = [...parametros,...clusterCulinary] : console.log()
+        renderOption.includes("Cultura") ? parametros = [...parametros, ...clusterCulture] : console.log()
+        renderOption.includes("Viajes") ? parametros = [...parametros,...clusterTravel] : console.log()
+        renderOption.includes("Otros") ? parametros = [...parametros,...clusterOther] : console.log()
+
+        return (
+            <div className="cardContainer">
+                <CardList highlightPlan={highlightPlan} understate={understate} clusters={parametros} />
+            </div>
+        )
     }
 
 
     //Función para filtrar los marcadores 
     function typeOfMarker(cluster) {
-        if(renderSport) return cluster
-        else if (cluster.properties.category == "sport") return cluster       
+
+        if (renderOption.includes("Todos")) return cluster
+        // else if (cluster.properties.category == "sport") return cluster
+        else if (renderOption.includes("Deporte") && cluster.properties.category == "sport") return (cluster.properties.category == "sport")
+        else if (renderOption.includes("Viajes") && cluster.properties.category == "travel") return (cluster.properties.category == "travel")
+        else if (renderOption.includes("Cultura") && cluster.properties.category == "culture") return (cluster.properties.category == "culture")
+        else if (renderOption.includes("Gastronomía") && cluster.properties.category == "culinary") return (cluster.properties.category == "culinary")
+        else if (renderOption.includes("Otros") && cluster.properties.category == "other") return (cluster.properties.category == "other")
     }
 
 
@@ -246,43 +258,50 @@ export default function SimpleMap(props) {
                                 imageName = nuknuk
                                 break;
                         }
-                       
+
 
                         let newCluster = typeOfMarker(cluster)
-                        
-                        if (newCluster) { 
-                        return (<Marker
-                            key={cluster.properties.planId}
-                            lat={latitude}
-                            lng={longitude}
-                        >
-                            <OverlayTrigger
-                                trigger={['hover', 'focus']}
-                                placement="bottom"
-                                overlay={popoverHoverFocus(cluster.properties)}
-                            // container={cluster.properties}
 
+                        if (newCluster) {
+                            return (<Marker
+                                key={cluster.properties.planId}
+                                lat={latitude}
+                                lng={longitude}
                             >
-                                <Link to={{
-                                    pathname: `/plans/details/${cluster.properties.planId}`,
-                                    cardProps: {
-                                        cardProps: cluster
-                                    }
-                                }}>
+                                <OverlayTrigger
+                                    trigger={['hover', 'focus']}
+                                    placement="bottom"
+                                    overlay={popoverHoverFocus(cluster.properties)}
+                                // container={cluster.properties}
 
-                                    <button onMouseOver={() => { showCard(cluster.properties.planId) }} onMouseOut={() => hideCard(cluster.properties.planId)} id={`${cluster.properties.planId}`} className={`plan-marker`}>
-                                        <img src={imageName} alt="Plan"></img>
-                                    </button>
-                                </Link>
+                                >
+                                    <Link to={{
+                                        pathname: `/plans/details/${cluster.properties.planId}`,
+                                        cardProps: {
+                                            cardProps: cluster
+                                        }
+                                    }}>
 
-                            </OverlayTrigger>
-                        </Marker>
+                                        <button onMouseOver={() => { showCard(cluster.properties.planId) }} onMouseOut={() => hideCard(cluster.properties.planId)} id={`${cluster.properties.planId}`} className={`plan-marker`}>
+                                            <img src={imageName} alt="Plan"></img>
+                                        </button>
+                                    </Link>
+
+                                </OverlayTrigger>
+                            </Marker>
                             )
                         }
                     })}
                 </GoogleMapReact>
 
-                <Filtro filter={filter} name={"Deporte"} />
+                <Filtro filter={() => filter("Deporte")} name={"Deporte"} />
+                <Filtro filter={() => filter("Viajes")} name={"Viajes"} />
+                <Filtro filter={() => filter("Gastronomía")} name={"Gastronomía"} />
+                <Filtro filter={() => filter("Cultura")} name={"Cultura"} />
+                <Filtro filter={() => filter("Otros")} name={"Otros"} />
+                <Filtro filter={() => filter("Todos")} name={"Todos"} />
+
+
                 {renderList(clusters)}
                 {/* <div className="cardContainer">
                     <CardList highlightPlan={highlightPlan} understate={understate} clusters={clusters} />

@@ -11,7 +11,7 @@ class Filtro extends Component {
 
     render() {
         return (
-            <Button className="filter" onClick={this.props.filter} >{this.props.name}</Button>
+            <Button className="filter" id={this.props.name} onClick={this.props.filter} >{this.props.name}</Button>
         )
 
     }
