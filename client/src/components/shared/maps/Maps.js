@@ -63,7 +63,7 @@ export default function SimpleMap(props) {
     let markerMap
     useEffect(() => {
 
-        //Centrar el mapa con las coordenadas del a dirección introducida
+        //Centrar el mapa con las coordenadas de la dirección introducida
         let myLatLng
         mapRef.current && props.coords.lat ? myLatLng = { lat: props.coords.lat, lng: props.coords.lng } : console.log()
         mapRef.current && props.coords.lat ? mapRef.current.setCenter(myLatLng) : console.log()
@@ -73,7 +73,7 @@ export default function SimpleMap(props) {
             markerMap = new window.google.maps.Marker({
                 position: myLatLng,
                 map: mapRef.current,
-                title: "Hello World!",
+                title: "¡Mira todas las actividades!",
             })
         }
 
@@ -122,20 +122,19 @@ export default function SimpleMap(props) {
     //Función para renderizar cards según el filtro
     let parametros = []
     function renderList(params) {
-        let clustersSport = params.filter(cluster => cluster.properties.category == "sport")
-        let clusterCulture = params.filter(cluster => cluster.properties.category == "culture")
-        let clusterTravel = params.filter(cluster => cluster.properties.category == "travel")
-        let clusterCulinary = params.filter(cluster => cluster.properties.category == "culinary")
-        let clusterOther = params.filter(cluster => cluster.properties.category == "other")
+        let clustersSport = params.filter(cluster => cluster.properties.category === "sport")
+        let clusterCulture = params.filter(cluster => cluster.properties.category === "culture")
+        let clusterTravel = params.filter(cluster => cluster.properties.category === "travel")
+        let clusterCulinary = params.filter(cluster => cluster.properties.category === "culinary")
+        let clusterOther = params.filter(cluster => cluster.properties.category === "other")
 
         renderOption.includes("Todos") ? parametros = params : params = []
-        console.log(parametros)
-        console.log([...parametros, ...clustersSport])
-        renderOption.includes("Deporte") ? parametros = [...parametros,...clustersSport] : console.log()
-        renderOption.includes("Gastronomía") ? parametros = [...parametros,...clusterCulinary] : console.log()
+
+        renderOption.includes("Deporte") ? parametros = [...parametros, ...clustersSport] : console.log()
+        renderOption.includes("Gastronomía") ? parametros = [...parametros, ...clusterCulinary] : console.log()
         renderOption.includes("Cultura") ? parametros = [...parametros, ...clusterCulture] : console.log()
-        renderOption.includes("Viajes") ? parametros = [...parametros,...clusterTravel] : console.log()
-        renderOption.includes("Otros") ? parametros = [...parametros,...clusterOther] : console.log()
+        renderOption.includes("Viajes") ? parametros = [...parametros, ...clusterTravel] : console.log()
+        renderOption.includes("Otros") ? parametros = [...parametros, ...clusterOther] : console.log()
 
         return (
             <div className="cardContainer">
@@ -148,13 +147,18 @@ export default function SimpleMap(props) {
     //Función para filtrar los marcadores 
     function typeOfMarker(cluster) {
 
+        let category = cluster.properties.category
         if (renderOption.includes("Todos")) return cluster
-        // else if (cluster.properties.category == "sport") return cluster
-        else if (renderOption.includes("Deporte") && cluster.properties.category == "sport") return (cluster.properties.category == "sport")
-        else if (renderOption.includes("Viajes") && cluster.properties.category == "travel") return (cluster.properties.category == "travel")
-        else if (renderOption.includes("Cultura") && cluster.properties.category == "culture") return (cluster.properties.category == "culture")
-        else if (renderOption.includes("Gastronomía") && cluster.properties.category == "culinary") return (cluster.properties.category == "culinary")
-        else if (renderOption.includes("Otros") && cluster.properties.category == "other") return (cluster.properties.category == "other")
+        else if (renderOption.includes("Deporte") && category === "sport") return (category === "sport")
+        else if (renderOption.includes("Viajes") && category === "travel") return (category === "travel")
+        else if (renderOption.includes("Cultura") && category === "culture") return (category === "culture")
+        else if (renderOption.includes("Gastronomía") && category === "culinary") return (category === "culinary")
+        else if (renderOption.includes("Otros") && category === "other") return (category === "other")
+    }
+
+    //Función para cambiar el color de los botones de los filtros
+    function buttonColor(category) {
+        if (renderOption.includes(category)){ return  "active" }  else return  "inactive" 
     }
 
 
@@ -218,15 +222,15 @@ export default function SimpleMap(props) {
                         const [longitude, latitude] = cluster.geometry.coordinates
                         const { cluster: isCluster } = cluster.properties
 
-                        if (isCluster) {
+                        if (isCluster && renderOption.includes("Todos")) {
                             return <Marker
                                 key={cluster.id}
                                 lat={latitude}
                                 lng={longitude}
                             >
                                 <div className="cluster-marker" style={{
-                                    width: `${10 + (cluster.properties.point_count / points.length) * 30}px`,
-                                    height: `${10 + (cluster.properties.point_count / points.length) * 30}px`
+                                    width: `${50 + (cluster.properties.point_count / points.length) * 50}px`,
+                                    height: `${50 + (cluster.properties.point_count / points.length) * 50}px`
 
                                 }}
                                     onClick={() => {
@@ -293,14 +297,15 @@ export default function SimpleMap(props) {
                         }
                     })}
                 </GoogleMapReact>
-
-                <Filtro filter={() => filter("Deporte")} name={"Deporte"} />
-                <Filtro filter={() => filter("Viajes")} name={"Viajes"} />
-                <Filtro filter={() => filter("Gastronomía")} name={"Gastronomía"} />
-                <Filtro filter={() => filter("Cultura")} name={"Cultura"} />
-                <Filtro filter={() => filter("Otros")} name={"Otros"} />
-                <Filtro filter={() => filter("Todos")} name={"Todos"} />
-
+                <div className="filtersButton">
+                    {console.log(buttonColor("Viajes"))}
+                    <Filtro filter={() => filter("Deporte")} name={"Deporte"} src={atleta} buttonColor={buttonColor("Deporte")}/>
+                    <Filtro filter={() => filter("Viajes")} name={"Viajes"} src={viaje} buttonColor={buttonColor("Viajes")}/>
+                    <Filtro filter={() => filter("Gastronomía")} name={"Gastronomía"} src={fastfood} buttonColor={buttonColor("Gastronomía")}/>
+                    <Filtro filter={() => filter("Cultura")} name={"Cultura"} src={museo} buttonColor={buttonColor("Cultura")}/>
+                    <Filtro filter={() => filter("Otros")} name={"Otros"} src={nuknuk} buttonColor={buttonColor("Otros")}/>
+                    <Filtro filter={() => filter("Todos")} name={"Todos"} buttonColor={buttonColor("Todos")}/>
+                </div>
 
                 {renderList(clusters)}
                 {/* <div className="cardContainer">

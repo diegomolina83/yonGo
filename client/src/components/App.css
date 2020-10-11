@@ -118,11 +118,6 @@ h1{
   transition-duration: .5s;
 }
 
-.filter{
-    position: absolute;
-    top: 20%;
-    left: 85%;
-}
 
 #Viajes{
   left:90%;
@@ -147,13 +142,25 @@ top:15%;
 
 .cluster-marker{
   color:#fff;
-  background: red;
+  background: #ef4b4c;
   border-radius: 50%;
   padding: 10px;
   display:flex;
   justify-content: center;
   align-items: center;
 }
+
+.inactive{
+    background-color: #3d619b!important;
+}
+
+.active{
+    background-color: green!important;
+}
+
+
+
+
 @media (min-width: 300px) { 
   
   h1 {

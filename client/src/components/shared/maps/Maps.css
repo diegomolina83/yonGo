@@ -11,3 +11,24 @@ width: '100%'
     object-fit: contain;
 }
 
+.filter{
+    border:none;
+    border-radius:50%
+}
+
+
+.filter img{
+    width:20px;
+}
+
+.filtersButton{
+   
+    position: absolute;
+    top:19%;
+    left: 83%;
+    display:flex;
+
+}
+
+
+
