@@ -151,8 +151,6 @@ class PlanForm extends Component {
 
     }
 
-    ge
-
     render() {
         return (
 

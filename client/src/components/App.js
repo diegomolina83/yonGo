@@ -5,10 +5,12 @@ import './App.css'
 
 import Home from './pages/home/Home'
 import PlanForm from './pages/planForm/PlanForm';
-import UserProfile from './pages/user/profile'
+import UserProfile from './pages/user/profile/Profile'
 
 import PlanDetails from './pages/plains/PlanDetails'
 import authService from '../service/auth.service'
+
+import AppContext from './context/AppContext'
 
 
 class App extends Component {
@@ -77,21 +79,27 @@ class App extends Component {
 
     return (
       <>
-        <Switch>
 
-          <Route path='/' exact render={props => <Home {...props} loggedInUser={this.state.loggedInUser} setUser={this.setUser} logoutUser={this.logoutUser} />} />
+        <AppContext.Provider value={this.state}>
 
-          <Route path="/plans/new" render={props => this.state.loggedInUser ?
-            <PlanForm loggedInUser={this.state.loggedInUser} history={props.history} styles={this.styles} /> :
-            <Redirect to="/" />} />
+          <Switch>
 
-          <Route path="/user/profile/:userId" render={props => this.state.loggedInUser ?
-            <UserProfile loggedInUser={this.state.loggedInUser} styles={this.customStyles} {...props} /> :
-            <Redirect to="/" />} />
+            <Route path='/' exact render={props => <Home {...props} loggedInUser={this.state.loggedInUser} setUser={this.setUser} logoutUser={this.logoutUser} />} />
 
-          <Route path="/plans/details/:plan" render={props => <PlanDetails {...props} />} />
+            <Route path="/plans/new" render={props => this.state.loggedInUser ?
+              <PlanForm loggedInUser={this.state.loggedInUser} history={props.history} styles={this.styles} /> :
+              <Redirect to="/" />} />
 
-        </Switch>
+            <Route path="/user/profile/:userId" render={props => this.state.loggedInUser ?
+              <UserProfile styles={this.customStyles} {...props} /> :
+              <Redirect to="/" />} />
+
+            <Route path="/plans/details/:plan" render={props => <PlanDetails {...props} />} />
+
+          </Switch>
+
+        </AppContext.Provider>
+
       </>
     )
   }

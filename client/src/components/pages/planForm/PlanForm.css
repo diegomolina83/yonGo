@@ -1,6 +1,11 @@
+.plan-new{
+
+    padding-top: 40px
+}
+
 .plan-new h1{
 
-    color: #43506c
+    color: #43506c;    
 }
 
 .plan-new h1 span{
@@ -24,4 +29,12 @@
 .plan-new .form-location{
 
     background-color: #f8f8f8;
+}
+
+@media (min-width: 576px) { 
+  
+  .plan-new{
+
+    padding-top: 54px;
+  }
 }

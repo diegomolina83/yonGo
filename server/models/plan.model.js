@@ -30,7 +30,10 @@ const planSchema = new Schema({
         },
         date: Date
     },
-
+    imageUrl: {
+        type: String,
+        default: 'https://pbs.twimg.com/media/Boi190VCAAANJQ4.jpg'
+    },
     description: String,
 
     attendees: {

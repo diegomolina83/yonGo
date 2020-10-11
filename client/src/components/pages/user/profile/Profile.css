@@ -1,0 +1,39 @@
+.profile{
+
+    padding-top: 40px
+}
+
+.profile #profile-img img{
+
+    height: 120px;
+}
+
+.profile #plans-container{
+
+    position: relative;
+    
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.profile hr{
+
+    margin-left: -15px;
+    margin-right: -15px
+}
+
+@media (min-width: 300px) { 
+  
+  h1 {
+
+    font-size: 2.5rem
+  }
+}
+
+@media (min-width: 576px){
+
+    .profile {
+
+        padding-top: 54px;
+    }
+}

@@ -24,7 +24,7 @@ class CardPlan extends Component {
                             <Card.Body>
                                 <Card.Title><h2>{this.props.properties.title}</h2></Card.Title>
                                 <Card.Text>
-                                    <p>Puntuación:{this.props.properties.markAmount}</p>
+                                    Puntuación:{this.props.properties.markAmount}
                                 </Card.Text>
                                 <Button size="sm" variant="primary">{this.props.properties.title}</Button>
                             </Card.Body>

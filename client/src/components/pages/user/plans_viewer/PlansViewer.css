@@ -1,0 +1,16 @@
+#plans-switcher>div{
+
+    border-bottom: solid 1px #e1e1e1;
+    border-top: solid 3px rgba(255, 255, 255, 0)
+}
+
+#plans-switcher>div.selected{
+
+    border-bottom: solid 3px #5f7ab8;
+    pointer-events: none;
+}
+
+#plans-container{
+
+    padding-top: 0
+}
