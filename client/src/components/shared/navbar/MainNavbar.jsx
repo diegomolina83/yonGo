@@ -14,7 +14,7 @@ class MainNavbar extends Component {
     render() {
         return (
 
-            <Navbar className='p3 bg-light main-navbar'>
+            <Navbar className='p3 bg-light main-navbar' fixed='top'>
 
                 <NavbarLogo color='red' />
 

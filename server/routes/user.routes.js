@@ -36,7 +36,10 @@ router.get('/getAllPlans/:userId', (req, res) => {
         return
     }
 
-    Plan.find({ creator: req.params.userId })
+    Plan.find(
+        { attendees: req.params.userId },
+        { title: 1, imageUrl: 1, attendees: 1, creator: 1, 'start.date': 1 },
+        { sort: { 'start.date': 1 } })
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })

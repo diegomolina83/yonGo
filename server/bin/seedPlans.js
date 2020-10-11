@@ -33,22 +33,19 @@ const plansCreator = async (plansAmount) => {
                 // // Within Spain
                 // const minLatitude = 36.134919
                 // const maxLatitude = 43.326108
-                // const randomStartLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
-                // const randomEndLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
-
                 // const minLongitude = -8.648822
                 // const maxLongitude = 2.195764
-                // const randomStartLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
-                // const randomEndLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
+
+
 
                 // Within Madrid
                 const minLatitude = 40.307528
                 const maxLatitude = 40.496922
-                const randomStartLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
-                const randomEndLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
-
                 const minLongitude = -3.843728
                 const maxLongitude = -3.560117
+
+                const randomStartLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
+                const randomEndLatitude = Math.random() * (maxLatitude - minLatitude) + minLatitude
                 const randomStartLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
                 const randomEndLongitude = Math.random() * (maxLongitude - minLongitude) + minLongitude
 
@@ -73,7 +70,19 @@ const plansCreator = async (plansAmount) => {
                     date: endDate
                 }
 
-                const creatorIdx = Math.floor(Math.random() * allUsers.length)
+                let creatorIdx
+
+                if (i > 100) {
+
+                    creatorIdx = 0
+                } else if (i > 200) {
+
+                    creatorIdx = 1
+                } else {
+
+                    creatorIdx = Math.floor(Math.random() * allUsers.length)
+                }
+
                 const creator = allUsers[creatorIdx]
 
                 const owners = [creator]
@@ -117,9 +126,12 @@ const plansCreator = async (plansAmount) => {
                     average: Math.random() * 5
                 }
 
+                // Random image
+                const imageUrl = faker.image.city()
+
                 const newPlan = hasEnd ?
-                    { title, start, end, creator, owners, attendees, allowedUsers, mark, category } :
-                    { title, start, creator, owners, attendees, allowedUsers, mark, category }
+                    { title, start, end, creator, owners, attendees, allowedUsers, mark, category, imageUrl } :
+                    { title, start, creator, owners, attendees, allowedUsers, mark, category, imageUrl }
 
                 plans.push(newPlan)
             }
@@ -131,9 +143,7 @@ const plansCreator = async (plansAmount) => {
 
 const seedLength = 1000
 
-plansCreator(seedLength).then(plans => {
-
-    return Plan.create(plans)
-})
+plansCreator(seedLength)
+    .then(plans => Plan.create(plans))
     .then(createdPlans => console.log('The following plans were stored into de DB: ', createdPlans))
     .catch(err => console.log('Error: ', err))
