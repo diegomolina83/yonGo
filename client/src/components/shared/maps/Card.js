@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import './Cards.css'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import deporte from '../../../images/deporte.jpg'
 
 
 
@@ -20,7 +19,7 @@ class CardPlan extends Component {
                             cardProps
                         }
                     }}>   < Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={deporte} />
+                            <Card.Img variant="top" src={this.props.properties.imageUrl} />
                             <Card.Body>
                                 <Card.Title><h2>{this.props.properties.title}</h2></Card.Title>
                                 <Card.Text>

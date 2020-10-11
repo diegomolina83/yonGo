@@ -4,26 +4,30 @@ import useSwr from 'swr'
 import { Link } from 'react-router-dom'
 import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-
 import useSupercluster from "use-supercluster"
+
+import Filtro from '../../pages/filtro/Filtro'
+import CardList from './CardList'
+import './Maps.css'
+import '../../pages/filtro/Filtro.css'
+//images
 import viaje from '../../../images/viaje.png'
 import atleta from '../../../images/atleta.png'
 import fastfood from '../../../images/fastfood.png'
 import museo from '../../../images/museo.png'
 import nuknuk from '../../../images/nuknuk.png'
-import CardList from './CardList'
-import './Maps.css'
 
 
 const Marker = ({ children }) => children
-
+const renderOption = ["Todos"]
 
 export default function SimpleMap(props) {
 
     const lat = 40.42
     const lng = -3.71
-    const [zoom, setZoom] = useState(10);
-    const [bounds, setBounds] = useState(null);
+    const [zoom, setZoom] = useState(10)
+    const [bounds, setBounds] = useState(null)
+    const [renderFlag, setRenderFlag] = useState(true)
     const mapRef = useRef();
     const url = "http://localhost:5000/api/getAllPlans"
     const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -38,6 +42,7 @@ export default function SimpleMap(props) {
             category: plan.category,
             description: plan.description,
             requirements: plan.requirements,
+            imageUrl: plan.imageUrl,
             markAmount: plan.mark.amount
         },
         geometry: { type: "Point", coordinates: [parseFloat(plan.start.location.lng), parseFloat(plan.start.location.lat)] }
@@ -105,9 +110,56 @@ export default function SimpleMap(props) {
 
     }
 
+    //Función para filtrar Cards
+    function filter(type) {
+        setRenderFlag(!renderFlag)
 
+        if (!renderOption.includes(type)) renderOption.push(type)
+        else (renderOption.splice(renderOption.indexOf(type), 1))
+
+    }
+
+    //Función para renderizar cards según el filtro
+    let parametros = []
+    function renderList(params) {
+        let clustersSport = params.filter(cluster => cluster.properties.category == "sport")
+        let clusterCulture = params.filter(cluster => cluster.properties.category == "culture")
+        let clusterTravel = params.filter(cluster => cluster.properties.category == "travel")
+        let clusterCulinary = params.filter(cluster => cluster.properties.category == "culinary")
+        let clusterOther = params.filter(cluster => cluster.properties.category == "other")
+
+        renderOption.includes("Todos") ? parametros = params : params = []
+        console.log(parametros)
+        console.log([...parametros, ...clustersSport])
+        renderOption.includes("Deporte") ? parametros = [...parametros,...clustersSport] : console.log()
+        renderOption.includes("Gastronomía") ? parametros = [...parametros,...clusterCulinary] : console.log()
+        renderOption.includes("Cultura") ? parametros = [...parametros, ...clusterCulture] : console.log()
+        renderOption.includes("Viajes") ? parametros = [...parametros,...clusterTravel] : console.log()
+        renderOption.includes("Otros") ? parametros = [...parametros,...clusterOther] : console.log()
+
+        return (
+            <div className="cardContainer">
+                <CardList highlightPlan={highlightPlan} understate={understate} clusters={parametros} />
+            </div>
+        )
+    }
+
+
+    //Función para filtrar los marcadores 
+    function typeOfMarker(cluster) {
+
+        if (renderOption.includes("Todos")) return cluster
+        // else if (cluster.properties.category == "sport") return cluster
+        else if (renderOption.includes("Deporte") && cluster.properties.category == "sport") return (cluster.properties.category == "sport")
+        else if (renderOption.includes("Viajes") && cluster.properties.category == "travel") return (cluster.properties.category == "travel")
+        else if (renderOption.includes("Cultura") && cluster.properties.category == "culture") return (cluster.properties.category == "culture")
+        else if (renderOption.includes("Gastronomía") && cluster.properties.category == "culinary") return (cluster.properties.category == "culinary")
+        else if (renderOption.includes("Otros") && cluster.properties.category == "other") return (cluster.properties.category == "other")
+    }
+
+
+    //Popover con información de cada marker
     const popoverHoverFocus = (params) => {
-
 
         return (
             <div style={{ height: 120, width: 200 }}>
@@ -118,6 +170,7 @@ export default function SimpleMap(props) {
                     positionTop={50}
                     title="Popover right"
                 >
+                    <img className="popoverImage " src={params.imageUrl}></img>
                     {params.title} <strong>{params.description}</strong>
                 </Popover>
             </div>
@@ -130,7 +183,6 @@ export default function SimpleMap(props) {
             <div className="map" style={{
                 height: '90vh', width: '100%'
             }}>
-
                 <GoogleMapReact
                     // layerTypes={['TrafficLayer', 'TransitLayer']} --> Posibles capas de carreteras pra el mapa
                     bootstrapURLKeys={{
@@ -207,38 +259,53 @@ export default function SimpleMap(props) {
                                 break;
                         }
 
-                        return (<Marker
-                            key={cluster.properties.planId}
-                            lat={latitude}
-                            lng={longitude}
-                        >
-                            <OverlayTrigger
-                                trigger={['hover', 'focus']}
-                                placement="bottom"
-                                overlay={popoverHoverFocus(cluster.properties)}
-                            // container={cluster.properties}
 
+                        let newCluster = typeOfMarker(cluster)
+
+                        if (newCluster) {
+                            return (<Marker
+                                key={cluster.properties.planId}
+                                lat={latitude}
+                                lng={longitude}
                             >
-                                <Link to={{
-                                    pathname: `/plans/details/${cluster.properties.planId}`,
-                                    cardProps: {
-                                        cardProps: cluster
-                                    }
-                                }}>
+                                <OverlayTrigger
+                                    trigger={['hover', 'focus']}
+                                    placement="bottom"
+                                    overlay={popoverHoverFocus(cluster.properties)}
+                                // container={cluster.properties}
 
-                                    <button onMouseOver={() => { showCard(cluster.properties.planId) }} onMouseOut={() => hideCard(cluster.properties.planId)} id={`${cluster.properties.planId}`} className={`plan-marker`}>
-                                        <img src={imageName} alt="Plan"></img>
-                                    </button>
-                                </Link>
+                                >
+                                    <Link to={{
+                                        pathname: `/plans/details/${cluster.properties.planId}`,
+                                        cardProps: {
+                                            cardProps: cluster
+                                        }
+                                    }}>
 
-                            </OverlayTrigger>
-                        </Marker>
-                        )
+                                        <button onMouseOver={() => { showCard(cluster.properties.planId) }} onMouseOut={() => hideCard(cluster.properties.planId)} id={`${cluster.properties.planId}`} className={`plan-marker`}>
+                                            <img src={imageName} alt="Plan"></img>
+                                        </button>
+                                    </Link>
+
+                                </OverlayTrigger>
+                            </Marker>
+                            )
+                        }
                     })}
                 </GoogleMapReact>
-                <div className="cardContainer">
+
+                <Filtro filter={() => filter("Deporte")} name={"Deporte"} />
+                <Filtro filter={() => filter("Viajes")} name={"Viajes"} />
+                <Filtro filter={() => filter("Gastronomía")} name={"Gastronomía"} />
+                <Filtro filter={() => filter("Cultura")} name={"Cultura"} />
+                <Filtro filter={() => filter("Otros")} name={"Otros"} />
+                <Filtro filter={() => filter("Todos")} name={"Todos"} />
+
+
+                {renderList(clusters)}
+                {/* <div className="cardContainer">
                     <CardList highlightPlan={highlightPlan} understate={understate} clusters={clusters} />
-                </div>
+                </div> */}
 
             </div >
 

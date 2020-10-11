@@ -118,7 +118,31 @@ h1{
   transition-duration: .5s;
 }
 
+.filter{
+    position: absolute;
+    top: 20%;
+    left: 85%;
+}
 
+#Viajes{
+  left:90%;
+}
+#Cultura{
+  left:94%;
+}
+#Gastronomía{
+top:15%;
+}
+
+#Otros{
+  top:15%;
+  left:92%;
+}
+
+#Todos{
+  top:15%;
+  left:96%
+}
 
 
 .cluster-marker{
