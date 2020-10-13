@@ -26,7 +26,7 @@ export default function ReactPlacesAutocomplete(props) {
             onChange={setAddress}
             onSelect={handleSelect}
         >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-            <div>
+                <div className={`searchBar ${props.newClass}`}>
                 <Form.Control {...getInputProps({ placeholder: "Escribe dirección" })} />
 
                 <div>
@@ -35,7 +35,7 @@ export default function ReactPlacesAutocomplete(props) {
                     {
                         suggestions.map((suggestion, idx) => {
                             const style = {
-                                backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
+                                backgroundColor: suggestion.active ? "#5f7ab8" : "#fff"
                             }
                             return <div{...getSuggestionItemProps(suggestion, { style })} key={idx}>
                                 {suggestion.description}</div>

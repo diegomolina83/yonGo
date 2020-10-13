@@ -1,7 +1,8 @@
 
 .map{
 height: '70vh';
-width: '100%'
+width: '100%';
+
 }
 
 
@@ -12,23 +13,44 @@ width: '100%'
 }
 
 .filter{
+    opacity: 1;
+    transition: opacity 1s;
     border:none;
-    border-radius:50%
+    border-radius:5px;
+    margin:1px;
+    
 }
 
 
 .filter img{
-    width:20px;
+    width:25px;
+    filter: invert(100%);
 }
 
 .filtersButton{
-   
-    position: absolute;
-    top:19%;
-    left: 83%;
+    
     display:flex;
-
+    flex-wrap: wrap;
+    position: absolute;
+    top:9%;
+    left: 82%;
+    width: 18%;
+    justify-content: center;
+   
+    
 }
 
+
+.hide{
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+
+.filterButton{
+    position: absolute;
+    top:5%;
+    left:85%;
+}
 
 

@@ -94,7 +94,7 @@ class App extends Component {
               <UserProfile styles={this.customStyles} {...props} /> :
               <Redirect to="/" />} />
 
-            <Route path="/plans/details/:plan" render={props => <PlanDetails {...props} />} />
+            <Route path="/plans/details/:plan" render={props => <PlanDetails {...props} loggedInUser={this.state.loggedInUser}/>} />
 
           </Switch>
 
