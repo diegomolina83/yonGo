@@ -23,10 +23,10 @@ import Button from 'react-bootstrap/esm/Button';
 
 const Marker = ({ children }) => children
 const renderOption = ["Todos"]
-let count=0
+let count = 0
 export default function SimpleMap(props) {
 
- 
+
     const lat = 40.42
     const lng = -3.71
     const [zoom, setZoom] = useState(10)
@@ -48,7 +48,7 @@ export default function SimpleMap(props) {
             requirements: plan.requirements,
             imageUrl: plan.imageUrl,
             start: plan.start,
-            end:plan.end,
+            end: plan.end,
             attendees: plan.attendees,
             markAmount: plan.mark.amount
         },
@@ -136,14 +136,13 @@ export default function SimpleMap(props) {
         let clusterOther = params.filter(cluster => cluster.properties.category === "other")
 
         renderOption.includes("Todos") ? parametros = params : params = []
-
         renderOption.includes("Deporte") ? parametros = [...parametros, ...clustersSport] : console.log()
         renderOption.includes("Gastronomía") ? parametros = [...parametros, ...clusterCulinary] : console.log()
         renderOption.includes("Cultura") ? parametros = [...parametros, ...clusterCulture] : console.log()
         renderOption.includes("Viajes") ? parametros = [...parametros, ...clusterTravel] : console.log()
         renderOption.includes("Otros") ? parametros = [...parametros, ...clusterOther] : console.log()
 
-       let newParam=parametros.filter(cluster => dateFilter(cluster))
+        let newParam = parametros.filter(cluster => dateFilter(cluster))
         return (
             <div className="cardContainer">
                 <CardList highlightPlan={highlightPlan} understate={understate} clusters={newParam} />
@@ -266,7 +265,7 @@ export default function SimpleMap(props) {
                     {clusters.map(cluster => {
                         const [longitude, latitude] = cluster.geometry.coordinates
                         const { cluster: isCluster } = cluster.properties
-                        if (isCluster && renderOption.includes("Todos")  ) {
+                        if (isCluster && renderOption.includes("Todos")) {
                             return <Marker
                                 key={cluster.id}
                                 lat={latitude}
@@ -284,7 +283,7 @@ export default function SimpleMap(props) {
                                     }}
                                 >
                                     {(dateFilter(cluster)) ? count++ : console.log()}
-                                    {cluster.properties.point_count-count}
+                                    {cluster.properties.point_count - count}
                                 </div>
                             </Marker>;
                         }

@@ -12,4 +12,5 @@ export default class PlanService {
     getAllUsers = () => this.api.get('/getAllUsers')
     getOneUser = id => this.api.get(`/getOneUser/${id}`)
     getAllPlans = id => this.api.get(`/getAllPlans/${id}`)
+    getAllPlansFast = id => this.api.get(`/getAllPlans/fast/${id}`)
 }

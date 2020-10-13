@@ -32,7 +32,7 @@ class PlanDetails extends Component {
 
     render() {
         console.log(this.props.loggedInUser)
-       
+
         return (
             <>
                 <MainNavbar />
@@ -48,7 +48,7 @@ class PlanDetails extends Component {
                         <p>{this.propCard.category}</p>
                         <h2>{this.propCard.description}</h2>
                         <h2>{this.propCard.requirements}</h2>
-                        <img src={this.props.loggedInUser.imageUrl}/>
+                        <img src={this.props.loggedInUser.imageUrl} />
 
                     </div>
 
@@ -57,7 +57,7 @@ class PlanDetails extends Component {
                         center={this.center}
                         zoom={20}
                     >
-                        
+
                         <Marker
                             position={this.center}
                             title="Principio"

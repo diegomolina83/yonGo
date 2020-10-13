@@ -29,6 +29,24 @@ router.get('/getOneUser/:userId', (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
+router.get('/getAllPlans/fast/:userId', (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+        res.status(400).json({ message: 'Specified id is not valid' })
+        return
+    }
+
+    Plan.find(
+        { attendees: req.params.userId },
+        { title: 1, imageUrl: 1, attendees: 1, creator: 1, 'start.date': 1 },
+        { sort: { 'start.date': 1 } }).limit(20)
+        .then(response => {
+            console.log('CONSULTA PROCESADA!!!')
+            res.json(response)
+        })
+        .catch(err => res.status(500).json(err))
+})
+
 router.get('/getAllPlans/:userId', (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
@@ -40,7 +58,10 @@ router.get('/getAllPlans/:userId', (req, res) => {
         { attendees: req.params.userId },
         { title: 1, imageUrl: 1, attendees: 1, creator: 1, 'start.date': 1 },
         { sort: { 'start.date': 1 } })
-        .then(response => res.json(response))
+        .then(response => {
+            console.log('CONSULTA PROCESADA!!!')
+            res.json(response)
+        })
         .catch(err => res.status(500).json(err))
 })
 

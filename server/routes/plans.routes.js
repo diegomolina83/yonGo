@@ -27,7 +27,7 @@ router.get('/getOnePlan/:plan_id', (req, res) => {
 
 router.post('/plans/create', (req, res) => {
 
-    const { title, scope, category, description, owners, creator, location } = req.body
+    const { title, scope, category, description, owners, creator, imageUrl } = req.body
 
     console.log(req.body)
 
@@ -49,10 +49,10 @@ router.post('/plans/create', (req, res) => {
 
         const end = { location: req.body.endLocation, date: formattedEndDate }
 
-        planToCreate = { title, start, end, scope, category, description }
+        planToCreate = { title, start, end, scope, category, description, imageUrl }
     } else {
 
-        planToCreate = { title, start, scope, category, description, owners, creator }
+        planToCreate = { title, start, scope, category, description, owners, creator, imageUrl }
     }
 
     Plan.create(planToCreate)

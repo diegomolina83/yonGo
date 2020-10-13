@@ -2,14 +2,22 @@ import React, { Component } from 'react'
 
 import Container from 'react-bootstrap/Container'
 
-import MainNavbar from '../../shared/navbar/MainNavbar'
-import BackArrow from '../../styled/BackArrow'
+import MainNavbar from '../../../shared/navbar/MainNavbar'
+import BackArrow from '../../../styled/BackArrow'
 
 import Form from 'react-bootstrap/Form'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
+import Image from 'react-bootstrap/Image'
+
+import FormImage from '../../../shared/form/FormImage'
+import DefaultImage from './default-plan-img.png'
+
 import PlanFormLocation from './FormLocation'
-import planService from '../../../service/plan.service'
+
+import planService from '../../../../service/plan.service'
+import fileService from '../../../../service/files.service'
+
 
 import './PlanForm.css'
 
@@ -34,16 +42,19 @@ class PlanForm extends Component {
             description: '',
             requirements: '',
 
+            imageUrl: DefaultImage,
+            isImageLoading: false,
+
             creator: undefined,
             owners: []
 
         }
 
-        console.log('En el constructor de pFORM')
-
         this.hasEnd = false
         this.isValidForm = false
+
         this.planService = new planService()
+        this.fileService = new fileService
     }
 
     componentDidMount() {
@@ -97,6 +108,19 @@ class PlanForm extends Component {
         this.validation()
 
         this.forceUpdate()
+    }
+
+    handleFileUrl = e => {
+
+        const uploadData = new FormData()
+        uploadData.append('imageUrl', e.target.files[0])
+
+        const displayLoadingInfo = this.setState({ isImageLoading: true, imageUrl: '' })
+        const uploadImage = this.fileService.uploadImage(uploadData)
+
+        Promise.all([displayLoadingInfo, uploadImage])
+            .then(response => this.setState({ imageUrl: response[1].data.secure_url, isImageLoading: false }))
+            .catch(err => console.log(err))
     }
 
     validation = () => {
@@ -161,7 +185,7 @@ class PlanForm extends Component {
 
                 <Container fluid='lg pb-4'>
 
-                    <BackArrow backLink={this.props.history.goBack} color='red' />
+                    <BackArrow backLink={this.props.history.goBack} className='d-inline-block mt-3 mb-4' color='red' />
 
                     <h1 className='mb-5 text-center font-weight-bold'>Diseña una nueva <span>experiencia!</span></h1>
 
@@ -209,14 +233,17 @@ class PlanForm extends Component {
                             <Form.Control as="textarea" rows="3" name='requirements' onChange={this.handleInputChange} placeholder='¿Algo que deban saber?' />
                         </Form.Group> */}
 
+                        {!this.state.isImageLoading ?
+                            <FormImage src={this.state.imageUrl} onChange={this.handleFileUrl} />
+                            :
+                            <FormImage src={this.state.imageUrl} onChange={this.handleFileUrl} loading />}
+
                         <Button id='submit-btn' disabled className='mr-2 submit-btn' variant={this.props.styles.button.submit} type="submit">Crear plan</Button>
                         <Button variant={this.props.styles.button.discreet} onClick={this.props.history.goBack}>Cancelar</Button>
                     </Form>
 
                 </Container>
             </div>
-
-
         )
     }
 }
