@@ -16,7 +16,7 @@ class CardPlan extends Component {
                     <Link to={{
                         pathname: `/plans/details/${this.props.properties.planId}`,
                         cardProps: {
-                            cardProps
+                            cardProps: cardProps.properties
                         }
                     }}>   < Card style={{ width: '18rem' }}>
                             <Card.Img variant="top" src={this.props.properties.imageUrl} />

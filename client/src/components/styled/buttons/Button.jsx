@@ -22,7 +22,7 @@ const StyledBtn = styled.button`
     }
 
 `
-const SmallButton = ({ children, variant, outline, size, onClick, className, ariaControls, ariaExpanded, type }) => {
+const SmallButton = ({ children, variant, outline, size, onClick, className, ariaControls, ariaExpanded, type, style }) => {
 
     let sizeClass
 
@@ -128,6 +128,7 @@ const SmallButton = ({ children, variant, outline, size, onClick, className, ari
             aria-controls={ariaControls}
             aria-expanded={ariaExpanded}
             type={btnType}
+            style={style}
         >
             {children}
         </StyledBtn>

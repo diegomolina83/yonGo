@@ -10,103 +10,156 @@ import './PlansViewer.css'
 
 class PlansViewer extends Component {
 
-    constructor({ user, plansList }) {
+    constructor({ user, plansList, backLink }) {
+
         super()
+
         this.state = {
 
-            user: user,
-
-            userPlans: plansList,
-
-            currentShownPlans: 'all-plans',
-
-            plansContainerHeight: 0,
-
-            currentShownPlans: 'all-plans'
-
+            shownPlans: 'all-plans',
+            cardsRowHeight: 0,
+            cardsPerRow: undefined,
+            indexesToShow: []
         }
+    }
+
+    shownPlansSwitcher = e => {
+
+        e.target.classList.replace('deselected', 'selected')
+        document.getElementById(this.state.shownPlans).classList.replace('selected', 'deselected')
+
+        this.setState({ shownPlans: e.target.id })
     }
 
     componentDidMount() {
 
-        window.addEventListener("resize", this.setPlansScrollSize)
+        window.addEventListener('load', this.setCardsRowValues)
+        window.addEventListener('scroll', this.setRenderedPlansIndexes)
+        window.addEventListener('resize', this.setCardsRowValues)
+
+        this.setCardsRowValues()
     }
 
     componentWillUnmount() {
-        window.addEventListener("resize", null);
+
+        window.removeEventListener('load', this.setCardsRowValues)
+        window.removeEventListener('scroll', this.setRenderedPlansIndexes)
+        window.removeEventListener('resize', this.setCardsRowValues)
     }
 
-    plansHandler = (e) => {
+    setCardsRowValues = () => {
 
-        // Clicked btn class change
-        e.target.classList.replace('deselected', 'selected')
+        let cardsPerRow
 
-        // Clicked btn class change
-        document.getElementById(this.state.currentShownPlans).classList.replace('selected', 'deselected')
+        if (window.innerWidth < 576) {
 
-        // State update
-        this.setState({ currentShownPlans: e.target.id })
+            cardsPerRow = 1
 
+        } else if (window.innerWidth < 768) {
+
+            cardsPerRow = 2
+
+        } else {
+
+            cardsPerRow = 3
+        }
+
+        const cardElement = document.getElementById('plans-content').firstElementChild
+        const cardOffsetHeight = cardElement.offsetHeight
+
+        const computedMargin = window.getComputedStyle(cardElement).getPropertyValue('margin-bottom')
+        const margin = Number(computedMargin.slice(0, computedMargin.indexOf('p')))
+
+        const cardsRowHeight = cardOffsetHeight + margin
+
+        this.setState({ cardsRowHeight: cardsRowHeight, cardsPerRow: cardsPerRow }, this.setRenderedPlansIndexes)
     }
 
-    setPlansScrollSize = () => {
+    setRenderedPlansIndexes = () => {
 
-        const windowHeight = window.innerHeight
-        const plansContainerY = document.getElementById('plans-container').getBoundingClientRect().top
+        let indexesToShow
+        const rowsAmountToRender = 7
+        let contentPaddingTop
+        const saveMarginRows = 2
 
-        this.setState({ plansContainerHeight: windowHeight - plansContainerY })
-    }
+        if (window.scrollY === 0) {
 
-    plansHandler = (e) => {
+            document.getElementById('top-back-arrow').classList.remove('inactive')
 
-        // Clicked btn class change
-        e.target.classList.replace('deselected', 'selected')
+            const plansBackArrow = document.getElementById('plans-back-arrow')
+            plansBackArrow.classList.add('inactive')
+            plansBackArrow.parentElement.classList.add('inactive')
 
-        // Clicked btn class change
-        document.getElementById(this.state.currentShownPlans).classList.replace('selected', 'deselected')
+            document.getElementById('plans-container').style.paddingTop = '0'
 
-        // State update
-        this.setState({ currentShownPlans: e.target.id })
+            indexesToShow = [0, this.state.cardsPerRow * rowsAmountToRender]
 
-    }
+        } else {
 
-    scrolleo = e => {
+            // We change back arrows display
+            if (this.previousScrollValue === 0) {
 
-        console.log(e.target);
+                //document.getElementById('plans-container').style.paddingTop = '722px'
 
-        const scrollContent = document.getElementById('plans-content')
+                document.getElementById('top-back-arrow').classList.add('inactive')
 
-        // .scrollHeight = e.target.offsetHeight + e.target.scrollTop (the maximun one)
-        console.log('scrollHeight', scrollContent.scrollHeight) // The height of the content defined by its own content
-        console.log('e.target.scrollTop: ', e.target.scrollTop);    // Scroll value in y
-        console.log('e.target.offsetHeight: ', e.target.offsetHeight);  // The height of the container (setted in the styles)
+                const plansBackArrow = document.getElementById('plans-back-arrow')
+                plansBackArrow.classList.remove('inactive')
+                plansBackArrow.parentElement.classList.remove('inactive')
+            }
 
-        // console.log('parent.getBoundingClientRect()', scrollContent.getBoundingClientRect());
+            // We set indexes to show and content padding
 
-        // console.log('window.innerHeight: ', window.innerHeight);
+            let firstIndexToShow = Math.floor((window.scrollY - (this.state.cardsRowHeight * saveMarginRows)) / this.state.cardsRowHeight) * this.state.cardsPerRow
+            firstIndexToShow = firstIndexToShow > 0 ? firstIndexToShow : 0
+            const secondIndexToShow = firstIndexToShow + this.state.cardsPerRow * rowsAmountToRender
+
+            indexesToShow = [firstIndexToShow, secondIndexToShow]
+            contentPaddingTop = (firstIndexToShow / this.state.cardsPerRow) * this.state.cardsRowHeight
+
+            document.getElementById('plans-container').style.paddingTop = `${contentPaddingTop}px`
+        }
+
+        const contentPaddingBot = ((this.props.plansList.length - indexesToShow[1]) * this.state.cardsRowHeight) / this.state.cardsPerRow
+        document.getElementById('plans-container').style.paddingBottom = `${contentPaddingBot}px`
+
+        this.previousScrollValue = window.scrollY
+
+        this.setState({ indexesToShow: indexesToShow })
     }
 
     render() {
 
-        let plansToRender = this.state.currentShownPlans === 'all-plans' ? this.state.userPlans : this.state.userPlans.filter(elm => elm.creator === this.props.match.params.userId)
+        if (!this.props.user || !this.props.plansList || !this.props.backLink) {
 
-        plansToRender = plansToRender.slice(0, 20)
+            return null
+        }
+
+        const plansToShow = this.state.shownPlans === 'all-plans' ?
+            this.props.plansList.slice(this.state.indexesToShow[0], this.state.indexesToShow[1]) :
+            this.props.plansList.filter(elm => elm.creator === this.props.user._id).slice(this.state.indexesToShow[0], this.state.indexesToShow[1])
+
+
 
         return (
 
             <>
 
-                <TopButtons plansHandler={this.plansHandler} />
+                <TopButtons
+                    allPlans={this.props.plansList.length}
+                    createdPlans={this.props.plansList.filter(elm => elm.creator === this.props.user._id).length}
+                    switcher={this.shownPlansSwitcher}
+                    backLink={this.props.backLink} />
 
-                <div id='plans-container' className='hidden-scroll justify-space-between' onScroll={this.scrolleo} onPointerEnter={this.showPlansScroll} onPointerLeave={this.showPlansScroll} style={{ height: `${this.state.plansContainerHeight}px` }}>
+                <div id='plans-container' className='justify-space-between px-3'>
 
                     <Row id='plans-content'>
 
-                        {this.state.userPlans.length ?
+                        {plansToShow.length ?
 
                             <> {
 
-                                plansToRender.map((elm, idx) => <PlanCard key={idx} plan={elm} />)
+                                plansToShow.map((elm, idx) => <PlanCard key={idx} plan={elm} userId={this.props.user._id} />)
 
                             }</> : <p style={{ textAlign: 'center' }}>No hay planes que mostrar</p>
                         }

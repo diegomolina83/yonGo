@@ -1,16 +1,44 @@
+#plans-switcher{
+
+    top: 40px
+}
+
 #plans-switcher>div{
 
     border-bottom: solid 1px #e1e1e1;
-    border-top: solid 3px rgba(255, 255, 255, 0)
+    border-top: solid 3px rgba(255, 255, 255, 0);
+    color:grey
 }
 
 #plans-switcher>div.selected{
 
     border-bottom: solid 3px #5f7ab8;
     pointer-events: none;
+    color: black;
 }
 
 #plans-container{
 
-    padding-top: 0
+    padding-top: 0;
+    margin-left: -15px;
+    margin-right: -15px
+}
+
+.arrow-column{
+
+    transition: all;
+    transition-duration: .5s;
+}
+
+.arrow-column.inactive{
+    
+    padding: 0
+}
+
+@media(min-width: 576px){
+
+    #plans-switcher{
+
+        top: 54px
+    }
 }

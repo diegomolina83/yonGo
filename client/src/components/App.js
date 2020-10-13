@@ -90,9 +90,8 @@ class App extends Component {
               <PlanForm loggedInUser={this.state.loggedInUser} history={props.history} styles={this.styles} /> :
               <Redirect to="/" />} />
 
-            <Route path="/user/profile/:userId" render={props => this.state.loggedInUser ?
-              <UserProfile styles={this.customStyles} {...props} /> :
-              <Redirect to="/" />} />
+            <Route path="/user/profile/:userId" render={props =>
+              <UserProfile styles={this.customStyles} {...props} />} />
 
             <Route path="/plans/details/:plan" render={props => <PlanDetails {...props} />} />
 

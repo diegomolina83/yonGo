@@ -32,7 +32,7 @@ export default function SimpleMap(props) {
     const url = "http://localhost:5000/api/getAllPlans"
     const fetcher = (...args) => fetch(...args).then(res => res.json())
     const { data, error } = useSwr(url, fetcher)
-    const plans = data && !error ? data.slice(0, 2000) : []
+    const plans = data && !error ? data.slice(0, 3000) : []
     const points = plans.map(plan => ({
         type: "Feature",
         properties: {
@@ -129,13 +129,13 @@ export default function SimpleMap(props) {
         let clusterOther = params.filter(cluster => cluster.properties.category == "other")
 
         renderOption.includes("Todos") ? parametros = params : params = []
-        console.log(parametros)
-        console.log([...parametros, ...clustersSport])
-        renderOption.includes("Deporte") ? parametros = [...parametros,...clustersSport] : console.log()
-        renderOption.includes("Gastronomía") ? parametros = [...parametros,...clusterCulinary] : console.log()
+        // console.log(parametros)
+        // console.log([...parametros, ...clustersSport])
+        renderOption.includes("Deporte") ? parametros = [...parametros, ...clustersSport] : console.log()
+        renderOption.includes("Gastronomía") ? parametros = [...parametros, ...clusterCulinary] : console.log()
         renderOption.includes("Cultura") ? parametros = [...parametros, ...clusterCulture] : console.log()
-        renderOption.includes("Viajes") ? parametros = [...parametros,...clusterTravel] : console.log()
-        renderOption.includes("Otros") ? parametros = [...parametros,...clusterOther] : console.log()
+        renderOption.includes("Viajes") ? parametros = [...parametros, ...clusterTravel] : console.log()
+        renderOption.includes("Otros") ? parametros = [...parametros, ...clusterOther] : console.log()
 
         return (
             <div className="cardContainer">
@@ -278,7 +278,7 @@ export default function SimpleMap(props) {
                                     <Link to={{
                                         pathname: `/plans/details/${cluster.properties.planId}`,
                                         cardProps: {
-                                            cardProps: cluster
+                                            cardProps: cluster.properties
                                         }
                                     }}>
 

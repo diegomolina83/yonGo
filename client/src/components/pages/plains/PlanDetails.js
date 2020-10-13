@@ -6,7 +6,8 @@ class PlanDetails extends Component {
 
     constructor(props) {
         super()
-        this.propCard = props.location.cardProps.cardProps.properties
+        console.log(props)
+        this.propCard = props.location.cardProps.cardProps
     }
 
     render() {

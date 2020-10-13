@@ -2,15 +2,15 @@ import React from 'react'
 
 import Spinner from 'react-bootstrap/Spinner'
 
-const LoadingMessage = ({ message }) => {
+const LoadingMessage = ({ children }) => {
 
     return (
 
-        <div className='d-flex flex-column align-items-center' style={{ position: 'absolute', top: '50%', left: '50%', width: '200px', transform: 'translate(-100px)' }}>
+        <div className='d-flex flex-column align-items-center justify-content-center' style={{ position: 'absolute', width: '100%', height: '100%' }}>
 
             <Spinner animation="border" />
 
-            <p style={{ display: 'inline-block', textAlign: 'center', margin: 0, marginTop: '1rem' }}>{message}</p>
+            <p style={{ display: 'inline-block', textAlign: 'center', margin: 0, marginTop: '1rem' }}>{children}</p>
 
         </div>
 

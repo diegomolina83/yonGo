@@ -46,6 +46,10 @@ const userSchema = new Schema({
         mark: {
             amount: { type: Number, default: 0 },
             average: { type: Number, default: 0 },
+        },
+        planInvitations: {
+            type: [{ type: Schema.Types.ObjectId, ref: 'Plan' }],
+            default: []
         }
     }
 

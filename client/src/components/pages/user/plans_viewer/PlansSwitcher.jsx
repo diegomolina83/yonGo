@@ -10,11 +10,11 @@ const PlansSwitcher = ({ allPlans, createdPlans, switcher, backLink }) => {
 
     return (
 
-        <Row id='plans-switcher' className='mb-3' style={{ position: 'sticky', top: '54px', zIndex: '1', backgroundColor: 'white' }}>
+        <Row id='plans-switcher' className='mb-3' style={{ position: 'sticky', zIndex: '1', backgroundColor: 'white' }}>
 
-            <Col xs='auto' className='d-flex align-items-center'>
+            <Col xs='auto' className='d-flex align-items-center arrow-column inactive'>
 
-                <BackArrow id='plans-back-arrow' backLink={backLink} />
+                <BackArrow id='plans-back-arrow' backLink={backLink} className='inactive' />
 
             </Col>
 
@@ -24,7 +24,9 @@ const PlansSwitcher = ({ allPlans, createdPlans, switcher, backLink }) => {
                 <p className='mb-0' style={{ pointerEvents: 'none', cursor: 'none' }}>
 
                     <span style={{ fontWeight: '700' }}>{createdPlans} </span>
-                    {createdPlans !== 1 ? 'creaciones' : 'creación'}
+                    {window.innerWidth < 576 ? 'c' :
+                        createdPlans !== 1 ? 'creaciones' : 'creación'}
+
 
                 </p>
 
@@ -36,7 +38,8 @@ const PlansSwitcher = ({ allPlans, createdPlans, switcher, backLink }) => {
                 <p className='mb-0' style={{ pointerEvents: 'none', cursor: 'none' }}>
 
                     <span style={{ fontWeight: '700' }}>{allPlans} </span>
-                    {allPlans !== 1 ? 'participaciones' : 'participación'}
+                    {window.innerWidth < 576 ? 'p' :
+                        allPlans !== 1 ? 'participaciones' : 'participación'}
 
                 </p>
 
