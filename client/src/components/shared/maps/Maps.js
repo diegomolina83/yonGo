@@ -6,7 +6,9 @@ import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import useSupercluster from "use-supercluster"
 
-import Filtro from '../../pages/filtro/Filtro'
+import ScheduleIcon from '../Icons/ScheduleIcon'
+import ClockIcon from '../Icons/ClockIcon'
+import Filtro from '../../pages/filtro/Filtro.jsx'
 import CardList from './CardList'
 import './Maps.css'
 import '../../pages/filtro/Filtro.css'
@@ -16,12 +18,14 @@ import atleta from '../../../images/atleta.png'
 import fastfood from '../../../images/fastfood.png'
 import museo from '../../../images/museo.png'
 import nuknuk from '../../../images/nuknuk.png'
+import Button from 'react-bootstrap/esm/Button';
 
 
 const Marker = ({ children }) => children
 const renderOption = ["Todos"]
-
+let count = 0
 export default function SimpleMap(props) {
+
 
     const lat = 40.42
     const lng = -3.71
@@ -43,6 +47,9 @@ export default function SimpleMap(props) {
             description: plan.description,
             requirements: plan.requirements,
             imageUrl: plan.imageUrl,
+            start: plan.start,
+            end: plan.end,
+            attendees: plan.attendees,
             markAmount: plan.mark.amount
         },
         geometry: { type: "Point", coordinates: [parseFloat(plan.start.location.lng), parseFloat(plan.start.location.lat)] }
@@ -54,7 +61,7 @@ export default function SimpleMap(props) {
         points,
         bounds,
         zoom,
-        options: { radius: 200, maxZoom: 20 }
+        options: { radius: 200, maxZoom: 15 }
 
     })
 
@@ -63,7 +70,7 @@ export default function SimpleMap(props) {
     let markerMap
     useEffect(() => {
 
-        //Centrar el mapa con las coordenadas del a dirección introducida
+        //Centrar el mapa con las coordenadas de la dirección introducida
         let myLatLng
         mapRef.current && props.coords.lat ? myLatLng = { lat: props.coords.lat, lng: props.coords.lng } : console.log()
         mapRef.current && props.coords.lat ? mapRef.current.setCenter(myLatLng) : console.log()
@@ -73,7 +80,7 @@ export default function SimpleMap(props) {
             markerMap = new window.google.maps.Marker({
                 position: myLatLng,
                 map: mapRef.current,
-                title: "Hello World!",
+                title: "¡Mira todas las actividades!",
             })
         }
 
@@ -122,24 +129,23 @@ export default function SimpleMap(props) {
     //Función para renderizar cards según el filtro
     let parametros = []
     function renderList(params) {
-        let clustersSport = params.filter(cluster => cluster.properties.category == "sport")
-        let clusterCulture = params.filter(cluster => cluster.properties.category == "culture")
-        let clusterTravel = params.filter(cluster => cluster.properties.category == "travel")
-        let clusterCulinary = params.filter(cluster => cluster.properties.category == "culinary")
-        let clusterOther = params.filter(cluster => cluster.properties.category == "other")
+        let clustersSport = params.filter(cluster => cluster.properties.category === "sport")
+        let clusterCulture = params.filter(cluster => cluster.properties.category === "culture")
+        let clusterTravel = params.filter(cluster => cluster.properties.category === "travel")
+        let clusterCulinary = params.filter(cluster => cluster.properties.category === "culinary")
+        let clusterOther = params.filter(cluster => cluster.properties.category === "other")
 
         renderOption.includes("Todos") ? parametros = params : params = []
-        // console.log(parametros)
-        // console.log([...parametros, ...clustersSport])
         renderOption.includes("Deporte") ? parametros = [...parametros, ...clustersSport] : console.log()
         renderOption.includes("Gastronomía") ? parametros = [...parametros, ...clusterCulinary] : console.log()
         renderOption.includes("Cultura") ? parametros = [...parametros, ...clusterCulture] : console.log()
         renderOption.includes("Viajes") ? parametros = [...parametros, ...clusterTravel] : console.log()
         renderOption.includes("Otros") ? parametros = [...parametros, ...clusterOther] : console.log()
 
+        let newParam = parametros.filter(cluster => dateFilter(cluster))
         return (
             <div className="cardContainer">
-                <CardList highlightPlan={highlightPlan} understate={understate} clusters={parametros} />
+                <CardList highlightPlan={highlightPlan} understate={understate} clusters={newParam} />
             </div>
         )
     }
@@ -148,13 +154,18 @@ export default function SimpleMap(props) {
     //Función para filtrar los marcadores 
     function typeOfMarker(cluster) {
 
+        let category = cluster.properties.category
         if (renderOption.includes("Todos")) return cluster
-        // else if (cluster.properties.category == "sport") return cluster
-        else if (renderOption.includes("Deporte") && cluster.properties.category == "sport") return (cluster.properties.category == "sport")
-        else if (renderOption.includes("Viajes") && cluster.properties.category == "travel") return (cluster.properties.category == "travel")
-        else if (renderOption.includes("Cultura") && cluster.properties.category == "culture") return (cluster.properties.category == "culture")
-        else if (renderOption.includes("Gastronomía") && cluster.properties.category == "culinary") return (cluster.properties.category == "culinary")
-        else if (renderOption.includes("Otros") && cluster.properties.category == "other") return (cluster.properties.category == "other")
+        else if (renderOption.includes("Deporte") && category === "sport") return (category === "sport")
+        else if (renderOption.includes("Viajes") && category === "travel") return (category === "travel")
+        else if (renderOption.includes("Cultura") && category === "culture") return (category === "culture")
+        else if (renderOption.includes("Gastronomía") && category === "culinary") return (category === "culinary")
+        else if (renderOption.includes("Otros") && category === "other") return (category === "other")
+    }
+
+    //Función para cambiar el color de los botones de los filtros
+    function buttonColor(category) {
+        if (renderOption.includes(category)) { return "active" } else return "inactive"
     }
 
 
@@ -171,17 +182,54 @@ export default function SimpleMap(props) {
                     title="Popover right"
                 >
                     <img className="popoverImage " src={params.imageUrl}></img>
-                    {params.title} <strong>{params.description}</strong>
+                    <h5>{params.title}</h5>
+                    <p><ScheduleIcon /> {params.start.date.slice(0, 10)}</p>
+                    <p><ClockIcon /> {params.start.date.slice(params.start.date.indexOf('T') + 1, params.start.date.indexOf('T') + 6)}</p>
                 </Popover>
             </div>
         )
     }
 
+    //Función para ocultar/mostrar los filtros
+    const hideFilters = () => {
+        return (<Button className="filterButton" onClick={() => {
+            let filterButton = document.getElementsByClassName('filter')
+            for (let item of filterButton) {
+                item.classList.contains('hide') ? item.classList.remove('hide') : item.classList.add('hide')
+            }
+
+        }}>Filtros</Button>)
+    }
+
+
+    //Filtro por fecha
+    const dateFilter = (cluster) => {
+        let startDay
+        let newFecha
+        let today = new Date()
+        let currentYear = today.getFullYear()
+        let currentDay = today.getDate()
+        let currentMonth = today.getMonth() + 1
+        if (cluster.properties.start) {
+            startDay = cluster.properties.start.date.slice(0, 10)
+            // let hora = cluster.properties.start.date.slice(cluster.properties.start.date.indexOf('T') + 1, cluster.properties.start.date.indexOf('T') + 6)
+            newFecha = startDay.split("-")
+            if (currentYear <= newFecha[0])
+                if (currentMonth <= newFecha[1])
+                    if (currentDay <= newFecha[2])
+                        return true
+                    else return false
+                else return false
+            else return true
+        }
+        else return false
+
+    }
 
     return (
         <>
             <div className="map" style={{
-                height: '90vh', width: '100%'
+                height: '100vh', width: '100%'
             }}>
                 <GoogleMapReact
                     // layerTypes={['TrafficLayer', 'TransitLayer']} --> Posibles capas de carreteras pra el mapa
@@ -192,7 +240,7 @@ export default function SimpleMap(props) {
 
                     options={{
                         fullscreenControl: false,
-                        // streetViewControl:true
+                        streetViewControl: true
                     }}
                     defaultCenter={{
                         lat: lat,
@@ -217,16 +265,15 @@ export default function SimpleMap(props) {
                     {clusters.map(cluster => {
                         const [longitude, latitude] = cluster.geometry.coordinates
                         const { cluster: isCluster } = cluster.properties
-
-                        if (isCluster) {
+                        if (isCluster && renderOption.includes("Todos")) {
                             return <Marker
                                 key={cluster.id}
                                 lat={latitude}
                                 lng={longitude}
                             >
                                 <div className="cluster-marker" style={{
-                                    width: `${10 + (cluster.properties.point_count / points.length) * 30}px`,
-                                    height: `${10 + (cluster.properties.point_count / points.length) * 30}px`
+                                    width: `${40 + (cluster.properties.point_count / points.length) * 50}px`,
+                                    height: `${40 + (cluster.properties.point_count / points.length) * 50}px`
 
                                 }}
                                     onClick={() => {
@@ -235,7 +282,8 @@ export default function SimpleMap(props) {
                                         mapRef.current.panTo({ lat: latitude, lng: longitude })
                                     }}
                                 >
-                                    {cluster.properties.point_count}
+                                    {(dateFilter(cluster)) ? count++ : console.log()}
+                                    {cluster.properties.point_count - count}
                                 </div>
                             </Marker>;
                         }
@@ -259,10 +307,11 @@ export default function SimpleMap(props) {
                                 break;
                         }
 
-
                         let newCluster = typeOfMarker(cluster)
 
-                        if (newCluster) {
+
+
+                        if (newCluster && dateFilter(cluster)) {
                             return (<Marker
                                 key={cluster.properties.planId}
                                 lat={latitude}
@@ -293,19 +342,17 @@ export default function SimpleMap(props) {
                         }
                     })}
                 </GoogleMapReact>
-
-                <Filtro filter={() => filter("Deporte")} name={"Deporte"} />
-                <Filtro filter={() => filter("Viajes")} name={"Viajes"} />
-                <Filtro filter={() => filter("Gastronomía")} name={"Gastronomía"} />
-                <Filtro filter={() => filter("Cultura")} name={"Cultura"} />
-                <Filtro filter={() => filter("Otros")} name={"Otros"} />
-                <Filtro filter={() => filter("Todos")} name={"Todos"} />
-
+                {hideFilters()}
+                <div className="filtersButton">
+                    <Filtro filter={() => filter("Deporte")} name={"Deporte"} src={atleta} buttonColor={buttonColor("Deporte")} />
+                    <Filtro filter={() => filter("Viajes")} name={"Viajes"} src={viaje} buttonColor={buttonColor("Viajes")} />
+                    <Filtro filter={() => filter("Gastronomía")} name={"Gastronomía"} src={fastfood} buttonColor={buttonColor("Gastronomía")} />
+                    <Filtro filter={() => filter("Cultura")} name={"Cultura"} src={museo} buttonColor={buttonColor("Cultura")} />
+                    <Filtro filter={() => filter("Otros")} name={"Otros"} src={nuknuk} buttonColor={buttonColor("Otros")} />
+                    <Filtro filter={() => filter("Todos")} name={"Todos"} buttonColor={buttonColor("Todos")} />
+                </div>
 
                 {renderList(clusters)}
-                {/* <div className="cardContainer">
-                    <CardList highlightPlan={highlightPlan} understate={understate} clusters={clusters} />
-                </div> */}
 
             </div >
 

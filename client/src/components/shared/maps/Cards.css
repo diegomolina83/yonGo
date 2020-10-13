@@ -5,17 +5,17 @@
     top: 20%;
     max-height: 70%;
     text-decoration: none;
-    text-align: center;
+    
     
     
 }
 
 .cardContainer {
-    background-color: gray;
+   
     position: absolute;
     z-index: 1;
     right: 19px;
-    top: 25%;
+    top: 17%;
     max-height: 70%;
     max-width: 15%;
     min-width: 15%;
@@ -37,36 +37,31 @@
 
 
 .cardSelected{
-    background-color: green;
-    position: absolute;
-    top:0px;
-    left: 0px;
-    right: 0px;
-   
-    
+    display:none;    
 }
 
 .cardUnselected{
-    background-color: #5f7ab8;
     z-index: 1;
     right: 19px;
     top: 20%;
     max-height: 70%;
     text-decoration: none;
-    text-align: center;
+    
 }
 
 /*Media Queries*/
 
 @media (max-width: 768px) { 
 .cardContainer{
-    position:relative;
+    position:absolute;
     background-color: white;
     display:flex;
     right:0px;
-    top:0px;
+    top:80%;
     max-width: 100%;
 }
+
+
 
 
 }

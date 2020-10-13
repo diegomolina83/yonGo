@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom'
 import './Cards.css'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
+import fireIcon from '../../pages/user/plans_viewer/fuego.png'
+import Schedule from '../Icons/ScheduleIcon'
+import ClockIcon from '../Icons/ClockIcon'
+import AttendeesIcon from '../Icons/AttendeesIcon'
 
 
 class CardPlan extends Component {
@@ -18,16 +24,63 @@ class CardPlan extends Component {
                         cardProps: {
                             cardProps: cardProps.properties
                         }
-                    }}>   < Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={this.props.properties.imageUrl} />
+                    }}>
+
+                        <Card className='d-flex justify-content-center mb-3' style={{ width: '18rem' }}>
+                            <Card.Img style={{ maxHeight: '140px', objectFit: 'cover' }} variant="top" src={this.props.properties.imageUrl} />
                             <Card.Body>
-                                <Card.Title><h2>{this.props.properties.title}</h2></Card.Title>
-                                <Card.Text>
-                                    Puntuación:{this.props.properties.markAmount}
-                                </Card.Text>
-                                <Button size="sm" variant="primary">{this.props.properties.title}</Button>
+
+                                <Card.Title >{this.props.properties.title}</Card.Title>
+
+                                <div id="event-date">
+
+                                    <Schedule />
+
+                                    <Card.Text className='mb-1 d-inline-block ml-2'>
+                                        {this.props.properties.start.date.slice(0, 10)}
+                                    </Card.Text>
+
+                                </div>
+
+                                <div id="event-time">
+
+                                    <ClockIcon />
+
+                                    <Card.Text className='mb-1 d-inline-block ml-2'>
+                                        {this.props.properties.start.date.slice(this.props.properties.start.date.indexOf('T') + 1, this.props.properties.start.date.indexOf('T') + 6)}
+                                    </Card.Text>
+
+                                </div>
+
+                                <div id="event-attendees" className='mb-3'>
+
+                                    <AttendeesIcon />
+
+                                    <Card.Text className='d-inline-block ml-1'>
+                                        {this.props.properties.attendees.length}
+                                    </Card.Text>
+
+                                    {this.props.properties.attendees.length > 10 ?
+                                        <img src={fireIcon} alt="llama de fuego" className='ml-2' style={{ width: '15px' }} title='vas a morir!' /> : null}
+
+
+
+                                </div>
+
+                                <Row>
+
+                                    <Col>
+
+                                        <Button variant="primary" size='sm'>Go somewhere</Button>
+
+                                    </Col>
+
+                                </Row>
+
                             </Card.Body>
-                        </Card ></Link>
+                        </Card>
+
+                    </Link>
                 </div>
             </>
         )
@@ -46,6 +99,8 @@ class CardPlan extends Component {
 
 
 export default CardPlan
+
+
 
 
 
