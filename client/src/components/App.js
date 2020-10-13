@@ -4,10 +4,14 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import './App.css'
 
 import Home from './pages/home/Home'
-import PlanForm from './pages/planForm/PlanForm';
-import UserProfile from './pages/user/profile/Profile'
 
 import PlanDetails from './pages/plains/PlanDetails'
+import PlanForm from './pages/plans/planForm/PlanForm';
+import PlanEdition from './pages/plans/edit/PlanEdition'
+
+import UserProfile from './pages/user/profile/Profile'
+import UserSettings from './pages/user/edit/UserSettings'
+
 import authService from '../service/auth.service'
 
 import AppContext from './context/AppContext'
@@ -90,10 +94,11 @@ class App extends Component {
               <PlanForm loggedInUser={this.state.loggedInUser} history={props.history} styles={this.styles} /> :
               <Redirect to="/" />} />
 
-            <Route path="/user/profile/:userId" render={props =>
-              <UserProfile styles={this.customStyles} {...props} />} />
-
             <Route path="/plans/details/:plan" render={props => <PlanDetails {...props} />} />
+            <Route path="/plans/edit/:planId" render={props => <PlanEdition {...props} />} />
+
+            <Route path="/user/profile/:userId" render={props => <UserProfile styles={this.customStyles} {...props} />} />
+            <Route path="/user/settings/:userId" render={props => <UserSettings styles={this.customStyles} {...props} />} />
 
           </Switch>
 

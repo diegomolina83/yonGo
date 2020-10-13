@@ -2,21 +2,21 @@ import React, { Component } from 'react'
 
 import Container from 'react-bootstrap/Container'
 
-import MainNavbar from '../../shared/navbar/MainNavbar'
-import BackArrow from '../../styled/BackArrow'
+import MainNavbar from '../../../shared/navbar/MainNavbar'
+import BackArrow from '../../../styled/BackArrow'
 
 import Form from 'react-bootstrap/Form'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 
-import FormImage from '../../shared/form/FormImage'
+import FormImage from '../../../shared/form/FormImage'
 import DefaultImage from './default-plan-img.png'
 
 import PlanFormLocation from './FormLocation'
 
-import planService from '../../../service/plan.service'
-import fileService from '../../../service/files.service'
+import planService from '../../../../service/plan.service'
+import fileService from '../../../../service/files.service'
 
 
 import './PlanForm.css'

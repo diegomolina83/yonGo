@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 
-import ReactPlacesAutocomplete from '../../shared/maps/ReactPlacesAutocomplete'
+import ReactPlacesAutocomplete from '../../../shared/maps/ReactPlacesAutocomplete'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 //import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
 
-import Button from '../../styled/buttons/Button'
+import Button from '../../../styled/buttons/Button'
 
 
 
