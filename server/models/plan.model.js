@@ -19,6 +19,10 @@ const planSchema = new Schema({
                 type: String,
                 // required: true,
                 default: ''
+            },
+            address: {
+                type: String,
+                default: ''
             }
         },
         date: Date
@@ -26,7 +30,8 @@ const planSchema = new Schema({
     end: {
         location: {
             lat: String,
-            lng: String
+            lng: String,
+            address: String
         },
         date: Date
     },
@@ -60,6 +65,12 @@ const planSchema = new Schema({
     owners: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         default: []
+    },
+    chat: {
+        messages: {
+            type: [String],
+            default: []
+        },
     },
     requirements: [String]
 

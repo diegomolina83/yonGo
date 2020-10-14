@@ -40,7 +40,7 @@ export default function SimpleMap(props) {
     const [bounds, setBounds] = useState(null)
     const [renderFlag, setRenderFlag] = useState(true)
     const mapRef = useRef();
-    const url = "http://localhost:5000/api/getAllPlans"
+    const url = `${process.env.REACT_APP_API_URL}/getAllPlans`
     const fetcher = (...args) => fetch(...args).then(res => res.json())
     const { data, error } = useSwr(url, fetcher)
     const plans = data && !error ? data.slice(0, 3000) : []

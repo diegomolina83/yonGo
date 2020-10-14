@@ -28,33 +28,33 @@ class PlanForm extends Component {
 
         super()
 
-        this.state = props.location ?
+        this.state =
+        {
+            title: '',
 
-            props.location.plan :
+            startLocation: {},
+            startDate: '',
+            startTime: '',
 
-            {
-                title: '',
+            endLocation: '',
+            endDate: '',
+            endTime: '',
 
-                startLocation: {},
-                startDate: '',
-                startTime: '',
+            scope: 'friends',
+            category: '',
 
-                endLocation: '',
-                endDate: '',
-                endTime: '',
+            description: '',
+            requirements: '',
 
-                scope: 'friends',
-                category: '',
+            imageUrl: DefaultImage,
+            isImageLoading: false,
 
-                description: '',
-                requirements: '',
+            creator: undefined,
+            owners: [],
+            attendees: []
+        }
 
-                imageUrl: DefaultImage,
-                isImageLoading: false,
-
-                creator: undefined,
-                owners: []
-            }
+        this.isEdition = props.match ? true : false
 
         this.hasEnd = false
         this.isValidForm = false
@@ -65,21 +65,63 @@ class PlanForm extends Component {
 
     componentDidMount() {
 
-        this.setState({
-            creator: this.props.loggedInUser._id,
-            owners: new Array(this.props.loggedInUser._id)
-        })
+        if (this.isEdition) {
+
+            this.planService.getOnePlan(this.props.match.params.planId)
+                .then(matchedPlan => {
+
+                    const { title, scope, category, description, requirements, imageUrl, creator, owners, attendees, isImageLoading } = matchedPlan.data
+                    matchedPlan.data.isImageLoading = false
+
+                    const objToSet = { title, scope, category, description, requirements, imageUrl, creator, owners, attendees, isImageLoading }
+                    objToSet.startDate = matchedPlan.data.start.date.slice(0, 10)
+                    objToSet.startTime = matchedPlan.data.start.date.slice(matchedPlan.data.start.date.indexOf('T') + 1, matchedPlan.data.start.date.indexOf('T') + 6)
+
+                    if (matchedPlan.data.end) {
+
+                        objToSet.endDate = matchedPlan.data.end.date.slice(0, 10)
+                        objToSet.endTime = matchedPlan.data.end.date.slice(matchedPlan.data.end.date.indexOf('T') + 1, matchedPlan.data.end.date.indexOf('T') + 6)
+                    }
+
+                    this.isValidForm = true
+                    document.getElementById('submit-btn').toggleAttribute('disabled')
+                    this.setState(objToSet)
+                })
+                .catch(err => console.log(err))
+
+
+        } else {
+
+            this.setState({
+                creator: this.props.loggedInUser._id,
+                owners: new Array(this.props.loggedInUser._id),
+                attendees: new Array(this.props.loggedInUser._id)
+
+            })
+        }
+
     }
 
     handleFormSubmit = e => {
 
         e.preventDefault()
 
-        this.planService.createPlan(this.state)
-            .then(response => {
-                this.props.history.push('/')
-            })
-            .catch(err => console.log(err))
+        if (this.isEdition) {
+
+            console.log('Editando plan :)');
+            this.planService.editPlan(this.props.match.params.planId, this.state)
+                .then(respuesta => console.log('el siguiente plan ha sido creado: ', respuesta))
+                .catch(err => console.log({ err }))
+
+        } else {
+
+            this.planService.createPlan(this.state)
+                .then(response => {
+                    this.props.history.push('/')
+                })
+                .catch(err => console.log(err))
+        }
+
     }
 
     handleInputChange = e => {
@@ -126,7 +168,7 @@ class PlanForm extends Component {
 
         Promise.all([displayLoadingInfo, uploadImage])
             .then(response => this.setState({ imageUrl: response[1].data.secure_url, isImageLoading: false }))
-            .catch(err => console.log(err))
+            .catch(err => console.log({ err }))
     }
 
     validation = () => {
@@ -158,10 +200,15 @@ class PlanForm extends Component {
             document.getElementById('submit-btn').toggleAttribute('disabled')
 
             this.isValidForm = !this.isValidForm
+        } else {
+
+            console.log('Fill al the fields please!')
         }
     }
 
-    getCoords = (coords, flag) => {
+    getCoords = (coords, address, flag) => {
+
+        console.log('la dirección es: ', address);
 
         switch (flag) {
             case "start":
@@ -197,12 +244,16 @@ class PlanForm extends Component {
 
                             <BackArrow backLink={this.props.history.goBack} className='d-inline-block mt-3 mb-4' color='red' />
 
-                            <h1 className='mb-5 text-center font-weight-bold'>Diseña una nueva <span>experiencia!</span></h1>
+                            <h1 className='mb-5 text-center font-weight-bold'>{this.isEdition ? <>Rediseña tu <span>plan</span></> : <>Diseña una nueva <span>experiencia!</span></>} </h1>
 
                             <Form onSubmit={this.handleFormSubmit}>
 
                                 <Form.Group>
-                                    <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
+                                    <Form.Control
+                                        // className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold'
+                                        className='plan-new-title rounded font-weight-bold'
+
+                                        type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
                                 </Form.Group>
 
                                 <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={styles} hasEndToogle={this.hasEndToogle} />
@@ -213,7 +264,7 @@ class PlanForm extends Component {
 
                                     <ButtonGroup className='border rounded flex-column flex-sm-row d-flex d-sm-inline-flex' aria-label="scope">
                                         <Button id='public' variant={styles.button.default} onClick={this.handleOptionChange}>Público</Button>
-                                        <Button id='friends' className='selected-btn' onClick={this.handleOptionChange}>Amigos</Button>
+                                        <Button id='friends' className='selected-btn' variant={styles.button.default} onClick={this.handleOptionChange}>Amigos</Button>
                                         <Button id='group' variant={styles.button.default} onClick={this.handleOptionChange}>Grupo</Button>
                                     </ButtonGroup>
 
@@ -224,11 +275,11 @@ class PlanForm extends Component {
                                     <Form.Label className='d-block'>Categoría</Form.Label>
 
                                     <ButtonGroup className='border rounded flex-column flex-sm-row d-flex d-sm-inline-flex' aria-label="category">
-                                        <Button id='sport' variant='light' onClick={this.handleOptionChange} >Deporte</Button>
-                                        <Button id='culinary' variant={styles.button.default} onClick={this.handleOptionChange} >Culinaria</Button>
-                                        <Button id='culture' variant={styles.button.default} onClick={this.handleOptionChange} >Cultura</Button>
-                                        <Button id='travel' variant={styles.button.default} onClick={this.handleOptionChange} >Viajes</Button>
-                                        <Button id='other' variant={styles.button.default} onClick={this.handleOptionChange} >Otra</Button>
+                                        <Button id='sport' className={this.isEdition && this.state.category === 'sport' ? 'selected-btn' : ''} variant={styles.button.default} onClick={this.handleOptionChange} >Deporte</Button>
+                                        <Button id='culinary' className={this.isEdition && this.state.category === 'culinary' ? 'selected-btn' : ''} variant={styles.button.default} onClick={this.handleOptionChange} >Culinaria</Button>
+                                        <Button id='culture' className={this.isEdition && this.state.category === 'culture' ? 'selected-btn' : ''} variant={styles.button.default} onClick={this.handleOptionChange} >Cultura</Button>
+                                        <Button id='travel' className={this.isEdition && this.state.category === 'travel' ? 'selected-btn' : ''} variant={styles.button.default} onClick={this.handleOptionChange} >Viajes</Button>
+                                        <Button id='other' className={this.isEdition && this.state.category === 'other' ? 'selected-btn' : ''} variant={styles.button.default} onClick={this.handleOptionChange} >Otra</Button>
                                     </ButtonGroup>
 
                                 </Form.Group>
@@ -248,7 +299,7 @@ class PlanForm extends Component {
                                     :
                                     <FormImage src={this.state.imageUrl} onChange={this.handleFileUrl} loading />}
 
-                                <Button id='submit-btn' disabled className='mr-2 submit-btn' variant={styles.button.submit} type="submit">Crear plan</Button>
+                                <Button id='submit-btn' disabled className='mr-2 submit-btn' variant={styles.button.submit} type="submit">{this.isEdition ? 'Editar' : 'Crear'} plan</Button>
                                 <Button variant={styles.button.discreet} onClick={this.props.history.goBack}>Cancelar</Button>
                             </Form>
 

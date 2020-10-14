@@ -13,7 +13,20 @@ import Button from '../../../styled/buttons/Button'
 
 
 const PlanFormLocation = (props) => {
-    const [open, setOpen] = useState({ value: false, btnText: 'Añadir final', toogleFun: props.hasEndToogle });
+    const [open, setOpen] = useState({ value: false, btnText: 'Añadir final', toogleFun: props.hasEndToogle })
+
+    //props.formState.endDate ? setOpen(true) : null
+
+    console.log('props.formState: ', props.formState)
+    console.log('open', open)
+
+    if (props.formState.endDate && !open) {
+
+        console.log('Si entrar entro')
+
+        setOpen(true)
+
+    }
 
 
     return (
@@ -29,13 +42,13 @@ const PlanFormLocation = (props) => {
             <Row>
                 <Col>
                     <Form.Group>
-                        <Form.Control type="date" name="startDate" value={props.formState.inversions} onChange={props.handleInputChange} />
+                        <Form.Control type="date" name="startDate" value={props.formState.startDate} onChange={props.handleInputChange} />
                     </Form.Group>
                 </Col>
 
                 <Col>
                     <Form.Group>
-                        <Form.Control type="time" name="startTime" value={props.formState.inversions} onChange={props.handleInputChange} />
+                        <Form.Control type="time" name="startTime" value={props.formState.startTime} onChange={props.handleInputChange} />
                     </Form.Group>
                 </Col>
             </Row>

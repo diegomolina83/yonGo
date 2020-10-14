@@ -27,7 +27,7 @@ router.get('/getOnePlan/:plan_id', (req, res) => {
 
 router.post('/plans/create', (req, res) => {
 
-    const { title, scope, category, description, owners, creator, imageUrl } = req.body
+    const { title, scope, category, description, owners, creator, attendees, imageUrl } = req.body
 
     console.log(req.body)
 
@@ -49,10 +49,10 @@ router.post('/plans/create', (req, res) => {
 
         const end = { location: req.body.endLocation, date: formattedEndDate }
 
-        planToCreate = { title, start, end, scope, category, description, imageUrl }
+        planToCreate = { title, start, end, scope, category, description, owners, creator, attendees, imageUrl }
     } else {
 
-        planToCreate = { title, start, scope, category, description, owners, creator, imageUrl }
+        planToCreate = { title, start, scope, category, description, owners, creator, attendees, imageUrl }
     }
 
     Plan.create(planToCreate)
@@ -61,6 +61,41 @@ router.post('/plans/create', (req, res) => {
             console.log(err)
             res.status(500).json(err)
         })
+})
+
+router.put('/plans/edit/:id', (req, res) => {
+
+    const { title, scope, category, description, owners, creator, attendees, imageUrl } = req.body
+
+    console.log(req.body)
+
+    // We set the Date object for the startDate
+    const startDateArray = req.body.startDate.split('-').map(elm => Number(elm))
+    const startTimeArray = req.body.startTime.split(':').map(elm => Number(elm))
+    const formattedStartDate = new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2], startTimeArray[0], startTimeArray[1])
+
+    const start = { location: req.body.startLocation, date: formattedStartDate }
+
+    let planToEdit
+
+    if (req.body.endDate && req.body.endTime) {
+
+        // We set the Date object for the endDate
+        const endDateArray = req.body.endDate.split('-').map(elm => Number(elm))
+        const endTimeArray = req.body.endTime.split(':').map(elm => Number(elm))
+        const formattedEndDate = new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2], endTimeArray[0], endTimeArray[1])
+
+        const end = { location: req.body.endLocation, date: formattedEndDate }
+
+        planToEdit = { title, start, end, scope, category, description, owners, creator, attendees, imageUrl }
+    } else {
+
+        planToEdit = { title, start, scope, category, description, owners, creator, attendees, imageUrl }
+    }
+
+    Plan.findByIdAndUpdate(req.params.id, planToEdit, { new: true })
+        .then(updatedPlan => res.json(updatedPlan))
+        .catch(err => res.status(500).json(err))
 })
 
 
