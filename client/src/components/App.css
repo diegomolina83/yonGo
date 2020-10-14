@@ -68,7 +68,6 @@ h1{
 .selected-btn:hover{
 
   background-color: #5f7ab8;
-
   color:white
 }
 
@@ -99,8 +98,11 @@ h1{
   transition-duration: .5s;
 }
 
-.plan-marker img:hover{
-  width: 50px;
+.plan-marker:hover{
+  width: 80px;
+  height: 80px;
+   transition: all;
+  transition-duration: .5s;
 }
 
 .highlight{
@@ -150,11 +152,11 @@ top:15%;
   align-items: center;  
 }
 
-.inactive{
+.inactiveButton{
     background-color: #3d619b!important;
 }
 
-.active{
+.activeButton{
     background-color: green!important;
 }
 
@@ -189,6 +191,9 @@ top:15%;
   margin-top:5%;
   display:flex;
 }
+.detailsBody{
+  width:100%;
+}
 
 /* .mapBody{
 overflow: hidden;
@@ -214,6 +219,63 @@ border:none;
 outline:none;
 }
 
+
+.imageAndMapDetail{
+  display:flex;
+  margin:0 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.imageAndMapDetail img{
+  width: 60vh;
+  margin:0 15px;
+}
+
+.detailsBody h1{
+text-align: center;
+font-family: 'Poppins', sans-serif;
+font-size: 60px;
+margin-bottom:20px;
+}
+
+.profileImageDetail{
+width:8%;
+border-radius: 50%;
+}
+
+
+.infoDetail{
+  width:70%;
+  display:flex;
+  margin:0 auto;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.dateDetails{
+  display:flex;
+  flex-direction: column;
+}
+
+.dateAndProfileDetail{
+  display: flex;
+}
+
+.menuButtonsTop{
+ 
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  margin:0 auto;
+}
+
+.menuButtons{
+  opacity: 1;
+  transition: opacity 1s;
+  background-color: #5f7ab8;
+}
 @media (min-width: 300px) { 
   
   h1 {

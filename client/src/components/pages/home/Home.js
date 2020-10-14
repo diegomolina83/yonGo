@@ -53,7 +53,12 @@ class Home extends Component {
                     item.classList.contains('hide') ? item.classList.remove('hide') : item.classList.add('hide')
                 }
             }}><img className="userImg" src={this.props.loggedInUser.imageUrl} /></button>)}
-        else return (<img className="userImg" src="https://lacasitacreativa.files.wordpress.com/2012/11/282416.gif" />)
+        else return (<button className="userImgButton" onClick={() => {
+            let filterButton = document.getElementsByClassName('menuButtons')
+            for (let item of filterButton) {
+                item.classList.contains('hide') ? item.classList.remove('hide') : item.classList.add('hide')
+            }
+        }}><img className="userImg" src="https://lacasitacreativa.files.wordpress.com/2012/11/282416.gif" /></button>)
     }
 
 
@@ -67,13 +72,15 @@ class Home extends Component {
                     <h1 className="logo">yonGo</h1>
                     <div className="principalButtons">
                         {this.putImage()}
+                        <div className="menuButtonsTop">
                         {!this.props.loggedInUser && <Button className="menuButtons" onClick={() => this.setState({ logModal: true, logType: 'Login' })}>Login</Button>}
                         {!this.props.loggedInUser && <Button className="menuButtons"onClick={() => this.setState({ logModal: true, logType: 'Sign up' })}>Registro</Button>}
                         {this.props.loggedInUser && <Button className="menuButtons" onClick={this.props.logoutUser}>Cerrar sesión</Button>}
+                            {this.props.loggedInUser && <Link className="menuButtons" to="/plans/new"><Button className="menuButtons">Nuevo plan</Button></Link>}
                         {this.props.loggedInUser && <Link className='btn btn-primary mr-1 menuButtons' to={{
                             pathname: `user/profile/${this.props.loggedInUser._id}`
                         }}>Perfil</Link>}
-                        {this.props.loggedInUser && <Link className="menuButtons" to="/plans/new"><Button>Nuevo plan</Button></Link>}
+                        </div>
                     </div>
 
                     <ReactPlacesAutocomplete newClass={"searchBarMap"} getCoords={this.getCoords} flag={"map"} />

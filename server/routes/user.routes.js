@@ -37,9 +37,9 @@ router.get('/getAllPlans/fast/:userId', (req, res) => {
     }
 
     Plan.find(
-        { attendees: req.params.userId },
-        { title: 1, imageUrl: 1, attendees: 1, creator: 1, 'start.date': 1 },
-        { sort: { 'start.date': 1 } }).limit(20)
+        { attendees: req.params.userId })
+        .sort({ 'start.date': 1 })
+        .limit(20)
         .then(response => {
             console.log('CONSULTA PROCESADA!!!')
             res.json(response)
@@ -55,9 +55,8 @@ router.get('/getAllPlans/:userId', (req, res) => {
     }
 
     Plan.find(
-        { attendees: req.params.userId },
-        { title: 1, imageUrl: 1, attendees: 1, creator: 1, 'start.date': 1 },
-        { sort: { 'start.date': 1 } })
+        { attendees: req.params.userId })
+        .sort({ 'start.date': 1 })
         .then(response => {
             console.log('CONSULTA PROCESADA!!!')
             res.json(response)

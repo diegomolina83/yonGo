@@ -50,6 +50,7 @@ export default function SimpleMap(props) {
             start: plan.start,
             end: plan.end,
             attendees: plan.attendees,
+            creator: plan.creator,
             markAmount: plan.mark.amount
         },
         geometry: { type: "Point", coordinates: [parseFloat(plan.start.location.lng), parseFloat(plan.start.location.lat)] }
@@ -165,7 +166,7 @@ export default function SimpleMap(props) {
 
     //Función para cambiar el color de los botones de los filtros
     function buttonColor(category) {
-        if (renderOption.includes(category)) { return "active" } else return "inactive"
+        if (renderOption.includes(category)) { return "activeButton" } else return "inactiveButton"
     }
 
 
@@ -326,9 +327,6 @@ export default function SimpleMap(props) {
                                 >
                                     <Link to={{
                                         pathname: `/plans/details/${cluster.properties.planId}`,
-                                        cardProps: {
-                                            cardProps: cluster.properties
-                                        }
                                     }}>
 
                                         <button onMouseOver={() => { showCard(cluster.properties.planId) }} onMouseOut={() => hideCard(cluster.properties.planId)} id={`${cluster.properties.planId}`} className={`plan-marker`}>
