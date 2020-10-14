@@ -17,13 +17,15 @@
 
 .plan-new-title{
 
-    font-size: 1.2em;
+    background-color: #43506c;
+    color: white
 }
 
 .plan-new-title::placeholder {
     
     /* text-transform: uppercase; */
     font-weight: normal;
+    color: white
 }
 
 .plan-new .form-location{

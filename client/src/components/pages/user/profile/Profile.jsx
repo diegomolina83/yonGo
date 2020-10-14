@@ -36,14 +36,14 @@ class UserProfile extends Component {
 
         Promise.all([getUser, getPlans])
             .then(response => this.setState({ user: response[0].data, userPlans: response[1].data }, this.getAllPlans))
-            .catch(err => console.log(err))
+            .catch(err => console.log({ err }))
     }
 
     getAllPlans() {
 
         this.userService.getAllPlans(this.props.match.params.userId)
             .then(response => this.setState({ user: this.state.user, userPlans: response.data }))
-            .catch(err => console.log(err))
+            .catch(err => console.log({ err }))
     }
 
     render() {

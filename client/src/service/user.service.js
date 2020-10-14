@@ -4,7 +4,8 @@ export default class PlanService {
 
     constructor() {
         this.api = axios.create({
-            baseURL: process.env.REACT_APP_API_URL,
+            baseURL: 'http://localhost:5000/api/users',
+            // baseURL: process.env.REACT_APP_API_URL
             withCredentials: true
         })
     }

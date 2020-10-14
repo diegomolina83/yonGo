@@ -21,8 +21,6 @@ class App extends Component {
 
   constructor() {
 
-    console.log('Montando App.js')
-
     super()
     this.state = {
       loggedInUser: undefined,

@@ -82,7 +82,7 @@ class Home extends Component {
 
         if (this.props.loggedInUser) {
             return (<button className="userImgButton" onClick={() => { this.setState({ logExpand: !this.state.logExpand }) }}>
-                <img className="userImg" src={this.props.loggedInUser.imageUrl} />
+                <img className="userImg" src={this.props.loggedInUser.imageUrl} style={{ display: 'block', margin: '0 auto' }} />
             </button>)
         }
         else return (<img className="userImg" src="https://lacasitacreativa.files.wordpress.com/2012/11/282416.gif" />)
@@ -114,14 +114,14 @@ class Home extends Component {
 
                                         {this.props.loggedInUser ?
                                             <>
-                                                <CustomButton variant='darkBlue' size='sm'>
-                                                    <Link to={`user/profile/${this.props.loggedInUser._id}`} style={{ color: 'white', textDecoration: 'none' }}>
+                                                <CustomButton className='p-0' variant='darkBlue' size='sm'>
+                                                    <Link to={`user/profile/${this.props.loggedInUser._id}`} className='d-block w-100 h-100' style={{ color: 'white', textDecoration: 'none', padding: '.25rem .5rem' }}>
                                                         Perfil
                                                     </Link>
                                                 </CustomButton>
 
-                                                <CustomButton variant='darkBlue' size='sm'>
-                                                    <Link to="/plans/new" style={{ color: 'white', textDecoration: 'none' }}>
+                                                <CustomButton className='p-0' variant='darkBlue' size='sm'>
+                                                    <Link to="/plans/new" className='d-block w-100 h-100' style={{ color: 'white', textDecoration: 'none', padding: '.25rem .5rem' }}>
                                                         Nuevo plan
                                                     </Link>
                                                 </CustomButton>

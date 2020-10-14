@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form'
 
 
 export default function ReactPlacesAutocomplete(props) {
+
     const [address, setAddress] = React.useState("")
     const [, setCoordinates] = React.useState({ lat: null, lng: null })
 
@@ -16,7 +17,7 @@ export default function ReactPlacesAutocomplete(props) {
         const latLng = await getLatLng(results[0])
         setAddress(value)
         setCoordinates(latLng)
-        await props.getCoords([latLng.lat, latLng.lng], props.flag)
+        await props.getCoords([latLng.lat, latLng.lng], value, props.flag)
     }
 
 
@@ -26,7 +27,7 @@ export default function ReactPlacesAutocomplete(props) {
             onChange={setAddress}
             onSelect={handleSelect}
         >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                <div className={`searchBar ${props.newClass}`}>
+            <div className={`searchBar ${props.newClass}`}>
                 <Form.Control {...getInputProps({ placeholder: "Escribe dirección" })} />
 
                 <div>
