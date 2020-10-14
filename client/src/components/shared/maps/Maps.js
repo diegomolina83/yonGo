@@ -19,16 +19,23 @@ import fastfood from '../../../images/fastfood.png'
 import museo from '../../../images/museo.png'
 import nuknuk from '../../../images/nuknuk.png'
 import Button from 'react-bootstrap/esm/Button';
+import CustomButton from '../../styled/buttons/Button'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
+import Collapse from 'react-bootstrap/Collapse'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 const Marker = ({ children }) => children
 const renderOption = ["Todos"]
 let count = 0
+
 export default function SimpleMap(props) {
 
 
     const lat = 40.42
     const lng = -3.71
+    const [filterExpand, setFilterExpand] = useState(false)
     const [zoom, setZoom] = useState(10)
     const [bounds, setBounds] = useState(null)
     const [renderFlag, setRenderFlag] = useState(true)
@@ -191,17 +198,6 @@ export default function SimpleMap(props) {
         )
     }
 
-    //Función para ocultar/mostrar los filtros
-    const hideFilters = () => {
-        return (<Button className="filterButton" onClick={() => {
-            let filterButton = document.getElementsByClassName('filter')
-            for (let item of filterButton) {
-                item.classList.contains('hide') ? item.classList.remove('hide') : item.classList.add('hide')
-            }
-
-        }}>Filtros</Button>)
-    }
-
 
     //Filtro por fecha
     const dateFilter = (cluster) => {
@@ -340,14 +336,40 @@ export default function SimpleMap(props) {
                         }
                     })}
                 </GoogleMapReact>
-                {hideFilters()}
+                
                 <div className="filtersButton">
-                    <Filtro filter={() => filter("Deporte")} name={"Deporte"} src={atleta} buttonColor={buttonColor("Deporte")} />
-                    <Filtro filter={() => filter("Viajes")} name={"Viajes"} src={viaje} buttonColor={buttonColor("Viajes")} />
-                    <Filtro filter={() => filter("Gastronomía")} name={"Gastronomía"} src={fastfood} buttonColor={buttonColor("Gastronomía")} />
-                    <Filtro filter={() => filter("Cultura")} name={"Cultura"} src={museo} buttonColor={buttonColor("Cultura")} />
-                    <Filtro filter={() => filter("Otros")} name={"Otros"} src={nuknuk} buttonColor={buttonColor("Otros")} />
-                    <Filtro filter={() => filter("Todos")} name={"Todos"} buttonColor={buttonColor("Todos")} />
+                    <Row>
+                        <Col className='d-flex flex-column justify-content-center px-0'>
+
+                            <CustomButton variant='red' size='sm' style={{ width: '100%', borderRadius: '.2rem .2rem 0 0' }} onClick={() => setFilterExpand(!filterExpand)}>
+
+                                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-eye-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                    <path fill-rule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                </svg>
+
+                            </CustomButton>
+
+                            <Collapse in={filterExpand}>
+
+                                <div id="smoother">
+                                    <ButtonGroup vertical style={{ border: 'solid 2px #ef4b4c' }}>
+
+                                        <Filtro variant="lightGrey" filter={() => filter("Deporte")} name={"Deporte"} src={atleta} buttonColor={buttonColor("Deporte")} />
+                                        <Filtro variant="lightGrey" filter={() => filter("Viajes")} name={"Viajes"} src={viaje} buttonColor={buttonColor("Viajes")} />
+                                        <Filtro variant="lightGrey" filter={() => filter("Gastronomía")} name={"Gastronomía"} src={fastfood} buttonColor={buttonColor("Gastronomía")} />
+                                        <Filtro variant="lightGrey" filter={() => filter("Cultura")} name={"Cultura"} src={museo} buttonColor={buttonColor("Cultura")} />
+                                        <Filtro variant="lightGrey" filter={() => filter("Otros")} name={"Otros"} src={nuknuk} buttonColor={buttonColor("Otros")} />
+                                        <Filtro variant="lightGrey" filter={() => filter("Todos")} name={"Todos"} buttonColor={buttonColor("Todos")} />
+
+                                    </ButtonGroup>
+                                </div>
+
+                            </Collapse>
+
+
+                        </Col>
+                    </Row>
                 </div>
 
                 {renderList(clusters)}
@@ -355,7 +377,9 @@ export default function SimpleMap(props) {
             </div >
 
         </>
-    );
+    )
 }
+
+
 
 

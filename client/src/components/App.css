@@ -153,38 +153,85 @@ top:15%;
 }
 
 .inactiveButton{
-    background-color: #3d619b!important;
+    background-color: #303647!important;
+    color:white!important;
 }
 
 .activeButton{
     background-color: green!important;
+    color:white!important;
 }
 
 
-.searchBarMap{
-    width: 25%;
+/* .searchBarMap{
+    width: 300px;
     position: absolute;
     z-index: 5;
     left: 37%;
-    top: 7%;
+    top: 10px;
     background-color: #5f7ab8;
     padding: 3px;
     border-radius: 10px;
+} */
+
+.searchBarMap-container{
+
+  position: absolute;
+  width: 100%;
+  height: 70px;
+
+  top: 0;
+  left: 0;
+  
+  z-index: 5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+/* .searchBarMap{
+    width: 300px;
+    position: absolute;
+    z-index: 5;
+    left: 37%;
+    top: 10px;
+    padding: 3px;
+    border-radius: 10px;
+} */
+
+.searchBarMap input{
+
+  position: relative;
+
+  width: 300px;
+  z-index: inherit;
+  border-radius: 30px;
+
+  border: solid 2px #5f7ab8;
+}
+
+.searchBarMap>div{
+
+  width: 300px;
+  position: absolute;
 }
 
 .logo{
   font-family: 'Sansita Swashed', cursive;
   position: absolute;
   z-index: 5;
-  top:5%;
-  left:2%;
+  top: 10px;
+  left:20px;
+  font-size: 2em;
 }
 
 .principalButtons{
   position: absolute;
   z-index: 5;
-  top:12%;
-  left:2%;
+  top:60px;
+  left:30px;
 }
 
 .details{

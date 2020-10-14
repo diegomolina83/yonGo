@@ -10,7 +10,7 @@ const PlansSwitcher = ({ allPlans, createdPlans, switcher, backLink }) => {
 
     return (
 
-        <Row id='plans-switcher' className='mb-3' style={{ position: 'sticky', zIndex: '1', backgroundColor: 'white' }}>
+        <Row id='plans-switcher' className='mb-3' style={{ position: 'sticky', zIndex: '2', backgroundColor: 'white' }}>
 
             <Col xs='auto' className='d-flex align-items-center arrow-column inactive'>
 

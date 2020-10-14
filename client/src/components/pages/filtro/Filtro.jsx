@@ -2,21 +2,19 @@ import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button'
 import '../../App.css'
 import '../../shared/maps/Maps.css'
+import CustomButton from '../../styled/buttons/Button'
 
 
-class Filtro extends Component {
+const Filtro = ({ buttonColor, name, filter, src, variant }) => {
 
-    constructor(props) {
-        super()
-    }
-    render() {
-        
-        return (
-            <Button className={`filter ${this.props.buttonColor}`} id={this.props.name} onClick={this.props.filter} >
-                {this.props.src ?  this.props.name  : "Todos"}</Button>
-        )
 
-    }
+
+    return (
+        <CustomButton variant={variant} size='sm' className={`${buttonColor}`} id={name} onClick={filter} >
+            {src ? name : "Todos"}</CustomButton>
+    )
+
+
 }
 
 export default Filtro
