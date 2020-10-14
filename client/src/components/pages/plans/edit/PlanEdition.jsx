@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 
+import PlanService from '../../../../service/plan.service'
+
+import PlanForm from '../planForm/PlanForm'
+
 //import './PlanEdition.css'
 
 class PlanEdition extends Component {
@@ -7,12 +11,19 @@ class PlanEdition extends Component {
     constructor() {
         super()
         this.state = {}
+
+        this.planService = new PlanService()
+    }
+
+    componentDidMount() {
+
+        this.planService.getOnePlan()
     }
 
     render() {
         return (
 
-            <h4 style={{ color: 'grey' }}><b style={{ color: 'black' }}>PlanEdition</b> class component</h4>
+            <PlanForm />
         )
     }
 }

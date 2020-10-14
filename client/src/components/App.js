@@ -7,7 +7,7 @@ import Home from './pages/home/Home'
 
 import PlanDetails from './pages/plains/PlanDetails'
 import PlanForm from './pages/plans/planForm/PlanForm';
-import PlanEdition from './pages/plans/edit/PlanEdition'
+import PlanEdition from './pages/plans/planForm/PlanForm'
 
 import UserProfile from './pages/user/profile/Profile'
 import UserSettings from './pages/user/edit/UserSettings'
@@ -21,9 +21,15 @@ class App extends Component {
 
   constructor() {
 
+    console.log('Montando App.js')
+
     super()
     this.state = {
-      loggedInUser: undefined
+      loggedInUser: undefined,
+
+      styles: {
+        button: { default: 'light', active: 'secondary', submit: 'primary', discreet: 'outline-secondary' }
+      }
     }
 
     this.styles = {
@@ -81,6 +87,8 @@ class App extends Component {
 
   render() {
 
+    console.log('Render de App.js')
+
     return (
       <>
 
@@ -95,7 +103,7 @@ class App extends Component {
               <Redirect to="/" />} />
 
             <Route path="/plans/details/:plan" render={props => <PlanDetails {...props} loggedInUser={this.state.loggedInUser} />} />
-            <Route path="/plans/edit/:planId" render={props => <PlanEdition {...props} />} />
+            <Route path="/plans/edit/:planId" render={props => <PlanEdition loggedInUser={this.state.loggedInUser} styles={this.styles} {...props} />} />
 
             <Route path="/user/profile/:userId" render={props => <UserProfile styles={this.customStyles} {...props} />} />
             <Route path="/user/settings/:userId" render={props => <UserSettings styles={this.customStyles} {...props} />} />

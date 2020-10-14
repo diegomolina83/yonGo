@@ -20,35 +20,41 @@ import fileService from '../../../../service/files.service'
 
 
 import './PlanForm.css'
+import AppContext from '../../../context/AppContext'
 
 class PlanForm extends Component {
 
-    constructor() {
+    constructor(props) {
+
         super()
-        this.state = {
-            title: '',
 
-            startLocation: {},
-            startDate: '',
-            startTime: '',
+        this.state = props.location ?
 
-            endLocation: '',
-            endDate: '',
-            endTime: '',
+            props.location.plan :
 
-            scope: 'friends',
-            category: '',
+            {
+                title: '',
 
-            description: '',
-            requirements: '',
+                startLocation: {},
+                startDate: '',
+                startTime: '',
 
-            imageUrl: DefaultImage,
-            isImageLoading: false,
+                endLocation: '',
+                endDate: '',
+                endTime: '',
 
-            creator: undefined,
-            owners: []
+                scope: 'friends',
+                category: '',
 
-        }
+                description: '',
+                requirements: '',
+
+                imageUrl: DefaultImage,
+                isImageLoading: false,
+
+                creator: undefined,
+                owners: []
+            }
 
         this.hasEnd = false
         this.isValidForm = false
@@ -179,71 +185,80 @@ class PlanForm extends Component {
 
         return (
 
-            <div className='plan-new'>
+            <AppContext.Consumer>
 
-                <MainNavbar />
+                {({ styles }) => (
 
-                <Container fluid='lg pb-4'>
+                    <div className='plan-new'>
 
-                    <BackArrow backLink={this.props.history.goBack} className='d-inline-block mt-3 mb-4' color='red' />
+                        <MainNavbar />
 
-                    <h1 className='mb-5 text-center font-weight-bold'>Diseña una nueva <span>experiencia!</span></h1>
+                        <Container fluid='lg pb-4'>
 
-                    <Form onSubmit={this.handleFormSubmit}>
+                            <BackArrow backLink={this.props.history.goBack} className='d-inline-block mt-3 mb-4' color='red' />
 
-                        <Form.Group>
-                            <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
-                        </Form.Group>
+                            <h1 className='mb-5 text-center font-weight-bold'>Diseña una nueva <span>experiencia!</span></h1>
 
-                        <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={this.props.styles} hasEndToogle={this.hasEndToogle} />
+                            <Form onSubmit={this.handleFormSubmit}>
 
-                        <Form.Group>
+                                <Form.Group>
+                                    <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
+                                </Form.Group>
 
-                            <Form.Label className='d-block'>Lista blanca</Form.Label>
+                                <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={styles} hasEndToogle={this.hasEndToogle} />
 
-                            <ButtonGroup className='border rounded flex-column flex-sm-row d-flex d-sm-inline-flex' aria-label="scope">
-                                <Button id='public' variant={this.props.styles.button.default} onClick={this.handleOptionChange}>Público</Button>
-                                <Button id='friends' className='selected-btn' onClick={this.handleOptionChange}>Amigos</Button>
-                                <Button id='group' variant={this.props.styles.button.default} onClick={this.handleOptionChange}>Grupo</Button>
-                            </ButtonGroup>
+                                <Form.Group>
 
-                        </Form.Group>
+                                    <Form.Label className='d-block'>Lista blanca</Form.Label>
 
-                        <Form.Group>
+                                    <ButtonGroup className='border rounded flex-column flex-sm-row d-flex d-sm-inline-flex' aria-label="scope">
+                                        <Button id='public' variant={styles.button.default} onClick={this.handleOptionChange}>Público</Button>
+                                        <Button id='friends' className='selected-btn' onClick={this.handleOptionChange}>Amigos</Button>
+                                        <Button id='group' variant={styles.button.default} onClick={this.handleOptionChange}>Grupo</Button>
+                                    </ButtonGroup>
 
-                            <Form.Label className='d-block'>Categoría</Form.Label>
+                                </Form.Group>
 
-                            <ButtonGroup className='border rounded flex-column flex-sm-row d-flex d-sm-inline-flex' aria-label="category">
-                                <Button id='sport' variant='light' onClick={this.handleOptionChange} >Deporte</Button>
-                                <Button id='culinary' variant={this.props.styles.button.default} onClick={this.handleOptionChange} >Culinaria</Button>
-                                <Button id='culture' variant={this.props.styles.button.default} onClick={this.handleOptionChange} >Cultura</Button>
-                                <Button id='travel' variant={this.props.styles.button.default} onClick={this.handleOptionChange} >Viajes</Button>
-                                <Button id='other' variant={this.props.styles.button.default} onClick={this.handleOptionChange} >Otra</Button>
-                            </ButtonGroup>
+                                <Form.Group>
 
-                        </Form.Group>
+                                    <Form.Label className='d-block'>Categoría</Form.Label>
 
-                        <Form.Group controlId="description">
-                            <Form.Label>Descripción</Form.Label>
-                            <Form.Control as="textarea" rows="3" name='description' onChange={this.handleInputChange} placeholder='¿Qué vas a regalar al mundo?' />
-                        </Form.Group>
+                                    <ButtonGroup className='border rounded flex-column flex-sm-row d-flex d-sm-inline-flex' aria-label="category">
+                                        <Button id='sport' variant='light' onClick={this.handleOptionChange} >Deporte</Button>
+                                        <Button id='culinary' variant={styles.button.default} onClick={this.handleOptionChange} >Culinaria</Button>
+                                        <Button id='culture' variant={styles.button.default} onClick={this.handleOptionChange} >Cultura</Button>
+                                        <Button id='travel' variant={styles.button.default} onClick={this.handleOptionChange} >Viajes</Button>
+                                        <Button id='other' variant={styles.button.default} onClick={this.handleOptionChange} >Otra</Button>
+                                    </ButtonGroup>
 
-                        {/* <Form.Group controlId="requirements">
+                                </Form.Group>
+
+                                <Form.Group controlId="description">
+                                    <Form.Label>Descripción</Form.Label>
+                                    <Form.Control as="textarea" rows="3" name='description' value={this.state.description} onChange={this.handleInputChange} placeholder='¿Qué vas a regalar al mundo?' />
+                                </Form.Group>
+
+                                {/* <Form.Group controlId="requirements">
                             <Form.Label>Requisitos</Form.Label>
                             <Form.Control as="textarea" rows="3" name='requirements' onChange={this.handleInputChange} placeholder='¿Algo que deban saber?' />
                         </Form.Group> */}
 
-                        {!this.state.isImageLoading ?
-                            <FormImage src={this.state.imageUrl} onChange={this.handleFileUrl} />
-                            :
-                            <FormImage src={this.state.imageUrl} onChange={this.handleFileUrl} loading />}
+                                {!this.state.isImageLoading ?
+                                    <FormImage src={this.state.imageUrl} onChange={this.handleFileUrl} />
+                                    :
+                                    <FormImage src={this.state.imageUrl} onChange={this.handleFileUrl} loading />}
 
-                        <Button id='submit-btn' disabled className='mr-2 submit-btn' variant={this.props.styles.button.submit} type="submit">Crear plan</Button>
-                        <Button variant={this.props.styles.button.discreet} onClick={this.props.history.goBack}>Cancelar</Button>
-                    </Form>
+                                <Button id='submit-btn' disabled className='mr-2 submit-btn' variant={styles.button.submit} type="submit">Crear plan</Button>
+                                <Button variant={styles.button.discreet} onClick={this.props.history.goBack}>Cancelar</Button>
+                            </Form>
 
-                </Container>
-            </div>
+                        </Container>
+                    </div>
+
+                )}
+
+            </AppContext.Consumer>
+
         )
     }
 }

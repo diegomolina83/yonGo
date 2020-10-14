@@ -24,6 +24,7 @@ import Button from 'react-bootstrap/esm/Button';
 const Marker = ({ children }) => children
 const renderOption = ["Todos"]
 let count = 0
+
 export default function SimpleMap(props) {
 
 
@@ -165,7 +166,7 @@ export default function SimpleMap(props) {
 
     //Función para cambiar el color de los botones de los filtros
     function buttonColor(category) {
-        if (renderOption.includes(category)) { return "active" } else return "inactive"
+        if (renderOption.includes(category)) { return "activeButton" } else return "inactiveButton"
     }
 
 
@@ -357,7 +358,7 @@ export default function SimpleMap(props) {
             </div >
 
         </>
-    );
+    )
 }
 
 

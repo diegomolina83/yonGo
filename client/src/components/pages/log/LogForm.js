@@ -60,14 +60,16 @@ class LogForm extends Component {
     render() {
 
         return (
+
             <Container>
                 <main>
                     <Row className="justify-content-center">
-                        <Col>
+                        <Col xs={9}>
 
                             <h1>{this.props.logType} de usuario</h1>
 
                             <Form onSubmit={this.handleFormSubmit}>
+
                                 <Form.Group>
                                     <Form.Label>Nombre de usuario</Form.Label>
                                     <Form.Control type="text" name="username" value={this.state.username} onChange={this.handleInputChange} />
@@ -86,7 +88,7 @@ class LogForm extends Component {
                                     <Form.Control type="password" name="password" value={this.state.password} onChange={this.handleInputChange} />
                                 </Form.Group>
 
-                                <Button variant="dark" type="submit">Acceder</Button>
+                                <Button variant="dark" type="submit" className='d-block' style={{ margin: '0 auto' }}>Acceder</Button>
                             </Form>
                         </Col>
                     </Row>
