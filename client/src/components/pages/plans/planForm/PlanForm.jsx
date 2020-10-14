@@ -28,33 +28,33 @@ class PlanForm extends Component {
 
         super()
 
-        this.state = props.location ?
+        this.state =
+        {
+            title: '',
 
-            props.location.plan :
+            startLocation: {},
+            startDate: '',
+            startTime: '',
 
-            {
-                title: '',
+            endLocation: '',
+            endDate: '',
+            endTime: '',
 
-                startLocation: {},
-                startDate: '',
-                startTime: '',
+            scope: 'friends',
+            category: '',
 
-                endLocation: '',
-                endDate: '',
-                endTime: '',
+            description: '',
+            requirements: '',
 
-                scope: 'friends',
-                category: '',
+            imageUrl: DefaultImage,
+            isImageLoading: false,
 
-                description: '',
-                requirements: '',
+            creator: undefined,
+            owners: [],
+            attendees: []
+        }
 
-                imageUrl: DefaultImage,
-                isImageLoading: false,
-
-                creator: undefined,
-                owners: []
-            }
+        this.isEdition = props.match ? true : false
 
         this.hasEnd = false
         this.isValidForm = false
@@ -65,10 +65,39 @@ class PlanForm extends Component {
 
     componentDidMount() {
 
-        this.setState({
-            creator: this.props.loggedInUser._id,
-            owners: new Array(this.props.loggedInUser._id)
-        })
+        if (this.isEdition) {
+
+            this.planService.getOnePlan(this.props.match.params.planId)
+                .then(matchedPlan => {
+
+                    const { title, scope, category, description, requirements, imageUrl, creator, owners, attendees, isImageLoading } = matchedPlan.data
+                    matchedPlan.data.isImageLoading = false
+
+                    const objToSet = { title, scope, category, description, requirements, imageUrl, creator, owners, attendees, isImageLoading }
+                    objToSet.startDate = matchedPlan.data.start.date.slice(0, 10)
+                    objToSet.startTime = matchedPlan.data.start.date.slice(matchedPlan.data.start.date.indexOf('T') + 1, matchedPlan.data.start.date.indexOf('T') + 6)
+
+                    if (matchedPlan.data.end) {
+
+                        objToSet.endDate = matchedPlan.data.end.date.slice(0, 10)
+                        objToSet.endTime = matchedPlan.data.end.date.slice(matchedPlan.data.end.date.indexOf('T') + 1, matchedPlan.data.end.date.indexOf('T') + 6)
+                    }
+
+                    this.setState(objToSet)
+                })
+                .catch(err => console.log(err))
+
+
+        } else {
+
+            this.setState({
+                creator: this.props.loggedInUser._id,
+                owners: new Array(this.props.loggedInUser._id),
+                attendees: new Array(this.props.loggedInUser._id)
+
+            })
+        }
+
     }
 
     handleFormSubmit = e => {
@@ -197,12 +226,14 @@ class PlanForm extends Component {
 
                             <BackArrow backLink={this.props.history.goBack} className='d-inline-block mt-3 mb-4' color='red' />
 
-                            <h1 className='mb-5 text-center font-weight-bold'>Diseña una nueva <span>experiencia!</span></h1>
+                            <h1 className='mb-5 text-center font-weight-bold'>{this.isEdition ? 'Rediseña tu' : 'Diseña una nueva'} <span>experiencia!</span></h1>
 
                             <Form onSubmit={this.handleFormSubmit}>
 
                                 <Form.Group>
-                                    <Form.Control className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold' type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
+                                    <Form.Control
+                                        className='plan-form-title border-top-0 border-right-0 border-left-0 rounded-0 font-weight-bold'
+                                        type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
                                 </Form.Group>
 
                                 <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={styles} hasEndToogle={this.hasEndToogle} />

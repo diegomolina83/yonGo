@@ -26,8 +26,7 @@ const PlanCard = ({ plan, userId }) => {
 
                             <Link
                                 to={{
-                                    pathname: `/plans/edit/${plan._id}`,
-                                    plan
+                                    pathname: `/plans/edit/${plan._id}`
                                 }}
                                 style={{ position: 'absolute', top: '10px', left: '30px', color: 'white', backgroundColor: '#ef4b4c', padding: '.4em .6em', borderRadius: '50%', zIndex: '1' }}>
 
