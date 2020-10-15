@@ -38,9 +38,7 @@ const PlanCard = ({ plan, userId }) => {
 
                         <Link to={{
                             pathname: `/plans/details/${plan._id}`,
-                            cardProps: {
-                                cardProps: plan
-                            }
+                            search: `?name=${loggedInUser.username}&room=${plan.title}`
                         }}
                             style={{ textDecoration: 'none', color: 'inherit', width: '100%', height: '100%' }}>
 

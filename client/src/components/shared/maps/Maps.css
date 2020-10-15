@@ -28,16 +28,13 @@ width: '100%';
 }
 
 .filtersButton{
-    
     display:flex;
     flex-wrap: wrap;
     position: absolute;
-    top:9%;
-    left: 82%;
+    top:30%;
+    left: -5.3%;
     width: 18%;
-    justify-content: center;
-   
-    
+    justify-content: center;      
 }
 
 
@@ -55,3 +52,15 @@ width: '100%';
 }
 
 
+@media (min-width: 320px) and (max-width: 480px) {
+
+.filtersButton{
+    position: absolute;
+    top: 8%;
+    left: 72.7%;
+    width: 18%;
+    justify-content: center; 
+}
+
+
+}

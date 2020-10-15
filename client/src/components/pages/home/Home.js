@@ -66,18 +66,7 @@ class Home extends Component {
         })
     }
 
-    // putImage = () => {
-    //     if (this.props.loggedInUser) {
-    //         return (<button className="userImgButton" onClick={() => {
-    //             let filterButton = document.getElementsByClassName('menuButtons')
-    //             for (let item of filterButton) {
-    //                 item.classList.contains('hide') ? item.classList.remove('hide') : item.classList.add('hide')
-    //             }
-    //         }}><img className="userImg" src={this.props.loggedInUser.imageUrl} /></button>)
-    //     }
-    //     else return (<img className="userImg" src="https://lacasitacreativa.files.wordpress.com/2012/11/282416.gif" />)
-    // }
-
+    
     putImage = () => {
 
         if (this.props.loggedInUser) {
@@ -146,14 +135,7 @@ class Home extends Component {
 
                     </Row>
 
-                    {/* {!this.props.loggedInUser && <Button className="menuButtons" onClick={() => this.setState({ logModal: true, logType: 'Login' })}>Login</Button>}
-                    {!this.props.loggedInUser && <Button className="menuButtons" onClick={() => this.setState({ logModal: true, logType: 'Sign up' })}>Registro</Button>}
-                    {this.props.loggedInUser && <Button className="menuButtons" onClick={this.props.logoutUser}>Cerrar sesión</Button>}
-                    {this.props.loggedInUser && <Link className='btn btn-primary mr-1 menuButtons' to={{
-                        pathname: `user/profile/${this.props.loggedInUser._id}`
-                    }}>Perfil</Link>}
-                    {this.props.loggedInUser && <Link className="menuButtons" to="/plans/new"><Button>Nuevo plan</Button></Link>} */}
-
+                  
                 </div>
 
                 <div className='searchBarMap-container'>
@@ -162,7 +144,7 @@ class Home extends Component {
 
                 </div>
 
-                <SimpleMap coords={Object.create({ lat: this.state.lat, lng: this.state.lng })} />
+                <SimpleMap loggedInUser={this.props.loggedInUser} coords={Object.create({ lat: this.state.lat, lng: this.state.lng })} />
 
                 <Modal show={this.state.logModal} onHide={() => this.setState({ logModal: false })}>
                     <Modal.Header closeButton>

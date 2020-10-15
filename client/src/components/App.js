@@ -106,7 +106,7 @@ class App extends Component {
 
             <Route path="/user/profile/:userId" render={props => <UserProfile styles={this.customStyles} {...props} />} />
             <Route path="/user/settings/:userId" render={props => <UserSettings styles={this.customStyles} {...props} />} />
-            <Route path="/chat" component={Chat} />
+            {/* {this.state.loggedInUser ? <Route path="/chat" component={Chat} /> : null} */}
           </Switch>
 
         </AppContext.Provider>
