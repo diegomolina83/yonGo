@@ -31,7 +31,7 @@ const Chat = ({ location }) => {
         socket.emit('join', { name, room }, (error) => {
             if (error) {
                 socket.off()
-                window.location.reload()
+                // window.location.reload()
             }
         });
     }, [ENDPOINT, location.key])
