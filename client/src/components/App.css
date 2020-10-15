@@ -101,45 +101,28 @@ h1{
 .plan-marker:hover{
   width: 80px;
   height: 80px;
-   transition: all;
+  transition: all;
   transition-duration: .5s;
 }
 
 .highlight{
-  width: 60px;
-  height: 60px;
+  width:80px;
+  height: 80px;
+  transition: all;
+  transition-duration: .5s;
   background: #5f7ab8;
   border-radius: 50%;
   border:none;
 }
 .highlight img{
-  filter: sepia(100%);
-
-  width:30px;
+  filter: invert(100%);
+  width:35px;
   transition: all;
   transition-duration: .5s;
 }
 
 
-#Viajes{
-  left:90%;
-}
-#Cultura{
-  left:94%;
-}
-#Gastronomía{
-top:15%;
-}
 
-#Otros{
-  top:15%;
-  left:92%;
-}
-
-#Todos{
-  top:15%;
-  left:96%
-}
 
 
 .cluster-marker{
@@ -202,13 +185,10 @@ top:15%;
 } */
 
 .searchBarMap input{
-
   position: relative;
-
   width: 300px;
   z-index: inherit;
   border-radius: 30px;
-
   border: solid 2px #5f7ab8;
 }
 
@@ -274,8 +254,10 @@ outline:none;
   justify-content: center;
 }
 
-.imageAndMapDetail img{
-  width: 60vh;
+.imagePlan{
+  width: 100%;
+  max-height: 600px;
+  object-fit: fill;
   margin:0 15px;
 }
 
@@ -287,7 +269,7 @@ margin-bottom:20px;
 }
 
 .profileImageDetail{
-width:8%;
+width:15%;
 border-radius: 50%;
 }
 
@@ -323,10 +305,32 @@ border-radius: 50%;
   transition: opacity 1s;
   background-color: #5f7ab8;
 }
-@media (min-width: 300px) { 
+
+/* .detailCreatorName{
+  text-align: center;
+} */
+@media (min-width: 320px) and (max-width: 480px) {
   
   h1 {
 
     font-size: 2.5rem,
   }
+
+  .searchBarMap input{
+  position: relative;
+  width: 100%;
+  z-index: inherit;
+  border-radius: 30px;
+  border: solid 2px #5f7ab8;
+  left:25%;
+
+}
+
+.userImg{
+  width:75px;
+  height: 75px;
+  border-radius: 50%;
+  border:4px solid #5f7ab8;
+  object-fit: cover;
+}
 }

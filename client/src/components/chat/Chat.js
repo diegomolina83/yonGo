@@ -18,6 +18,8 @@ const Chat = ({ location }) => {
     const [messages, setMessages] = useState([]);
     const ENDPOINT = 'localhost:5000'
 
+    // console.log("LOCATION",location)
+
     useEffect(() => {
         const { name, room } = queryString.parse(location.search)
 
@@ -25,15 +27,14 @@ const Chat = ({ location }) => {
 
         setName(name)
         setRoom(room)
-
-        socket.emit('join', { name, room }, () => {
-
-        })
-        return () => {
-            socket.emit('disconnect')
-            socket.off()
-        }
-    }, [ENDPOINT, location.search])
+        socket.off()
+        socket.emit('join', { name, room }, (error) => {
+            if (error) {
+                socket.off()
+                window.location.reload()
+            }
+        });
+    }, [ENDPOINT, location.key])
 
     useEffect(() => {
         socket.on('message', message => {
@@ -56,7 +57,7 @@ const Chat = ({ location }) => {
         }
     }
 
-    console.log(message, messages)
+
 
     return (
         <div className="outerContainer">

@@ -5,9 +5,7 @@
     top: 20%;
     max-height: 70%;
     text-decoration: none;
-    
-    
-    
+       
 }
 
 .cardContainer {
@@ -15,13 +13,14 @@
     position: absolute;
     z-index: 1;
     right: 19px;
-    top: 17%;
-    max-height: 70%;
+    top: 13%;
+    max-height: 74%;
     max-width: 15%;
     min-width: 15%;
     overflow: auto;
     text-decoration: none;
     width: 100%;
+    
 }
 
 .cardContainer a{
@@ -37,7 +36,8 @@
 
 
 .cardSelected{
-    display:none;    
+    display:none;   
+    
 }
 
 .cardUnselected{
@@ -49,19 +49,35 @@
     
 }
 
+
+.buttonCard{
+    background-color: #5f7ab8;
+    width: 50%;
+}
+
+
 /*Media Queries*/
 
-@media (max-width: 768px) { 
+
+@media (min-width: 320px) and (max-width: 480px) {
 .cardContainer{
     position:absolute;
     background-color: white;
     display:flex;
-    right:0px;
-    top:80%;
-    max-width: 100%;
+    left:0px;
+    top:55%;
+    max-width: 73%;
+    max-height: 50%;
 }
 
+.cardPlan{
+    background-color:transparent;
+    height: 50%;
+}
 
-
+.cardImageList{
+    
+ 
+}
 
 }

@@ -26,6 +26,8 @@ import Row from 'react-bootstrap/Row'
 import Collapse from 'react-bootstrap/Collapse'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
+
+
 const Marker = ({ children }) => children
 const renderOption = ["Todos"]
 let count = 0
@@ -237,7 +239,7 @@ export default function SimpleMap(props) {
 
                     options={{
                         fullscreenControl: false,
-                        streetViewControl: true
+                        // streetViewControl: true
                     }}
                     defaultCenter={{
                         lat: lat,
@@ -279,7 +281,7 @@ export default function SimpleMap(props) {
                                         mapRef.current.panTo({ lat: latitude, lng: longitude })
                                     }}
                                 >
-                                    {(dateFilter(cluster)) ? count++ : console.log()}
+                                    {/* {(dateFilter(cluster)) ? count++ : console.log()} */}
                                     {cluster.properties.point_count - count}
                                 </div>
                             </Marker>;
@@ -323,6 +325,7 @@ export default function SimpleMap(props) {
                                 >
                                     <Link to={{
                                         pathname: `/plans/details/${cluster.properties.planId}`,
+                                        search: `?name=${props.loggedInUser ? props.loggedInUser.username : "invitado"}&room=${cluster.properties.title}`
                                     }}>
 
                                         <button onMouseOver={() => { showCard(cluster.properties.planId) }} onMouseOut={() => hideCard(cluster.properties.planId)} id={`${cluster.properties.planId}`} className={`plan-marker`}>
@@ -336,16 +339,16 @@ export default function SimpleMap(props) {
                         }
                     })}
                 </GoogleMapReact>
-                
+
                 <div className="filtersButton">
                     <Row>
                         <Col className='d-flex flex-column justify-content-center px-0'>
 
                             <CustomButton variant='red' size='sm' style={{ width: '100%', borderRadius: '.2rem .2rem 0 0' }} onClick={() => setFilterExpand(!filterExpand)}>
 
-                                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-eye-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" className="bi bi-eye-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                    <path fill-rule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                    <path fillRule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
                                 </svg>
 
                             </CustomButton>
