@@ -17,7 +17,7 @@ const Chat = ({ location }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     //const ENDPOINT = 'localhost:5000'
-    const ENDPOINT = 'https://yongoclient.herokuapp.com:5000'
+    const ENDPOINT = 'https://yongoserver.herokuapp.com'
 
     // console.log("LOCATION",location)
 
