@@ -4,8 +4,6 @@ import PlanService from '../../../../service/plan.service'
 
 import PlanForm from '../planForm/PlanForm'
 
-//import './PlanEdition.css'
-
 class PlanEdition extends Component {
 
     constructor() {

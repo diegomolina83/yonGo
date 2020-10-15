@@ -9,6 +9,7 @@ import ScheduleIcon from '../../../components/shared/Icons/ScheduleIcon'
 import ClockIcon from '../../../components/shared/Icons/ClockIcon'
 import { GoogleMap, DirectionsRenderer, Marker } from '@react-google-maps/api'
 import { Link } from 'react-router-dom'
+import AttendButton from '../../shared/attend_btn/AttendBuntton'
 
 
 const containerStyle = {
@@ -22,13 +23,13 @@ class PlanDetails extends Component {
     constructor() {
         super()
         this.state = {
-            propCard:{},
+            propCard: {},
             end: {},
-            center:{}
-            
+            center: {}
+
         }
         this.planService = new PlanService()
-        
+
     }
 
 
@@ -38,14 +39,13 @@ class PlanDetails extends Component {
             .then(response => this.setState({ propCard: response.data }))
             .catch(err => console.log(err))
         console.log(this.state.propCard)
-        
-       
+
+
     }
 
 
     setCenter() {
-        if(this.state.propCard.start)
-        { this.center = { lat: parseFloat(this.state.propCard.start.location.lat), lng: parseFloat(this.state.propCard.start.location.lng) } }
+        if (this.state.propCard.start) { this.center = { lat: parseFloat(this.state.propCard.start.location.lat), lng: parseFloat(this.state.propCard.start.location.lng) } }
         else console.log()
     }
 
@@ -66,7 +66,7 @@ class PlanDetails extends Component {
     }
 
     render() {
-        
+
         this.state.propCard ? this.setCenter() : console.log()
         return (
             <>
@@ -77,6 +77,8 @@ class PlanDetails extends Component {
                     <div className="detailsBody">
 
                         <h1>{this.state.propCard.title}</h1>
+
+                        {this.props.loggedInUser && this.state.propCard._id ? <AttendButton variant={'lightBlue'} size='sm' planId={this.state.propCard._id} loggedInUserId={this.props.loggedInUser._id} /> : null}
 
                         <div className="imageAndMapDetail">
                             <img src={this.state.propCard.imageUrl} />
