@@ -5,7 +5,7 @@ export default class CoasterService {
     constructor() {
         this.api = axios.create({
             //baseURL: 'http://localhost:5000/api/files',
-            baseURL: 'http://yongo-server.herokuapp.com/api',
+            baseURL: process.env.REACT_APP_API_URL,
             withCredentials: true
         })
     }

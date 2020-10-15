@@ -154,8 +154,17 @@ export default function SimpleMap(props) {
 
         let newParam = parametros.filter(cluster => dateFilter(cluster))
         return (
-            <div className="cardContainer">
-                <CardList highlightPlan={highlightPlan} understate={understate} clusters={newParam} />
+
+            <div className='right-column'>
+
+                <div className='cardOuterContainer'>
+
+                    <div className="cardContainer">
+                        <CardList highlightPlan={highlightPlan} understate={understate} clusters={newParam} />
+                    </div>
+
+                </div>
+
             </div>
         )
     }

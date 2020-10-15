@@ -66,7 +66,7 @@ class Home extends Component {
         })
     }
 
-    
+
     putImage = () => {
 
         if (this.props.loggedInUser) {
@@ -131,11 +131,11 @@ class Home extends Component {
 
                         </Col>
 
-                        
+
 
                     </Row>
 
-                  
+
                 </div>
 
                 <div className='searchBarMap-container'>
@@ -144,7 +144,7 @@ class Home extends Component {
 
                 </div>
 
-                <SimpleMap loggedInUser={this.props.loggedInUser} coords={Object.create({ lat: this.state.lat, lng: this.state.lng })} />
+                <SimpleMap id='home-map' loggedInUser={this.props.loggedInUser} coords={Object.create({ lat: this.state.lat, lng: this.state.lng })} />
 
                 <Modal show={this.state.logModal} onHide={() => this.setState({ logModal: false })}>
                     <Modal.Header closeButton>

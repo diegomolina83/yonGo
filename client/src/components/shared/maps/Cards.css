@@ -4,11 +4,12 @@
     right: 19px;
     top: 20%;
     max-height: 70%;
+    width: 100%;
     text-decoration: none;
        
 }
 
-.cardContainer {
+/* .map .cardContainer {
    
     position: absolute;
     z-index: 1;
@@ -21,11 +22,48 @@
     text-decoration: none;
     width: 100%;
     
+} */
+
+.map .right-column{
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 200px;
+    background-color: red;
+
+    padding: 10px
+}
+
+.map .cardOuterContainer {
+    right: 19px;
+    top: 0%;
+    height: 100%;
+    width: 100%;
+
+    padding: 10px;
+    background-color: #43506c;
+    border-radius: 10px;   
+}
+
+.map .cardContainer {
+
+    height: 100%;
+    width: 100%;
+    
+    overflow: auto;
+    text-decoration: none;    
 }
 
 .cardContainer a{
     text-decoration: none;
     color:black;
+}
+
+.cardImageList{
+    width: 100%    
+ 
 }
 
 .cardContainer::-webkit-scrollbar {
