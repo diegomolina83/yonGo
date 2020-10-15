@@ -35,10 +35,12 @@ class PlanForm extends Component {
             startLocation: {},
             startDate: '',
             startTime: '',
+            startAddress: '',
 
             endLocation: '',
             endDate: '',
             endTime: '',
+            endAddress: '',
 
             scope: 'friends',
             category: '',
@@ -76,11 +78,13 @@ class PlanForm extends Component {
                     const objToSet = { title, scope, category, description, requirements, imageUrl, creator, owners, attendees, isImageLoading }
                     objToSet.startDate = matchedPlan.data.start.date.slice(0, 10)
                     objToSet.startTime = matchedPlan.data.start.date.slice(matchedPlan.data.start.date.indexOf('T') + 1, matchedPlan.data.start.date.indexOf('T') + 6)
+                    objToSet.startAddress = matchedPlan.data.start.location.address
 
                     if (matchedPlan.data.end) {
 
                         objToSet.endDate = matchedPlan.data.end.date.slice(0, 10)
                         objToSet.endTime = matchedPlan.data.end.date.slice(matchedPlan.data.end.date.indexOf('T') + 1, matchedPlan.data.end.date.indexOf('T') + 6)
+                        objToSet.endAddress = matchedPlan.data.end.location.address
                     }
 
                     this.isValidForm = true
@@ -117,7 +121,7 @@ class PlanForm extends Component {
 
             this.planService.createPlan(this.state)
                 .then(response => {
-                    this.props.history.push('/')
+                    this.props.history.push(`/plans/details/${response.data._id}?name=${this.props.loggedInUser.username}&room=${response.data.title}`)
                 })
                 .catch(err => console.log(err))
         }
@@ -212,10 +216,10 @@ class PlanForm extends Component {
 
         switch (flag) {
             case "start":
-                this.setState({ startLocation: { lat: coords[0], lng: coords[1] } })
+                this.setState({ startLocation: { lat: coords[0], lng: coords[1], address }, startAddress: address })
                 break;
             case "end":
-                this.setState({ endLocation: { lat: coords[0], lng: coords[1] } })
+                this.setState({ endLocation: { lat: coords[0], lng: coords[1], address }, endAddress: address })
                 break;
             case "map":
                 console.log("Estamos en el mapa")
@@ -256,7 +260,7 @@ class PlanForm extends Component {
                                         type="text" name="title" value={this.state.title} onChange={this.handleInputChange} placeholder='Titulo' />
                                 </Form.Group>
 
-                                <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} styles={styles} hasEndToogle={this.hasEndToogle} />
+                                <PlanFormLocation getCoords={this.getCoords} formState={this.state} handleInputChange={this.handleInputChange} inputValues={[this.state.startAddress, this.state.endAddress]} styles={styles} hasEndToogle={this.hasEndToogle} />
 
                                 <Form.Group>
 

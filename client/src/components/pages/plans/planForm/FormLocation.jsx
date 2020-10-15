@@ -13,6 +13,9 @@ import Button from '../../../styled/buttons/Button'
 
 
 const PlanFormLocation = (props) => {
+
+    console.log('props.inputValues en PlanFormLocation: ', props.inputValues)
+
     const [open, setOpen] = useState({ value: false, btnText: 'Añadir final', toogleFun: props.hasEndToogle })
 
     //props.formState.endDate ? setOpen(true) : null
@@ -36,7 +39,7 @@ const PlanFormLocation = (props) => {
             <Form.Label>Inicio</Form.Label>
 
             <Form.Group>
-                <ReactPlacesAutocomplete flag={"start"} getCoords={props.getCoords} />
+                <ReactPlacesAutocomplete flag={"start"} getCoords={props.getCoords} inputValue={props.inputValues[0]} />
             </Form.Group>
 
             <Row>
@@ -60,7 +63,7 @@ const PlanFormLocation = (props) => {
                     <Form.Label>Final</Form.Label>
 
                     <Form.Group>
-                        <ReactPlacesAutocomplete flag={"end"} getCoords={props.getCoords} />
+                        <ReactPlacesAutocomplete flag={"end"} getCoords={props.getCoords} inputValue='Hola' />
                     </Form.Group>
 
                     <Row>

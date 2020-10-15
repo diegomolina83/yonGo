@@ -35,11 +35,8 @@ const userSchema = new Schema({
         default: 'basic'
     },
     social: {
+
         following: {
-            type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-            default: []
-        },
-        followers: {
             type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
             default: []
         },

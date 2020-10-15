@@ -9,8 +9,15 @@ import Form from 'react-bootstrap/Form'
 
 export default function ReactPlacesAutocomplete(props) {
 
-    const [address, setAddress] = React.useState("")
+    const [address, setAddress] = React.useState()
     const [, setCoordinates] = React.useState({ lat: null, lng: null })
+
+    React.useEffect(() => {
+
+        console.log('props.inputValue es: ', props.inputValue)
+
+        setAddress(props.inputValue)
+    }, [props])
 
     const handleSelect = async (value) => {
         const results = await geocodeByAddress(value)

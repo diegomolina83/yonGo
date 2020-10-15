@@ -11,6 +11,7 @@ import AttendeesIcon from '../../shared/Icons/AttendeesIcon'
 
 import { GoogleMap, DirectionsRenderer, Marker } from '@react-google-maps/api'
 import { Link } from 'react-router-dom'
+import AttendButton from '../../shared/attend_btn/AttendBuntton'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -96,7 +97,7 @@ class PlanDetails extends Component {
         if (this.props.loggedInUser) {
             return (
                 <div>
-                <Link to={`/user/profile/${this.state.propCard.creator}`}>
+                    <Link to={`/user/profile/${this.state.propCard.creator}`}>
                         <img className="profileImageDetail" src={this.state.creatorData.imageUrl} />
                         <h5 className="detailCreatorName">{this.state.creatorData.username}</h5></Link></div>)
         }
@@ -124,24 +125,25 @@ class PlanDetails extends Component {
     getAttendees = () => {
         if (this.state.propCard.attendees) {
             this.state.propCard.attendees.forEach(element => {
-                
+
             })
         }
     }
 
     render() {
-        // console.log("LOCATION", this.props.match.params.title)
+
         this.state.propCard ? this.setCenter() : console.log()
 
         return (
             <>
                 <MainNavbar />
-{console.log("++++++++++++++++++++++++++++++++++",this.state)}
+                {console.log("++++++++++++++++++++++++++++++++++", this.state)}
                 <div className="details">
                     <div className="detailsBody">
                         <Container>
                             <Row>
                                 <Col><h1>{this.state.propCard.title}</h1></Col>
+                                {this.props.loggedInUser && this.state.propCard._id ? <AttendButton variant={'lightBlue'} size='sm' planId={this.state.propCard._id} loggedInUserId={this.props.loggedInUser._id} /> : null}
                             </Row>
                             <Row>
                                 <Col>   <img className="imagePlan" src={this.state.propCard.imageUrl} /></Col>

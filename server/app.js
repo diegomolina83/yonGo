@@ -20,7 +20,7 @@ const app = express()
 
 //Socket
 const http = require('http')
-const PORT = process.env.PORT || 5000
+const PORT = 5000
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js')
 const uploader = require('./configs/cloudinary.config')
@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id)
 
         if (user) {
-            io.to(user.room).emit('message',{user:'admin',text:`${user.name} ha salido del chat` })
+            io.to(user.room).emit('message', { user: 'admin', text: `${user.name} ha salido del chat` })
         }
     })
 });

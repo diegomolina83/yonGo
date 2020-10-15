@@ -22,12 +22,12 @@ const Chat = ({ location }) => {
 
     useEffect(() => {
         const { name, room } = queryString.parse(location.search)
-        
+
         socket = io(ENDPOINT)
 
         setName(name)
         setRoom(room)
-        socket.off() 
+        socket.off()
         socket.emit('join', { name, room }, (error) => {
             if (error) {
                 socket.off()
@@ -46,7 +46,7 @@ const Chat = ({ location }) => {
         });
     }, []);
 
- 
+
 
 
     //function for sending messages

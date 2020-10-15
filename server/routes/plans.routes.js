@@ -27,7 +27,7 @@ router.get('/getOnePlan/:plan_id', (req, res) => {
 
 router.post('/plans/create', (req, res) => {
 
-    const { title, scope, category, description, owners, creator, attendees, imageUrl } = req.body
+    const { title, scope, category, description, owners, creator, attendees, imageUrl, address } = req.body
 
     console.log(req.body)
 
@@ -49,10 +49,10 @@ router.post('/plans/create', (req, res) => {
 
         const end = { location: req.body.endLocation, date: formattedEndDate }
 
-        planToCreate = { title, start, end, scope, category, description, owners, creator, attendees, imageUrl }
+        planToCreate = { title, start, end, scope, category, description, owners, creator, attendees, imageUrl, address }
     } else {
 
-        planToCreate = { title, start, scope, category, description, owners, creator, attendees, imageUrl }
+        planToCreate = { title, start, scope, category, description, owners, creator, attendees, imageUrl, address }
     }
 
     Plan.create(planToCreate)
@@ -64,6 +64,11 @@ router.post('/plans/create', (req, res) => {
 })
 
 router.put('/plans/edit/:id', (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+        res.status(400).json({ message: 'Specified id is not valid' })
+        return
+    }
 
     const { title, scope, category, description, owners, creator, attendees, imageUrl } = req.body
 
@@ -88,6 +93,7 @@ router.put('/plans/edit/:id', (req, res) => {
         const end = { location: req.body.endLocation, date: formattedEndDate }
 
         planToEdit = { title, start, end, scope, category, description, owners, creator, attendees, imageUrl }
+
     } else {
 
         planToEdit = { title, start, scope, category, description, owners, creator, attendees, imageUrl }
@@ -96,6 +102,62 @@ router.put('/plans/edit/:id', (req, res) => {
     Plan.findByIdAndUpdate(req.params.id, planToEdit, { new: true })
         .then(updatedPlan => res.json(updatedPlan))
         .catch(err => res.status(500).json(err))
+})
+
+router.get('/plans/isAttendee/:planId/:userId', (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.planId)) {
+        res.status(400).json({ message: 'Specified plan id is not valid' })
+        return
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+        res.status(400).json({ message: 'Specified user id is not valid' })
+        return
+    }
+
+    Plan.find({ _id: req.params.planId, attendees: req.params.userId }, { _id: 1 })
+        .then(matchedPlans => {
+
+            if (matchedPlans.length !== 0) {
+
+                res.send(true)
+
+            } else {
+
+                res.send(false)
+            }
+        })
+        .catch(err => res.status(500).json(err))
+})
+
+router.put('/plans/handleAttendance/:planId/:userId/:isAttending', (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.planId)) {
+        res.status(400).json({ message: 'Specified plan id is not valid' })
+        return
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+        res.status(400).json({ message: 'Specified user id is not valid' })
+        return
+    }
+
+    if (req.params.isAttending === 'false') {
+
+        console.log('Entro al push')
+
+        Plan.findByIdAndUpdate(req.params.planId, { $push: { 'attendees': req.params.userId } }, { new: true })
+            .then(updatedPlan => res.json(updatedPlan))
+            .catch(err => res.status(500).json(err))
+    } else {
+
+        console.log('Entro al pull')
+
+        Plan.findByIdAndUpdate(req.params.planId, { $pull: { 'attendees': req.params.userId } }, { new: true })
+            .then(updatedPlan => res.json(updatedPlan))
+            .catch(err => res.status(500).json(err))
+    }
 })
 
 

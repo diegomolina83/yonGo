@@ -1,14 +1,24 @@
 import React from 'react'
 
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
-import Button from '../../../styled/buttons/Button'
+import CustomButton from '../../../styled/buttons/Button'
 
-const UserEditForm = ({ formState, handleFieldChange }) => {
+import Image from '../../../shared/form/FormImage'
+
+const UserEditForm = ({ formState, handleFieldChange, handleSubmit }) => {
 
     return (
 
-        <Form>
+        <Form onSubmit={handleSubmit}>
+
+            <Image src={formState.imageUrl} />
+
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Username</Form.Label>
+                <Form.Control type="text" value={formState.username} placeholder="Username" name='username' onChange={handleFieldChange} />
+            </Form.Group>
 
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -21,23 +31,20 @@ const UserEditForm = ({ formState, handleFieldChange }) => {
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="text" value={formState.username} placeholder="Username" />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
                 <Form.Label>First name</Form.Label>
-                <Form.Control type="text" value={formState.firstName} placeholder="First name" />
+                <Form.Control type="text" value={formState.firstName} placeholder="First name" name='firstName' onChange={handleFieldChange} />
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Last name</Form.Label>
-                <Form.Control type="text" value={formState.lastName} placeholder="Last name" />
+                <Form.Control type="text" value={formState.lastName} placeholder="Last name" name='lastName' onChange={handleFieldChange} />
             </Form.Group>
 
-            <Button variant="blue" type="submit">
+            <CustomButton variant="blue" type="submit">
                 Editar
-            </Button>
+            </CustomButton>
+
+            <Button variant='outline-danger' className='ml-2'>Delete</Button>
 
         </Form>
 
