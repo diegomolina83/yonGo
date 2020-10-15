@@ -10,13 +10,13 @@ export default class PlanService {
         })
     }
 
-    getAllUsers = () => this.api.get('/getAllUsers')
-    getOneUser = id => this.api.get(`/getOneUser/${id}`)
+    getAllUsers = () => this.api.get('/users/getAllUsers')
+    getOneUser = id => this.api.get(`/users/getOneUser/${id}`)
     editUser = (id, updatedUser) => this.api.put(`/edit/${id}`, updatedUser)
 
-    getAllPlans = id => this.api.get(`/getAllPlans/${id}`)
-    getAllPlansFast = id => this.api.get(`/getAllPlans/fast/${id}`)
+    getAllPlans = id => this.api.get(`/users/getAllPlans/${id}`)
+    getAllPlansFast = id => this.api.get(`/users/getAllPlans/fast/${id}`)
 
-    isFollowing = (followedUserId, followerUserId) => this.api.get(`/isFollowing/${followedUserId}/${followerUserId}`)
-    handleFollow = (followedUserId, followerUserId, isFollowing) => this.api.put(`/handleFollow/${followedUserId}/${followerUserId}/${isFollowing}`)
+    isFollowing = (followedUserId, followerUserId) => this.api.get(`/users/isFollowing/${followedUserId}/${followerUserId}`)
+    handleFollow = (followedUserId, followerUserId, isFollowing) => this.api.put(`/users/handleFollow/${followedUserId}/${followerUserId}/${isFollowing}`)
 }

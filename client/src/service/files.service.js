@@ -10,5 +10,5 @@ export default class CoasterService {
         })
     }
 
-    uploadImage = imageForm => this.api.post('/upload', imageForm)
+    uploadImage = imageForm => this.api.post('/files/upload', imageForm)
 }
