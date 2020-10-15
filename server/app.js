@@ -20,7 +20,8 @@ const app = express()
 
 //Socket
 const http = require('http')
-const PORT = 5000
+const PORT = process.env.PORT || 5000
+// const PORT = 'https://yongoserver.herokuapp.com/'
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js')
 const uploader = require('./configs/cloudinary.config')
