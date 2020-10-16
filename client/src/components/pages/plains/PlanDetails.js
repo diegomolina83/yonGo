@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import MainNavbar from '../../shared/navbar/MainNavbar'
 
 import '../../App.css'
+import './PlanDetails.css'
+
 import ScheduleIcon from '../../shared/Icons/ScheduleIcon'
 import ClockIcon from '../../shared/Icons/ClockIcon'
 import AttendeesIcon from '../../shared/Icons/AttendeesIcon'
@@ -14,16 +16,18 @@ import { Link } from 'react-router-dom'
 import AttendButton from '../../shared/attend_btn/AttendBuntton'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
+import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Chat from '../../chat/Chat'
+import chat from '../../../images/chat.png'
 
 
 const containerStyle = {
-    width: '100%',
+    width: '95%',
     height: '50vh'
 }
 
-
+let chatHidden = true
 class PlanDetails extends Component {
 
     constructor() {
@@ -32,7 +36,8 @@ class PlanDetails extends Component {
             propCard: {},
             end: {},
             center: {},
-            creatorData: {}
+            creatorData: {},
+
 
         }
         this.planService = new PlanService()
@@ -41,22 +46,6 @@ class PlanDetails extends Component {
     }
 
 
-    // componentDidMount() {
-
-
-
-    //     this.planService.getOnePlan(this.props.match.params.plan)
-    //         .then(response => this.setState({ propCard: response.data }))
-    //         .then(console.log("CREADOR", this.state.propCard.creator))
-
-
-    //     this.userService.getOneUser(this.props.match.params.plan.creator)
-    //         .then(response => this.setState({ creator: response.data }))
-    //         .catch(err => console.log(err))
-
-
-
-    // }
 
 
     componentDidMount() {
@@ -103,7 +92,7 @@ class PlanDetails extends Component {
         }
         else return (<button className="userImgButton" onClick={() => {
 
-        }}><img className="profileImageDetail" src="https://lacasitacreativa.files.wordpress.com/2012/11/282416.gif" /></button>)
+        }}><img className="profileImageDetail" src="https://pbs.twimg.com/profile_images/1012362101510160384/EjayQ10E.jpg" /></button>)
     }
 
     getDate = () => {
@@ -130,6 +119,12 @@ class PlanDetails extends Component {
         }
     }
 
+    startChat = () => {
+        chatHidden = !chatHidden
+        if (chatHidden) document.getElementById('containerChat').classList.add("hide")
+        else document.getElementById('containerChat').classList.remove("hide")
+    }
+
     render() {
 
         this.state.propCard ? this.setCenter() : console.log()
@@ -137,15 +132,15 @@ class PlanDetails extends Component {
         return (
             <>
                 <MainNavbar />
-                {console.log("++++++++++++++++++++++++++++++++++", this.state)}
+
                 <div className="details">
                     <div className="detailsBody">
                         <Container>
-                            <Row>
-                                <Col><h1>{this.state.propCard.title}</h1></Col>
-                                {this.props.loggedInUser && this.state.propCard._id ? <AttendButton variant={'lightBlue'} size='sm' planId={this.state.propCard._id} loggedInUserId={this.props.loggedInUser._id} /> : null}
+                            <Row >
+                                <Col><h1 className="mb-5 titleDetails">{this.state.propCard.title}</h1></Col>
                             </Row>
-                            <Row>
+                                    {this.props.loggedInUser && this.state.propCard._id ? <AttendButton getAttendeesNumber={this.getAttendeesNumber} className="joinButton" variant={'lightBlue'} size='sm' planId={this.state.propCard._id} loggedInUserId={this.props.loggedInUser._id} /> : null}
+                            <Row className="detailsMain">
                                 <Col>   <img className="imagePlan" src={this.state.propCard.imageUrl} /></Col>
                                 <Col>  <h3>Datos del plan</h3>
                                     <p>{this.state.propCard.description}</p>
@@ -181,6 +176,7 @@ class PlanDetails extends Component {
                                     </GoogleMap>
                                 </Col>
                             </Row>
+                            {this.props.loggedInUser && this.state.propCard._id ? <button className="chatIcon" onClick={() => this.startChat()}><img src={chat} /></button> : null}
                             {this.createChat()}
                         </Container>
                     </div>

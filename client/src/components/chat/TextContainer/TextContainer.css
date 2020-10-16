@@ -1,21 +1,24 @@
 .textContainer {
   display: flex;
   flex-direction: column;
-  margin-left: 100px;
+  position: fixed;
   color: white;
-  height: 60%;
+  height: 10%;
+  width: 15%;
   justify-content: space-between;
+  background-color: red;
 }
 
 .activeContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 50%;
+  color:black;
 }
 
 .activeItem {
   display: flex;
   align-items: center;
+  color:black;
 }
 
 .activeContainer img {
@@ -24,6 +27,15 @@
 
 .textContainer h1 {
   margin-bottom: 0px;
+}
+
+.usersChat{
+    color: black;
+    position: fixed;
+    top: 50%;
+    z-index: 5;
+    right: 21%;
+
 }
 
 @media (min-width: 320px) and (max-width: 1200px) {

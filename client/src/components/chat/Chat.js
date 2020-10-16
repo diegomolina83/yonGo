@@ -32,7 +32,7 @@ const Chat = ({ location }) => {
         socket.emit('join', { name, room }, (error) => {
             if (error) {
                 socket.off()
-                window.location.reload()
+
             }
         });
     }, [ENDPOINT, location.key])
@@ -61,14 +61,14 @@ const Chat = ({ location }) => {
 
 
     return (
-        <div className="outerContainer">
-            <div className="containerChat">
+        <>
+            <div id="containerChat">
                 <InfoBar room={room} />
                 <Messages messages={messages} name={name} />
                 <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
             </div>
             <TextContainer users={users} />
-        </div>
+        </>
     )
 }
 

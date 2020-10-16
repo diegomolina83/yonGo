@@ -47,6 +47,10 @@ const userSchema = new Schema({
         planInvitations: {
             type: [{ type: Schema.Types.ObjectId, ref: 'Plan' }],
             default: []
+        },
+        followers: {
+            type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+            default: []
         }
     }
 
