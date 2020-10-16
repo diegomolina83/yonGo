@@ -304,7 +304,13 @@ class PlanForm extends Component {
                                     <FormImage src={this.state.imageUrl} onChange={this.handleFileUrl} loading />}
 
                                 <Button id='submit-btn' disabled className='mr-2 submit-btn' variant={styles.button.submit} type="submit">{this.isEdition ? 'Editar' : 'Crear'} plan</Button>
-                                <Button variant={styles.button.discreet} onClick={this.props.history.goBack}>Cancelar</Button>
+
+                                {this.isEdition ?
+                                    <Button variant='outline-danger' >Eliminar</Button>
+                                    :
+                                    <Button variant={styles.button.discreet} onClick={this.props.history.goBack}>Cancelar</Button>
+                                }
+
                             </Form>
 
                         </Container>

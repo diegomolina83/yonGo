@@ -30,7 +30,7 @@ class CardPlan extends Component {
                             search: `?name=${loggedInUser ? loggedInUser.username : "invitado"}&room=${this.props.properties.title}`
                         }}>
 
-                            <Card className='cardImageList d-flex justify-content-center mb-3' style={{ width: '18rem' }}>
+                            <Card className='cardImageList d-flex justify-content-center mb-3'>
                                 <Card.Img className="cardImageList" style={{ maxHeight: '140px', objectFit: 'cover' }} variant="top" src={this.props.properties.imageUrl} />
                                 <Card.Body>
 
