@@ -1,0 +1,50 @@
+
+
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+.titleDetails{
+    margin-top:15%;
+}
+
+.detailsMain{
+    display:flex;
+    flex-direction: column;
+}
+.profileDetail{
+    background-color: #f8f8f8;
+    margin:15px;
+}
+
+.activeItem{
+    visibility: hidden;
+}
+
+.joinButton{
+    z-index: 5;
+    position: absolute;
+    width: 30%;
+    background-color: #43506c;
+    height: 6%;
+    top: 80%;
+    right: 13%;
+    color: white;
+}
+
+
+
+.chatIcon {
+    width: 16%;
+    position: relative;
+    z-index: 7;
+    right: 1%;
+    
+    border: none;
+    outline: none;
+    background-color:transparent;
+}
+
+}
+
+@media (min-width: 480px) and (max-width: 1200px) {}

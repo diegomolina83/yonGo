@@ -4,8 +4,8 @@ export default class PlanService {
 
     constructor() {
         this.api = axios.create({
-            //baseURL: 'http://localhost:5000/api/users',
-            baseURL: 'http://yongo-server.herokuapp.com/api',
+            baseURL: 'http://localhost:5000/api/users',
+            // baseURL: 'http://yongo-server.herokuapp.com/api',
             withCredentials: true
         })
     }

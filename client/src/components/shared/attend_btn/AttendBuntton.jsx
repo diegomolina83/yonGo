@@ -31,7 +31,7 @@ class AttendButton extends Component {
     handleAttendance = () => {
 
         this.planService.handleAttendance(this.props.planId, this.props.loggedInUserId, this.state.isAttendee)
-            .then(() => this.setState({ isAttendee: !this.state.isAttendee }))
+            .then(() => this.setState({ isAttendee: !this.state.isAttendee }, this.props.getAttendeesNumber))
             .catch(err => console.log({ err }))
     }
 
@@ -40,7 +40,7 @@ class AttendButton extends Component {
         return (
 
             <>
-                {this.state.mounted && <Button variant={this.props.variant} size={this.props.size} onClick={this.handleAttendance}>{this.state.isAttendee ? 'Borrarse' : 'Asistir'}</Button>}
+                {this.state.mounted && <button class="joinButton"variant={this.props.variant} size={this.props.size} onClick={this.handleAttendance}>{this.state.isAttendee ? 'Borrarse' : 'Asistir'}</button>}
             </>
         )
     }

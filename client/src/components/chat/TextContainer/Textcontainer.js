@@ -5,23 +5,18 @@ import onlineIcon from '../../../Icons/onlineIcon.png';
 import './TextContainer.css';
 
 const TextContainer = ({ users }) => (
-    <div className="textContainer">
-        
+    <div>
+
         {
             users
                 ? (
-                    <div>
-                        <h5>Usuari@s activ@s</h5>
-                        <div className="activeContainer">
-                            <h2>
-                                {users.map(({ name }) => (
-                                    <div key={name} className="activeItem">
-                                        {name}
-                                        <img alt="Online Icon" src={onlineIcon} />
-                                    </div>
-                                ))}
-                            </h2>
-                        </div>
+                    <div className="usersChat">
+                        {users.map(({ name }) => (
+                            <div key={name} className="activeItem">
+                                {name}
+                                <img alt="Online Icon" src={onlineIcon} />
+                            </div>
+                        ))}
                     </div>
                 )
                 : null
