@@ -1,12 +1,57 @@
 .cardPlan{
-    background-color: #5f7ab8;
+    
     z-index: 1;
     right: 19px;
     top: 20%;
     max-height: 70%;
     width: 100%;
     text-decoration: none;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 5px;
        
+}
+
+.card-content{
+
+    margin: 0
+}
+
+.cardPlan .card-header{
+
+    padding: 5px;
+    background-color: white;
+    border: none
+}
+
+.cardPlan .card-img-top{
+
+    max-height: 80px;
+}
+
+.cardPlan .card-body{
+
+    padding: 10px
+}
+
+.cardPlan .card-body .card-title{
+
+    font-size: 1em;
+    margin-bottom: .5em;
+}
+
+.cardPlan #event-date p,
+.cardPlan #event-time p,
+.cardPlan #event-attendees p{
+
+    font-size: .8em;
+}
+
+.cardPlan #event-date svg,
+.cardPlan #event-time svg,
+.cardPlan #event-attendees svg{
+
+    width: 1em
 }
 
 /* .map .cardContainer {
@@ -31,9 +76,9 @@
     right: 0;
     height: 100%;
     width: 200px;
-    background-color: red;
 
-    padding: 10px
+    padding: 10px;
+    padding-bottom: 115px;
 }
 
 .map .cardOuterContainer {
@@ -43,8 +88,10 @@
     width: 100%;
 
     padding: 10px;
-    background-color: #43506c;
-    border-radius: 10px;   
+    background-color: rgba(67, 80, 108, .1);
+    border-radius: 10px;
+    
+    backdrop-filter: blur(4px);
 }
 
 .map .cardContainer {
@@ -53,7 +100,10 @@
     width: 100%;
     
     overflow: auto;
-    text-decoration: none;    
+    text-decoration: none;
+    
+    display: flex;
+    flex-direction: column;
 }
 
 .cardContainer a{
@@ -61,8 +111,9 @@
     color:black;
 }
 
-.cardImageList{
-    width: 100%    
+.cardImage{
+    width: 100%;
+    margin: 0
  
 }
 
@@ -90,32 +141,67 @@
 
 .buttonCard{
     background-color: #5f7ab8;
-    width: 50%;
+    display: block;
+    margin: 0 auto;
 }
 
 
 /*Media Queries*/
 
+@media (max-width: 900px){
 
-@media (min-width: 320px) and (max-width: 480px) {
-.cardContainer{
-    position:absolute;
-    background-color: white;
-    display:flex;
-    left:0px;
-    top:55%;
-    max-width: 73%;
-    max-height: 50%;
-}
+    .map .right-column{
+        
+        height: 150px;
+        bottom: 0;
+        top: auto;
+        width: 100%;
 
-.cardPlan{
-    background-color:transparent;
-    height: 50%;
-}
+        padding: 10px;
+        padding-right: 60px;
 
-.cardImageList{
+        overflow-y: auto;
+        overflow-x:auto;
+    }
+
+    .map .cardContainer {
     
- 
+        display: flex;
+        flex-direction: row;
+    }
+
+    .card-content{
+
+        flex-direction: row;
+    }
+
+    .cardPlan{
+
+        width: 100px
+    }
 }
 
-}
+
+/* @media (min-width: 320px) and (max-width: 480px) {
+    
+    .cardContainer{
+        position:absolute;
+        background-color: white;
+        display:flex;
+        left:0px;
+        top:55%;
+        max-width: 73%;
+        max-height: 50%;
+    }
+
+    .cardPlan{
+        background-color:transparent;
+        height: 50%;
+    }
+
+    .cardImageList{
+        
+    
+    }
+
+} */

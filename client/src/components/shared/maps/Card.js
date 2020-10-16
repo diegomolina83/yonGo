@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Image from 'react-bootstrap/Image'
 
 import fireIcon from '../../pages/user/plans_viewer/fuego.png'
 import Schedule from '../Icons/ScheduleIcon'
@@ -30,8 +31,59 @@ class CardPlan extends Component {
                             search: `?name=${loggedInUser ? loggedInUser.username : "invitado"}&room=${this.props.properties.title}`
                         }}>
 
-                            <Card className='cardImageList d-flex justify-content-center mb-3'>
-                                <Card.Img className="cardImageList" style={{ maxHeight: '140px', objectFit: 'cover' }} variant="top" src={this.props.properties.imageUrl} />
+                            <Row className='card-content'>
+
+                                <Col className='card-header'>
+
+                                    <Image className="cardImage" style={{ objectFit: 'cover' }} src={this.props.properties.imageUrl} />
+
+                                </Col>
+
+                                <Col className='card-body'>
+
+                                    <h2 className='card-title'>{this.props.properties.title}</h2>
+
+                                    <div id="event-date">
+
+                                        <Schedule />
+
+                                        <Card.Text className='mb-1 d-inline-block ml-2'>
+                                            {this.props.properties.start.date.slice(0, 10)}
+                                        </Card.Text>
+
+                                    </div>
+
+                                    <div id="event-time">
+
+                                        <ClockIcon />
+
+                                        <Card.Text className='mb-1 d-inline-block ml-2'>
+                                            {this.props.properties.start.date.slice(this.props.properties.start.date.indexOf('T') + 1, this.props.properties.start.date.indexOf('T') + 6)}
+                                        </Card.Text>
+
+                                    </div>
+
+                                    <div id="event-attendees">
+
+                                        <AttendeesIcon />
+
+                                        <Card.Text className='d-inline-block ml-1'>
+                                            {this.props.properties.attendees.length}
+                                        </Card.Text>
+
+                                        {this.props.properties.attendees.length > 10 ?
+                                            <img src={fireIcon} alt="llama de fuego" className='ml-2' style={{ width: '15px' }} title='Más de 10 personas!' /> : null}
+
+                                    </div>
+
+                                    <Button className="buttonCard" size='sm'>Ir al plan</Button>
+
+                                </Col>
+
+                            </Row>
+
+                            {/* <Card className='cardImageList d-flex justify-content-center mb-3'>
+                                <Card.Img className="cardImageList" style={{ objectFit: 'cover' }} src={this.props.properties.imageUrl} />
                                 <Card.Body>
 
                                     <Card.Title >{this.props.properties.title}</Card.Title>
@@ -56,7 +108,7 @@ class CardPlan extends Component {
 
                                     </div>
 
-                                    <div id="event-attendees" className='mb-3'>
+                                    <div id="event-attendees">
 
                                         <AttendeesIcon />
 
@@ -82,7 +134,7 @@ class CardPlan extends Component {
                                     </Row>
 
                                 </Card.Body>
-                            </Card>
+                            </Card> */}
 
                         </Link>
                     </div>

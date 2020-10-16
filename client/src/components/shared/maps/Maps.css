@@ -26,13 +26,21 @@
 }
 
 .filtersButton{
+
     display:flex;
     flex-wrap: wrap;
+    justify-content: center;
     position: absolute;
     top:30%;
-    left: -5.3%;
-    width: 18%;
+    left: 15px;
+    width: 114px;
+    background-color: red;
     justify-content: center;      
+}
+
+.filtersButton .row{
+
+    width: 100%;
 }
 
 
